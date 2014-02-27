@@ -1,0 +1,18 @@
+# use this for manual replacement of suboptimal w2l output in kate. Will eventually be converted into a sed script
+# the upper line in a group is the target, the lower line the replacement
+
+\\(sub)?(sub)?section(\[.*\])?\{(\\textmd\{)?[0-9\.]+\. (.*) *\}
+\\\1\2section{\5}
+
+\\textit\{( *)\}
+\1
+
+\\label\{(bkm:Ref.*)\}\(\)
+\\ea\\label{\1}\n\\gll 
+
+\\gll    \\textit\{(.*)\} *\\
+\\gll \1 \\\\
+
+m\{[0-9\.]+in\}
+l
+ 
