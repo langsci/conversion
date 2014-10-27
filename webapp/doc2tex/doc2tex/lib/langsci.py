@@ -63,7 +63,7 @@ def convert(fn):
     preamble, text = w2lcontent.split(r"\begin{document}")
     text = text.split(r"\end{document}")[0] 
     preamble=preamble.split('\n')
-    newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l and 'labellistLi' not in l]) # or l.startswith('\\renewcommand')])
+    newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l and 'labellistLi' not in l and 'textsubscript' not in l]) # or l.startswith('\\renewcommand')])
     #replace all definitions of new environments by {}{}
     newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')  and 'listLi' not in l]) # or l.startswith('\\renewcommand')])
     newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage')])
@@ -123,7 +123,7 @@ class Document:
 				("\\begin","\n\\begin"),
 				("\\end","\n\\end"), 
 				("supertabular","tabular"),  
-				(" }","} "),
+				#(" }","} "),%causes problems with '\ '
 				("\~{}","{\\Tilde}"), 
 				("\\setcounter","%\\setcounter"),  
 			    )    

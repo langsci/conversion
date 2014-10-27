@@ -179,7 +179,17 @@ border-radius: 5px 5px 0 0;
 
 
 .wlsubmitter{
-    float:right;
+    float:right; 
+    background: none repeat scroll 0 0 #d0ecf6;
+    border: 4px solid lightgrey;
+    color: black;
+    float: right;
+    padding: 10px;
+} 
+
+.wlsubmitter a{
+    color:black;
+    font-weight:bold;
 }
  
 .error{
