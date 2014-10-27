@@ -32,19 +32,15 @@
             <img class="logo img-responsive" src="http://langsci-press.org/public/presses/1/pageHeaderLogoImage_en_US.png" alt="pyramid web framework">
           </div>
           <div class="col-md-10">
-            <div class="content">
-              <h3>Convert MS Word or Libre Office files to LaTeX</h3>
-              
-           
-<form action="http://127.0.0.1:6543/result" method="post" enctype="multipart/form-data">
-  <p>Choose a Word or LibreOffice file (doc, docx, odt)<br>
-    <input name="docfile" type="file" size="50" maxlength="10000000">
-  </p>
-  <input type="submit"/>
-</form>
-
+	    <div class="content">
+		<h3>Convert MS Word or Libre Office files to LaTeX</h3> 
+		<form action="http://www.glottotopia.org/doc2tex/result" method="post" enctype="multipart/form-data">
+		    <p>Choose a Word or LibreOffice file (doc, docx, odt)<br>
+			<input name="docfile" type="file" size="50" maxlength="10000000">
+		    </p>
+		    <input type="submit"/>
+		</form> 
 	    </div>
-          </div>
         </div>
         <div class="row">
           <div class="links"> 

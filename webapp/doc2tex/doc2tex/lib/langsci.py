@@ -2,6 +2,7 @@ import os
 import re
 import shutil
 import codecs
+import uuid
 
 wd = '/home/snordhoff/tmp/doc2tex'
 lspskeletond = '/home/snordhoff/versioning/git/langsci/latex/skeleton'
@@ -71,15 +72,16 @@ class Document:
 	
     def ziptex(self): 
 	localskeletond = os.path.join(wd,'skeleton')
+	wwwdir = os.path.join(wd,'www')
 	try:
 	   shutil.rmtree(localskeletond)
 	except os.IOError:
 	    pass
 	shutil.copytree(lspskeletond, localskeletond)
 	os.chdir(localskeletond)
-	localcommands = open('localcommands.sty','a')
-	localpackages = open('localpackages.sty','a')
-	localcounters = open('localcounters.sty','a') 
+	localcommands = codecs.open('localcommands.sty','a', encoding='utf-8')
+	localpackages = codecs.open('localpackages.sty','a', encoding='utf-8')
+	localcounters = codecs.open('localcounters.sty','a', encoding='utf-8') 
 	content =   codecs.open('chapters/filename.tex','w', encoding='utf-8') 
 	contentorig =   codecs.open('chapters/filenameorig.tex','w', encoding='utf-8')  
 	localcommands.write(self.commands)
@@ -93,10 +95,9 @@ class Document:
 	contentorig.write(self.text)
 	contentorig.close()
 	os.chdir(wd)
-	zipfn = 'test'
-	shutil.make_archive(zipfn, 'zip', localskeletond)
-	#move to weblocation
-	#return weblocation
+	self.zipfn = str(uuid.uuid4())
+	shutil.make_archive(self.zipfn, 'zip', localskeletond)
+	shutil.move(self.zipfn+'.zip',wwwdir) 
 	
 	
 	
@@ -107,21 +108,34 @@ class Document:
 				("{\\textquoteright}","'"),
 				("{\\textquotedblright}","''"),
 				("{\\textquotesingle}","'"),
-				("{\\textquotedouble}",'"'),
-				("\\textstyleVernacularWord","\\emph"),
-				("\\textstyleGloss","\\textsc"),
+				("{\\textquotedouble}",'"'), 
 				("\\par}","}"),
 				("\\clearpage","\n"),
 				("\\begin","\n\\begin"),
-				("\\end","\n\\end"),
-				("\ "," "),
-				("supertabular","tabular"),
-				("\\begin{center}","\\begin{table}\\centering"),
-				("\\end{center}","\\caption{}\n%\\label{}\n\\end{table}\n"),
-				(" }","} ")
+				("\\end","\n\\end"), 
+				("supertabular","tabular"),  
+				(" }","} "),
+				("\~{}","{\\Tilde}"), 
 			    )    
-	yanks =  ( ("\\begin{flushleft}","\\end{flushleft}","\\centering","\\tablehead{}","\\textstylefootnotereference","\\textstylepagenumber","\\textstyleCharChar","\\textstyleIPA","\\textstyleInternetlink","\\textstylefootnotereference","\\textstyleFootnoteTextChar","\\textstylepagenumber","\\textstyleappleconvertedspace","\\pagestyle{Standard}","\-","\\hline")
-			    )
+	yanks =  ("\\begin{flushleft}",
+		    "\\end{flushleft}",
+		    "\\centering",
+		    "\\tablehead{}", 
+		    "\\textstylepagenumber",
+		    "\\textstyleCharChar", 
+		    "\\textstyleInternetlink",
+		    "\\textstylefootnotereference",
+		    "\\textstyleFootnoteTextChar",
+		    "\\textstylepagenumber",
+		    "\\textstyleappleconvertedspace",
+		    "\\pagestyle{Standard}",
+		    "\\hline",
+		    "\\begin{styleStandard}",
+		    "\\end{styleStandard}",
+		    "\\begin{styleTextbody}",
+		    "\\end{styleTextbody}",
+		    "\\hline"
+		    ) 
 	for old, new in explicitreplacements:
 	    modtext = modtext.replace(old,new)
 	    
@@ -143,7 +157,10 @@ class Document:
 	modtext = re.sub("section\{([0-9\.]+ )(.*)","section{\2 %\1/",modtext)
 	modtext = re.sub("section\[.*?\]","section",modtext)
 	#                                 number    title         title number
+	#table cells in one row
 	modtext = re.sub("[\n ]*&[ \n]*",' & ',modtext)
+	modtext = modtext.replace(r'\ &','\&')
+	#collapse newlines
 	modtext = re.sub("\n*\\\\\\\\\n*",'\\\\\\\\\n',modtext) 
 	#bib
 	modtext = re.sub("\(([A-Z][a-z]+) +et al\.  +([12][0-9]{3}[a-z]?): *([0-9,-]+)\)","\\citep[\\3]{\\1EtAl\\2}",modtext)
@@ -157,7 +174,7 @@ class Document:
 	modtext = re.sub("([A-Z][a-z]+) +\(([12][0-9]{3}[a-z]?)\)","\\citet{\\1\\2}",modtext)
 	#modtext = re.sub("([A-Z][a-z]+) +([12][0-9]{3}[a-z]?)","\\citet{\\1\\2}",modtext)i
 
-	#excamples
+	#examples
 	modtext = modtext.replace("\n()", "\n\\ea \n \\gll \\\\\n   \\\\\n \\glt\n\\z\n\n")
 	modtext = re.sub("\n\(([0-9]+)\)", """\n\ea%\\1
     \label{ex:\\1}
@@ -167,7 +184,7 @@ class Document:
     \\\\glt
     \z
 
-    """,modtext)
+	""",modtext)
 	modtext = re.sub("\\label\{(bkm:Ref[0-9]+)\}\(\)", """ea%\\1
     \label{\\1}
     \langinfo{}{}\\\\newline
@@ -177,25 +194,27 @@ class Document:
     \z
 
     """,modtext)
+    
+	#subexamples
 	modtext = modtext.replace("\n *a. ","\n% \\ea\n%\\gll \n%    \n%\\glt \n")
 	modtext = modtext.replace("\n *b. ","%\\ex\n%\\gll \\\\\n%    \\\\\n%\\glt \n%\\z\n")    
-	modtext = modtext.replace("\n *c. ","%\\ex\n%\\gll \\\\\n%    \\\\\n%\\glt \n%\\z\n")
-	modtext = modtext.replace("\n *d. ",r"""
-    \ea
-    \gll \\
-	\\
-    \glt 
-    \z
-    """)
+	modtext = modtext.replace("\n *c. ","%\\ex\n%\\gll \\\\\n%    \\\\\n%\\glt \n%\\z\n")  
+	modtext = modtext.replace("\n *d. ","%\\ex\n%\\gll \\\\\n%    \\\\\n%\\glt \n%\\z\n") 
 	modtext = modtext.replace(r"\newline",r"\\")
-	modtext = modtext.replace(r'\ &','\&')
 
 
 	modtext = re.sub("Table ([0-9]+)[\.:](.*?)\n","\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
-	modtext = re.sub("Table ([0-9]+)","\\tabref{tab:\\1}",modtext)
+	modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:\\1}",modtext)
 	modtext = re.sub("Figure ([0-9]+)[\.:](.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{figure}",modtext)
-	modtext = re.sub("Figure ([0-9]+)","\\figref{fig:\\1}",modtext)
-	modtext = re.sub("Section ([0-9\.]+)","\\sectref{sec:\\1}",modtext) 
+	modtext = re.sub("Figure ([0-9]+)","\\\\figref{fig:\\1}",modtext)
+	modtext = re.sub("Section ([0-9\.]+)","\\\\sectref{sec:\\1}",modtext) 
+	
+	
+	modtext = re.sub("(begin\{tabular\}[^\n]*)",r"""\1
+\lsptoprule""",modtext) 
+	modtext = re.sub(r"\\end{tabular}",r"""\lspbottomrule
+\end{tabular}""",modtext) 
+	modtext = re.sub("""\n\n+""","\n\n",modtext) 
 	return modtext
 	    
 	    

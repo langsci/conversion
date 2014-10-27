@@ -44,12 +44,13 @@ def result(request):
     texdocument = convert(filename)
     texdocument.ziptex()
     
-    texttpl = (('raw',raw),
-	    ('mod',mod)
+    texttpl = (('raw',texdocument.text),
+	    ('mod',texdocument.modtext)
 	    )
     return {'project': 'doc2tex',
 	    'filename': inputfn,
-	    'texttpl': texttpl}
+	    'texttpl': texttpl,
+	    'zipurl': texdocument.zipfn}
 	    
 	    
 	    
