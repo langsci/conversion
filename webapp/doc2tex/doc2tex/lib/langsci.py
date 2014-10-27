@@ -75,7 +75,7 @@ class Document:
 	wwwdir = os.path.join(wd,'www')
 	try:
 	   shutil.rmtree(localskeletond)
-	except os.IOError:
+	except OSError:
 	    pass
 	shutil.copytree(lspskeletond, localskeletond)
 	os.chdir(localskeletond)
