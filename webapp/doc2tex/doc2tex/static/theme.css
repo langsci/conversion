@@ -182,3 +182,7 @@ border-radius: 5px 5px 0 0;
     float:right;
 }
  
+.error{
+    border: 3px solid #db0031 !important;
+    color:black;
+ }

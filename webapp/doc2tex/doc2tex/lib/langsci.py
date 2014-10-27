@@ -5,25 +5,31 @@ import codecs
 import uuid
 
 wd = '/home/doc2tex'
+wd = '/tmp'
 lspskeletond = '/home/doc2tex/skeletonbase'
+lspskeletond = '//home/snordhoff/versioning/git/langsci/lsp-converters/webapp/doc2tex/assets/skeletonbase'
+wwwdir = os.path.join(wd,'www')
+#wwwdir = '/var/www/wlport'	
 
 
 def convert(fn):
-    print "converting %s" %fn
+    #print "converting %s" %fn
     odtfn = False
     os.chdir(wd)
     if fn.endswith("docx"):
 	odtfn = fn.replace("docx","odt") 
 	syscall = """soffice --headless --convert-to odt "%s"  """ %fn
-	print syscall
+	#print syscall
 	os.system(syscall)
-    if fn.endswith("doc"):
+    elif fn.endswith("doc"):
 	odtfn = fn.replace("doc","odt")
 	syscall = """soffice --headless --convert-to odt "%s"  """ %fn
-	print syscall
+	#print syscall
 	os.system(syscall)
-    if fn.endswith("odt"):
+    elif fn.endswith("odt"):
 	odtfn = fn 
+    else:
+	raise ValueError
     if odtfn == False:
 	return False
     texfn = odtfn.replace("odt","tex")
@@ -72,7 +78,6 @@ class Document:
 	
     def ziptex(self): 
 	localskeletond = os.path.join(wd,'skeleton')
-	wwwdir = os.path.join(wd,'www')
 	try:
 	   shutil.rmtree(localskeletond)
 	except OSError:
