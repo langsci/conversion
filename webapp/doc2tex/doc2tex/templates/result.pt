@@ -83,7 +83,7 @@
 			    <textarea name="snip"  rows="30" cols="80">${texttpl[1][1]} </textarea>  
 			    <p class="wlsubmitter">
 				<input type="submit" class="wl-submit" value="Open in writeLaTeX" /><br/> Use <span>LangSci template   </span>
-				<input type="checkbox" checked=checked name="zip_uri" value="${zipurl}" />
+				<input type="checkbox" checked=checked name="snip_uri" value="${zipurl}" />
 			    </p>
 			</form> 
 		    </div>   

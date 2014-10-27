@@ -9,7 +9,7 @@ wd = '/tmp'
 lspskeletond = '/home/doc2tex/skeletonbase'
 lspskeletond = '//home/snordhoff/versioning/git/langsci/lsp-converters/webapp/doc2tex/assets/skeletonbase'
 wwwdir = os.path.join(wd,'www')
-#wwwdir = '/var/www/wlport'	
+wwwdir = '/var/www/wlport'	
 
 
 def convert(fn):
@@ -57,20 +57,23 @@ def convert(fn):
     #"-no_preamble=true"
     )
     syscall = "w2l {} {} {}".format(" ".join(w2loptions), odtfn, texfn)
-    print syscall
+    #print syscall
     os.system(syscall)
     w2lcontent = open(texfn).read().decode('utf8')
     preamble, text = w2lcontent.split(r"\begin{document}")
     text = text.split(r"\end{document}")[0] 
     preamble=preamble.split('\n')
-    newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') or l.startswith('\\renewcommand')])
+    newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l]) # or l.startswith('\\renewcommand')])
+    #replace all definitions of new environments by {}{}
+    newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')]) # or l.startswith('\\renewcommand')])
     newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage')])
     newcounters = '\n'.join([l for l in preamble if l.startswith('\\newcounter')])        
-    return Document(newcommands, newpackages, newcounters, text)
+    return Document(newcommands,newenvironments, newpackages, newcounters, text)
     
 class Document:
-    def __init__(self, commands, packages, counters, text):
+    def __init__(self, commands, environments, packages, counters, text):
 	self.commands = commands
+	self.environments = environments
 	self.packages = packages
 	self.counters = counters
 	self.text = text
@@ -90,6 +93,7 @@ class Document:
 	content =   codecs.open('chapters/filename.tex','w', encoding='utf-8') 
 	contentorig =   codecs.open('chapters/filenameorig.tex','w', encoding='utf-8')  
 	localcommands.write(self.commands)
+	localcommands.write(self.environments)
 	localcommands.close()
 	localpackages.write(self.packages)
 	localpackages.close()
@@ -183,7 +187,7 @@ class Document:
 	modtext = modtext.replace("\n()", "\n\\ea \n \\gll \\\\\n   \\\\\n \\glt\n\\z\n\n")
 	modtext = re.sub("\n\(([0-9]+)\)", """\n\ea%\\1
     \label{ex:\\1}
-    \langinfo{}{}\\\\newline
+    \langinfo{}{}{}\\\\newline
     \\\\gll\\\\newline
 	\\\\newline
     \\\\glt
@@ -192,7 +196,7 @@ class Document:
 	""",modtext)
 	modtext = re.sub("\\label\{(bkm:Ref[0-9]+)\}\(\)", """ea%\\1
     \label{\\1}
-    \langinfo{}{}\\\\newline
+    \langinfo{}{}{}\\\\newline
     \\\\gll \\\\newline  
 	\\\\newline
     \\\\glt
