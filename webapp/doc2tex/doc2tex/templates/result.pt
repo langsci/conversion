@@ -29,43 +29,63 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2">
-            <img class="logo img-responsive" src="${request.static_url('doc2tex:static/pyramid.png')}" alt="pyramid web framework">
+            <img class="logo img-responsive" src="http://langsci-press.org/public/presses/1/pageHeaderLogoImage_en_US.png" alt="pyramid web framework">
           </div>
           <div class="col-md-10">
             <div class="content">
 <!-- 		<h1><span class="font-semi-bold">Pyramid</span> <span class="smaller">starter template</span></h1> -->
 
-		<div> you uploaded ${filename} <div> 
+		<h1>  ${filename} </h1> 
+		<div><p> You can see the raw output of the conversion, or a modified output, which is more legible and has some bibliographical items parsed.</p></div>
+
+<!--<ul class="nav nav-tabs">
+    <li class="active"><a href="#languagetab" data-toggle="tab">Languages</a></li> 
+    <li class="navtabli"><a href="#formtab" data-toggle="tab">Form</a></li>
+    <li class="navtabli"><a href="#meaningtab" data-toggle="tab">Meaning</a></li>
+    <li class="navtabli"><a href="#metatab" data-toggle="tab">Meta</a></li>
+</ul> -->
 
 		<ul class="nav nav-tabs">
-		    <li class="navtabli" tal:repeat="t texttpl" ><a href="#${t[0]}" data-toggle="tab">${t[0]}</a></li>  
+		    <li class="active"><a href="#rawtab" data-toggle="tab">raw</a></li>  
+		    <li class="navtabli" ><a href="#modtab" data-toggle="tab">mod</a></li>  
 		</ul> 
 
 		<!-- Tab panes --> 
 
+<!--<div class="tab-content"> 
+    <div class="tab-pane active" id="languagetab"> 
+    #parse("families.vm")
+</div>  
+    <div class="tab-pane active" id="formtab"> 
+    #parse('form.vm') 
+</div> 
+    <div class="tab-pane active" id="meaningtab"> 
+    #parse('meaning.vm') 
+</div> 
+    <div class="tab-pane active" id="metatab"> 
+    #parse("grammarmeta.vm")
+</div>-->
+
+
+
 		<div class="tab-content">  
-		    <div class="tab-pane" tal:repeat="t texttpl" id="${t[0]}"> 
-			<form action="https://www.writelatex.com/docs" method="post" target="_blank">
+		    <div class="tab-pane active"  id="rawtab"> 
+			<form action="https://www.writelatex.com/docs" method="post" target="_blank"> 
 			    <p><input type="submit" class="wl-submit" value="Open in writeLaTeX" /></p>
-<!--			    <div>
-				<button> push to writelatex as article </button>
-				<button> push to writelatex as Language Science Press template </button>
-			    </div>    -->
-			    <input type="hidden" name="snip" value="\documentclass{article}\begin{document}\include{myfile}\end{document}" /> 			 
-			    <input type="hidden" name="snip_uri" value="main.tex"/>
-			    <textarea name="snip"  rows="30" cols="80">${t[1]} </textarea>
-<!-- 			    <input type="checkbox" name="splash" value="none" />For testing: Never show help splash.  -->
-			    <input type="hidden" name="snip_uri" value="myfile.tex"/>
+			    <textarea name="snip"  rows="30" cols="80">${texttpl[0][1]}  </textarea> 
+			</form> 
+		    </div>    
+		    <div class="tab-pane"  id="modtab"> 
+			<form action="https://www.writelatex.com/docs" method="post" target="_blank"> 
+			    <p><input type="submit" class="wl-submit" value="Open in writeLaTeX" /></p>
+			    <textarea name="snip"  rows="30" cols="80">${texttpl[1][1]} </textarea> 
 			</form> 
 		    </div>   
 		</div>  
+
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="links"> 
-          </div>
-        </div>
+        </div> 
         <div class="row">
           <div class="copyright">
             Copyright © Language Science Press
