@@ -57,8 +57,8 @@ def result(request):
 	    )
     return {'project': 'doc2tex',
 	    'filename': inputfn,
-	    'texttpl': texttpl,
-	    'zipurl': texdocument.zipfn}
+	    'texttpl': texttpl, 
+	    'zipurl': "http://www.glottotopia.org/wlport/%s.zip"%texdocument.zipfn}
 	    
 
 class FileFormatFailure(Exception):

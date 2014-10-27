@@ -7,8 +7,8 @@ import uuid
 wd = '/home/doc2tex'
 wd = '/tmp'
 lspskeletond = '/home/doc2tex/skeletonbase'
-lspskeletond = '//home/snordhoff/versioning/git/langsci/lsp-converters/webapp/doc2tex/assets/skeletonbase'
-wwwdir = os.path.join(wd,'www')
+#lspskeletond = '/home/snordhoff/versioning/git/langsci/lsp-converters/webapp/doc2tex/assets/skeletonbase'
+#wwwdir = os.path.join(wd,'www')
 wwwdir = '/var/www/wlport'	
 
 
@@ -63,9 +63,9 @@ def convert(fn):
     preamble, text = w2lcontent.split(r"\begin{document}")
     text = text.split(r"\end{document}")[0] 
     preamble=preamble.split('\n')
-    newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l]) # or l.startswith('\\renewcommand')])
+    newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l and 'labellistLi' not in l]) # or l.startswith('\\renewcommand')])
     #replace all definitions of new environments by {}{}
-    newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')]) # or l.startswith('\\renewcommand')])
+    newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')  and 'listLi' not in l]) # or l.startswith('\\renewcommand')])
     newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage')])
     newcounters = '\n'.join([l for l in preamble if l.startswith('\\newcounter')])        
     return Document(newcommands,newenvironments, newpackages, newcounters, text)
@@ -125,6 +125,7 @@ class Document:
 				("supertabular","tabular"),  
 				(" }","} "),
 				("\~{}","{\\Tilde}"), 
+				("\\setcounter","%\\setcounter"),  
 			    )    
 	yanks =  ("\\begin{flushleft}",
 		    "\\end{flushleft}",
@@ -143,7 +144,8 @@ class Document:
 		    "\\end{styleStandard}",
 		    "\\begin{styleTextbody}",
 		    "\\end{styleTextbody}",
-		    "\\hline"
+		    "\\hline",
+		    "\\maketitle"
 		    ) 
 	for old, new in explicitreplacements:
 	    modtext = modtext.replace(old,new)
@@ -153,6 +155,8 @@ class Document:
 	
 	#remove marked up white space
 	modtext = re.sub("\\text(it|bf|sc)\{( *)\}","\\2",modtext)  
+	
+	#remove explicit counters. These are not useless when from autoconversion 
 	
 	#remove explicit table widths
 	modtext = re.sub("m\{-?[0-9.]+in\}","l",modtext)  

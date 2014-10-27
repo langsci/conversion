@@ -70,18 +70,18 @@
 
 		<div class="tab-content">  
 		    <div class="tab-pane active"  id="rawtab"> 
-			<form action="https://www.writelatex.com/docs" method="post" target="_blank"> 
-			    <textarea name="snip"  rows="30" cols="80">${texttpl[0][1]}  </textarea> 
-			    <p class="wlsubmitter">
+			<form action="https://www.writelatex.com/docs" method="get" target="_blank"> 
+			    <textarea name="snip"  rows="30" cols="50">${texttpl[0][1]}  </textarea> 
+			    <p class="wlsubmitter"> 
 				<input type="submit" class="wl-submit" value="Open in writeLaTeX" /><br/>Use <span>LangSci template  </span>
-				<input type="checkbox" checked=checked name="zip_uri" value="${zipurl}" /> 
+				<input type="checkbox" checked=checked name="snip_uri" value="${zipurl}" /> 
 			    </p>
 			</form> 
 		    </div>    
 		    <div class="tab-pane"  id="modtab"> 
-			<form action="https://www.writelatex.com/docs" method="post" target="_blank"> 
-			    <textarea name="snip"  rows="30" cols="80">${texttpl[1][1]} </textarea>  
-			    <p class="wlsubmitter">
+			<form action="https://www.writelatex.com/docs" method="get" target="_blank"> 
+			    <textarea name="snip"  rows="30" cols="50">${texttpl[1][1]} </textarea>  
+			    <p class="wlsubmitter"> 
 				<input type="submit" class="wl-submit" value="Open in writeLaTeX" /><br/> Use <span>LangSci template   </span>
 				<input type="checkbox" checked=checked name="snip_uri" value="${zipurl}" />
 			    </p>
