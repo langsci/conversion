@@ -4,8 +4,8 @@ import shutil
 import codecs
 import uuid
 
-wd = '/home/snordhoff/tmp/doc2tex'
-lspskeletond = '/home/snordhoff/versioning/git/langsci/latex/skeleton'
+wd = '/home/doc2tex'
+lspskeletond = '/home/doc2tex/skeletonbase'
 
 
 def convert(fn):
