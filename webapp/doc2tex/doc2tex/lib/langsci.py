@@ -187,7 +187,7 @@ class Document:
 	modtext = modtext.replace("\n()", "\n\\ea \n \\gll \\\\\n   \\\\\n \\glt\n\\z\n\n")
 	modtext = re.sub("\n\(([0-9]+)\)", """\n\ea%\\1
     \label{ex:\\1}
-    \langinfo{}{}{}\\\\newline
+    \langinfo{lg}{fam}{src}\\\\newline
     \\\\gll\\\\newline
 	\\\\newline
     \\\\glt
@@ -196,7 +196,7 @@ class Document:
 	""",modtext)
 	modtext = re.sub("\\label\{(bkm:Ref[0-9]+)\}\(\)", """ea%\\1
     \label{\\1}
-    \langinfo{}{}{}\\\\newline
+    \langinfo{lg}{fam}{src}\\\\newline
     \\\\gll \\\\newline  
 	\\\\newline
     \\\\glt
