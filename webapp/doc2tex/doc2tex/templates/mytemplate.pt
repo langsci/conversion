@@ -36,7 +36,7 @@
               <h3>Convert MS Word or Libre Office files to LaTeX</h3>
               
            
-<form action="/doc2tex/result" method="post" enctype="multipart/form-data">
+<form action="http://127.0.0.1:6543/result" method="post" enctype="multipart/form-data">
   <p>Choose a Word or LibreOffice file (doc, docx, odt)<br>
     <input name="docfile" type="file" size="50" maxlength="10000000">
   </p>
