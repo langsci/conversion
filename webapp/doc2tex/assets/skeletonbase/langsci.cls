@@ -131,13 +131,13 @@
  			]
  			{Arimo_B.ttf}
  			
-   \setmonofont[
-   			Ligatures={TeX},Scale=MatchLowercase,Path=\fontpath,
- 			BoldFont = FreeMonoBold_B.otf ,
- 			SlantedFont = FreeMonoOblique_B.otf ,				
- 			BoldSlantedFont = FreeMonoBoldOblique_B.otf 		
- 			]
- 			{FreeMono_B.otf}
+%   \setmonofont[
+%   			Ligatures={TeX},Scale=MatchLowercase,Path=\fontpath,
+% 			BoldFont = FreeMonoBold_B.otf ,
+% 			SlantedFont = FreeMonoOblique_B.otf ,				
+% 			BoldSlantedFont = FreeMonoBoldOblique_B.otf 		
+% 			]
+% 			{FreeMono_B.otf}
  
  
    \setmainfont[
@@ -148,7 +148,8 @@
    			Numbers={Proportional},	% normal numbers			% for tables use \addfontfeatures{Numbers={Monospaced,Lining}}
  			BoldFont = LinLibertine_RZ_B.otf ,				% semi-bold
  			ItalicFont = LinLibertine_RI_B.otf ,			
- 			BoldItalicFont = LinLibertine_RZI_B.otf ]		% semi-bold
+ %			BoldItalicFont = LinLibertine_RZI_B.otf %semi-bold
+]	
  			{LinLibertine_R_B.otf}			
   
 %  \usepackage[libertine]{newtxmath}
@@ -199,7 +200,7 @@
   \newcommand{\lsSpineAuthorFont}{\fontsize{12pt}{14pt}\selectfont}
   \newcommand{\lsSpineTitleFont}{\sffamily\fontsize{16pt}{14pt}\selectfont}
   
-  \renewcommand{\bfseries}{\textsb}  	% bold -> semibold
+%  \renewcommand{\bfseries}{\textsb}  	% bold -> semibold
 \fi
 
 \setkomafont{sectioning}{\normalcolor\bfseries}

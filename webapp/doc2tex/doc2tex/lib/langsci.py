@@ -122,10 +122,14 @@ class Document:
 				("\\clearpage","\n"),
 				("\\begin","\n\\begin"),
 				("\\end","\n\\end"), 
-				("supertabular","tabular"),  
 				#(" }","} "),%causes problems with '\ '
-				("\~{}","{\\Tilde}"), 
+				("supertabular","tabular"),  
 				("\\setcounter","%\\setcounter"),  
+				("\~{}","{\\Tilde}"), 
+				("\\section","\\chapter"),  
+				("\\subsection","\\section"),  
+				("\\subsubsection","\\subsection"),  
+				("\\paragraph","\\subsection"),  
 			    )    
 	yanks =  ("\\begin{flushleft}",
 		    "\\end{flushleft}",
