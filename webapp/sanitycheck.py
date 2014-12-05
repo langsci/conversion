@@ -30,6 +30,7 @@ class LSPFile:
 	    
   def printErrors(self):
     print self.fn
+    print '%i possible errors found' % len(self.errors)
     print '\n'.join(self.errors).encode('utf8')
   
   antipatterns = ()
@@ -39,7 +40,7 @@ class TexFile(LSPFile):
   antipatterns = (
     (r" et al.","Please use the citation commands \\citet and \\citep"),      #et al in main tex
     (r"setfont","You should not set fonts explicitely"),      #no font definitions
-    (r"\\ref","It is often advisable to use the more specialized commands \\tabref, \\figref, \\sectref, and \\REF for examples"),      #no \ref
+    #(r"\\ref","It is often advisable to use the more specialized commands \\tabref, \\figref, \\sectref, and \\REF for examples"),      #no \ref
     ("",""),      #\ea\label
     ("",""),      #\section\label
     ("",""),      #captions end with .
@@ -69,29 +70,26 @@ class TexFile(LSPFile):
 class BibFile(LSPFile):
   
   antipatterns = (
-    ("address *=.*[,/].*","No more than one place of publication. No indications of countries or provinces"), #double cities in address
-    ("address *=.* and .*","No more than one place of publication."), #double cities in address
-    #("title * =.*: *[^{][a-zA-Z]*","Subtitles should be capitalized. In order to protect the capital letter, enclose it in braces \{...\} "), #: [a-z] in bib
-    ("[Aa]uthor *=.*[A-Z]\..*","Full author names should be given. Only use abbreviated names if the author is known to prefer this. It is OK to use middle initials"), #full author names
-    ("[Ee]ditor *=.*[A-Z]\..*","Full editor names should be given. Only use abbreviated names if the editor is known to prefer this. It is OK to use middle initials"), #full author names
+    ("[Aa]ddress *=.*[,/].*[^ ]","No more than one place of publication. No indications of countries or provinces"), #double cities in address
+    ("[Aa]ddress *=.* and .*","No more than one place of publication."), #double cities in address
+    ("[Tt]itle * =.*: +(?<!{)[a-zA-Z]+","Subtitles should be capitalized. In order to protect the capital letter, enclose it in braces {} "), #: [a-z] in bib
+    ("[Aa]uthor *=.*(?<=(and|AND|..[,{])) *[A-Z]\..*","Full author names should be given. Only use abbreviated names if the author is known to prefer this. It is OK to use middle initials"), #full author names
+    ("[Ee]ditor *=.*(?<=(and|AND|..[,{])) *[A-Z]\..*","Full editor names should be given. Only use abbreviated names if the editor is known to prefer this. It is OK to use middle initials"), #full author names
     ("[Aa]uthor *=.* et al","Do not use et al. in the bib file. Give a full list of authors"), #no et al in authors
     ("[Aa]uthor *=.*&.*","Use 'and' rather than & in the bib file"), #no et al in authors
-    #("title *=.*[^{][IVXLCDM]+[\.,\) ]","In order to keep the roman numbers in capitals, enclose them in braces"), #[IVXLCDM] no braces      
+    ("[Tt]itle *=(.* )?[IVXLCDM]+[\.,\) ]","In order to keep the Roman numbers in capitals, enclose them in braces {}"), #[IVXLCDM] no braces      
     )
 
 #year not in order in multicite
 
 if __name__ == "__main__":
-  print 1
   try:
     d = sys.argv[1]
-    print 2
   except IndexError:
     d = '.'
-  print 3
   texfiles = glob.glob('%s/*.tex'%d)
   bibfiles = glob.glob('%s/*.bib'%d)
-  print texfiles, bibfiles
+  print "checking %s" % ' '.join([f for f in texfiles+bibfiles])
   for tfn in texfiles:
     t = TexFile(tfn)
     t.check()
