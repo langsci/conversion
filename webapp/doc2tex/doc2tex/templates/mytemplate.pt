@@ -40,6 +40,14 @@
 		    </p>
 		    <input type="submit" value="Convert"/>
 		</form> 
+
+		<form action="http://glottotopia.org/doc2tex/sanitycheck" method="post" enctype="multipart/form-data">
+		  <p>	
+		    Choose a tex, bib or zipfile to check for compliance with the guidelines
+		    <input name="texbibzip" type="file" size="50" />
+		  </p>
+		  <input type="submit" value="check" />
+		</form>
 	    </div>
         </div>
         <div class="row">

@@ -27,20 +27,24 @@
             <div class="content">
 	      <h1>  Sanity check </h1> 
 	      <div tal:repeat="file files">
-		<h2> ${file} </h2>
-		<ul>
-		  <li tal:repeat="error errors"> 
-		    <div class="errorstring">${error['fn']} pre ${error['offendingstring']} post</div>
-		    <div class="errormsg">${error['msg']}</div>
-		  </li>
-		</ul>
+		<h2> ${file.split('/')[-1]} </h2>
+		<div class="sanityresult">
+		  <div tal:repeat="error files[file]" class="errorblock">  
+		    <div class="lsperrorstring">
+		      <span class="lsperrorpre">${error.pre}</span>
+		      <span class="lspoffendingstring">${error.offendingstring}</span>
+		      <span class="lsperrorpost">${error.post}</span>
+		    </div> 
+		  <div class="errormsg">${error.msg}
+		  </div>
+		</div>  
 	      </div>
             </div>
           </div>
         </div> 
         <div class="row">
           <div class="copyright">
-            Copyright © Language Science Press
+            Copyright   Language Science Press
           </div>
         </div>
       </div>

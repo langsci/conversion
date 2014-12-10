@@ -196,3 +196,40 @@ border-radius: 5px 5px 0 0;
     border: 3px solid #db0031 !important;
     color:black;
  }
+ 
+.errorblock{
+  padding:5px;
+  margin:5px;
+  background: #cdc;
+  color:black;
+}
+
+.lsperrorstring{ 
+  font-family:monospace;
+}
+
+.sanityresults li{
+  list-style:none
+}
+
+.errorsmsg{
+ color:blue; 
+}
+
+.lsperrorfn{
+  font-weight:bold;
+}
+ 
+
+.lsperrorpre{
+/*   text-decoration:underline; */
+} 
+
+.lsperrorpost{
+/*   text-decoration:underline; */
+}
+
+.lspoffendingstring{
+  color:#e33;
+  font-weight:bold;
+}

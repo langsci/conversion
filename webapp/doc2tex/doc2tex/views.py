@@ -5,6 +5,7 @@ import os
 import re
 import uuid
 from .lib.langsci import  convert
+from .lib.sanitycheck import  LSPDir
 import shutil
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
@@ -12,24 +13,29 @@ def home(request):
     return {'project': 'doc2tex'}
     
 @view_config(route_name='sanitycheck', renderer='templates/sanitycheck.pt')
-def sanitycheck(request):  
-    filename = _upload(request,'file',('tex', 'bib', 'zip'))    
+def sanitycheck(request):   
+    fn = request.POST['texbibzip'].filename 
+    input_file = request.POST['texbibzip'].file
+    filename = _upload(fn, input_file,('tex', 'bib', 'zip')) 
     filetype = filename.split('.')[-1]
     d = os.path.dirname(os.path.realpath(filename))
-    lspdir = sanitycheck.LSPDir(d)
+    lspdir = LSPDir(d)
     lspdir.check()   
     shutil.rmtree(d)
-    return {'project': 'doc2tex'
-	    'errors':lspdir.errors}
+    return {'project': 'doc2tex',
+	    'files':lspdir.errors}
   
     
-def _upload(request,postfield,accept):
-    inputfn = request.POST[postfield].filename
-    input_file = request.POST[postfield].file
+def _upload(filename,f,accept):
+    inputfn = filename
+    input_file = f
     filetype = inputfn.split('.')[-1]
     if filetype not in accept:
 	raise WrongFileFormatError(filetype)
-    file_path = os.path.join('/tmp', '%s'%uuid.uuid4(),'%s.%s' % (uuid.uuid4(),filetype))
+    tmpdir = '%s'%uuid.uuid4()
+    os.mkdir(os.path.join('/tmp',tmpdir))
+    #tmpfile = '%s.%s' % (uuid.uuid4(),filetype)
+    file_path = os.path.join('/tmp',tmpdir,inputfn)
     # We first write to a temporary file to prevent incomplete files from
     # being used.
     temp_file_path = file_path + '~'
@@ -49,7 +55,7 @@ def _upload(request,postfield,accept):
 
 @view_config(route_name='result', renderer='templates/result.pt')
 def result(request):  
-    filename = _upload(request,'docfile',('doc', 'docx', 'odt'))
+    filename = _upload(filename, f,('doc', 'docx', 'odt'))
     #convert file to tex
     try:
 	texdocument = convert(filename)

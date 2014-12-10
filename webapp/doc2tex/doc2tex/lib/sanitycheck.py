@@ -6,11 +6,13 @@ import os
 
 class LSPError:
   def __init__(self,fn,linenr,line,offendingstring,msg):
-    self.fn = fn
+    self.fn = fn.split('/')[-1]
     self.linenr = linenr
     self.line = line
     self.offendingstring = offendingstring
     self.msg = msg
+    self.pre =self.line.split(self.offendingstring)[0]
+    self.post =self.line.split(self.offendingstring)[1]
     
   def __str__(self): 
     return u"{linenr}:{offendingstring}\n\t{msg}".format(**self.__dict__).encode('utf8')
