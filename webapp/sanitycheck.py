@@ -11,7 +11,7 @@ class LSPError:
     self.msg = msg
     
   def __str__(self): 
-    return u"{linenr}:{offendingstring}\n\t{msg}".format(**self.__dict__)
+    return u"{linenr}:{offendingstring}\n\t{msg}".format(**self.__dict__).encode('utf8')
 
 class LSPFile:
   def __init__(self,fn):
