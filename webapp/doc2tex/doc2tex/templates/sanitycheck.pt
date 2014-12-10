@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="${request.locale_name}">
+<html lang="${request.locale_name}" xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" lang="en">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,24 +7,16 @@
     <meta name="description" content="pyramid web application">
     <meta name="author" content="Pylons Project">
     <link rel="shortcut icon" href="${request.static_url('doc2tex:static/pyramid-16x16.png')}">
-
-    <title>Starter Template for The Pyramid Web Framework</title>
-
-    <!-- Bootstrap core CSS -->
+    <title>Sanity Check</title>
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
     <link href="${request.static_url('doc2tex:static/theme.css')}" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="//oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
   </head>
-
   <body>
-
     <div class="starter-template">
       <div class="container">
         <div class="row">
@@ -33,60 +25,16 @@
           </div>
           <div class="col-md-10">
             <div class="content">
-<!-- 		<h1><span class="font-semi-bold">Pyramid</span> <span class="smaller">starter template</span></h1> -->
-
-		<h1>  ${filename} </h1> 
-		<div><p> You can see the raw output of the conversion, or a modified output, which is more legible and has some bibliographical items parsed.</p></div>
-
-<!--<ul class="nav nav-tabs">
-    <li class="active"><a href="#languagetab" data-toggle="tab">Languages</a></li> 
-    <li class="navtabli"><a href="#formtab" data-toggle="tab">Form</a></li>
-    <li class="navtabli"><a href="#meaningtab" data-toggle="tab">Meaning</a></li>
-    <li class="navtabli"><a href="#metatab" data-toggle="tab">Meta</a></li>
-</ul> -->
-
-		<ul class="nav nav-tabs">
-		    <li class="active"><a href="#rawtab" data-toggle="tab">raw</a></li>  
-		    <li class="navtabli" ><a href="#modtab" data-toggle="tab">mod</a></li>  
-		</ul> 
-
-		<!-- Tab panes --> 
-
-<!--<div class="tab-content"> 
-    <div class="tab-pane active" id="languagetab"> 
-    #parse("families.vm")
-</div>  
-    <div class="tab-pane active" id="formtab"> 
-    #parse('form.vm') 
-</div> 
-    <div class="tab-pane active" id="meaningtab"> 
-    #parse('meaning.vm') 
-</div> 
-    <div class="tab-pane active" id="metatab"> 
-    #parse("grammarmeta.vm")
-</div>-->
-
-
-
-		<div class="tab-content">  
-		    <div class="tab-pane active"  id="rawtab"> 
-<!-- 			<form action="https://www.writelatex.com/docs" method="get" target="_blank">  -->
-			    <textarea name="snip"  rows="30" cols="70">${texttpl[0][1]}  </textarea> 
-			    <p class="wlsubmitter"> 
-				<a href="https://www.writelatex.com/docs?snip_uri=${zipurl}" target="_blank" onclick="alert('you will have to change the advanced project settings to the Xelatex engine in writelatex')"> open in writelatex </a>
-			    </p>
-<!-- 			</form>  -->
-		    </div>    
-		    <div class="tab-pane"  id="modtab"> 
-<!-- 			<form action="https://www.writelatex.com/docs" method="get" target="_blank">  -->
-			    <textarea name="snip"  rows="30" cols="70">${texttpl[1][1]} </textarea>  
-			    <p class="wlsubmitter"> 
-				<a href="https://www.writelatex.com/docs?snip_uri=${zipurl}" target="_blank"  onclick="alert('you will have to change the advanced project settings to the Xelatex engine in writelatex')"> open in writelatex </a>
-			    </p>
-<!-- 			</form>  -->
-		    </div>   
-		</div>  
-
+	      <h1>  Sanity check </h1> 
+	      <div tal:repeat="file files">
+		<h2> ${file} </h2>
+		<ul>
+		  <li tal:repeat="error errors"> 
+		    <div class="errorstring">${error['fn']} pre ${error['offendingstring']} post</div>
+		    <div class="errormsg">${error['msg']}</div>
+		  </li>
+		</ul>
+	      </div>
             </div>
           </div>
         </div> 
