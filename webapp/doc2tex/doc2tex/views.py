@@ -5,56 +5,61 @@ import os
 import re
 import uuid
 from .lib.langsci import  convert
+import shutil
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
 def home(request):
     return {'project': 'doc2tex'}
     
+@view_config(route_name='sanitycheck', renderer='templates/sanitycheck.pt')
+def sanitycheck(request):  
+    filename = _upload(request,'file',('tex', 'bib', 'zip'))    
+    filetype = filename.split('.')[-1]
+    d = os.path.dirname(os.path.realpath(filename))
+    lspdir = sanitycheck.LSPDir(d)
+    lspdir.check()   
+    shutil.rmtree(d)
+    return {'project': 'doc2tex'
+	    'errors':lspdir.errors}
+  
     
-
-@view_config(route_name='result', renderer='templates/result.pt')
-def result(request): 
- 
-    inputfn = request.POST['docfile'].filename
-    input_file = request.POST['docfile'].file
+def _upload(request,postfield,accept):
+    inputfn = request.POST[postfield].filename
+    input_file = request.POST[postfield].file
     filetype = inputfn.split('.')[-1]
-    if filetype not in ('doc', 'docx', 'odt'):
+    if filetype not in accept:
 	raise WrongFileFormatError(filetype)
-    file_path = os.path.join('/tmp', '%s.%s' % (uuid.uuid4(),filetype))
-
-    #print file_path
+    file_path = os.path.join('/tmp', '%s'%uuid.uuid4(),'%s.%s' % (uuid.uuid4(),filetype))
     # We first write to a temporary file to prevent incomplete files from
     # being used.
-
     temp_file_path = file_path + '~'
     output_file = open(temp_file_path, 'wb')
-
     # Finally write the data to a temporary file
     input_file.seek(0)
     while True:
         data = input_file.read(2<<16)
         if not data:
             break
-        output_file.write(data)  
-        
+        output_file.write(data)          
     output_file.close()
-
     # Now that we know the file has been fully saved to disk move it into place.
-
     os.rename(temp_file_path, file_path) 
-    filename = file_path
-    
+    return file_path
+      
+
+@view_config(route_name='result', renderer='templates/result.pt')
+def result(request):  
+    filename = _upload(request,'docfile',('doc', 'docx', 'odt'))
     #convert file to tex
     try:
 	texdocument = convert(filename)
     except ValueError:
 	raise FileFormatFailure(filetype)
     os.remove(filename)
-    texdocument.ziptex()
-    
+    texdocument.ziptex()    
     texttpl = (('raw',texdocument.text),
-	    ('mod',texdocument.modtext)
-	    )
+	       ('mod',texdocument.modtext)
+	      )
     return {'project': 'doc2tex',
 	    'filename': inputfn,
 	    'texttpl': texttpl, 
@@ -85,6 +90,3 @@ def wrongfileformat(exc, request):
     return {'project': 'doc2tex',
 	    'msg': msg }
 	    
-	    
-	    
-	     

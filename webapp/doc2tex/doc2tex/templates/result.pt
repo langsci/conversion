@@ -8,7 +8,7 @@
     <meta name="author" content="Pylons Project">
     <link rel="shortcut icon" href="${request.static_url('doc2tex:static/pyramid-16x16.png')}">
 
-    <title>Starter Template for The Pyramid Web Framework</title>
+    <title>Conversion result</title>
 
     <!-- Bootstrap core CSS -->
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -73,7 +73,7 @@
 <!-- 			<form action="https://www.writelatex.com/docs" method="get" target="_blank">  -->
 			    <textarea name="snip"  rows="30" cols="70">${texttpl[0][1]}  </textarea> 
 			    <p class="wlsubmitter"> 
-				<a href="https://www.writelatex.com/docs?snip_uri=${zipurl}&engine=xelatex" target="_blank" onclick="alert('you will have to change the advanced project settings to the Xelatex engine in writelatex')"> open in writelatex </a>
+				<a href="https://www.writelatex.com/docs?snip_uri=${zipurl}" target="_blank"> open in writelatex </a>
 			    </p>
 <!-- 			</form>  -->
 		    </div>    
@@ -81,7 +81,7 @@
 <!-- 			<form action="https://www.writelatex.com/docs" method="get" target="_blank">  -->
 			    <textarea name="snip"  rows="30" cols="70">${texttpl[1][1]} </textarea>  
 			    <p class="wlsubmitter"> 
-				<a href="https://www.writelatex.com/docs?snip_uri=${zipurl}&engine=xelatex" target="_blank"  onclick="alert('you will have to change the advanced project settings to the Xelatex engine in writelatex')"> open in writelatex </a>
+				<a href="https://www.writelatex.com/docs?snip_uri=${zipurl}" target="_blank"> open in writelatex </a>
 			    </p>
 <!-- 			</form>  -->
 		    </div>   
