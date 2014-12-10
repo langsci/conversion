@@ -2,6 +2,17 @@ import re
 import glob
 import sys
 
+class LSPError:
+  def __init__(self,fn,linenr,line,offendingstring,msg):
+    self.fn = fn
+    self.linenr = linenr
+    self.line = line
+    self.offendingstring = offendingstring
+    self.msg = msg
+    
+  def __str__(self):
+    print "{linenr}:{offendingstring}\n{msg}".format(self.__dict__).encode('utf8')
+
 class LSPFile:
   def __init__(self,fn):
     self.fn = fn
@@ -28,7 +39,7 @@ class LSPFile:
 	if m != None:
 	  g = m.group(1)
 	  if g!='':	    
-	    self.errors.append("%i: %s\n\t%s" % (i,g,msg))	    
+	    self.errors.append(LSPError(fn,i,l,g,msg)	    
       for posp,negp,msg in self.posnegpatterns:	
 	posm = re.search('(%s)'%posp,l)
 	if posm==None:
@@ -36,7 +47,7 @@ class LSPFile:
 	g = posm.group(1)
 	negm = re.search(negp,l)
 	if negm==None:
-	  self.errors.append("%i: %s\n\t%s" % (i,g,msg))
+	  self.errors.append(LSPError(fn,i,l,g,msg)	
 	  
 	  
 	
@@ -110,8 +121,8 @@ class LSPDir:
       print fn
       fileerrors = self.errors[fn]
       print '%i possible errors found' % len(fileerrors)
-      print '\n'.join(fileerrors).encode('utf8')
-  
+      for e in fileerrors:
+	print e
   
   def check(self):
     for tfn in self.texfiles:
