@@ -10,8 +10,8 @@ class LSPError:
     self.offendingstring = offendingstring
     self.msg = msg
     
-  def __str__(self):
-    print "{linenr}:{offendingstring}\n{msg}".format(self.__dict__).encode('utf8')
+  def __str__(self): 
+    return u"{linenr}:{offendingstring}\n\t{msg}".format(**self.__dict__).encode('utf8')
 
 class LSPFile:
   def __init__(self,fn):
@@ -39,15 +39,15 @@ class LSPFile:
 	if m != None:
 	  g = m.group(1)
 	  if g!='':	    
-	    self.errors.append(LSPError(fn,i,l,g,msg)	    
-      for posp,negp,msg in self.posnegpatterns:	
+	    self.errors.append(LSPError(self.fn,i,l,g,msg))	    
+      for posp,negp,msg in self.posnegpatterns:
 	posm = re.search('(%s)'%posp,l)
 	if posm==None:
 	  continue
 	g = posm.group(1)
 	negm = re.search(negp,l)
 	if negm==None:
-	  self.errors.append(LSPError(fn,i,l,g,msg)	
+	  self.errors.append(LSPError(self.fn,i,l,g,msg))
 	  
 	  
 	
@@ -78,9 +78,9 @@ class TexFile(LSPFile):
 
   posnegpatterns = (
     (r"\[sub]*section\{",r"\label","All sections should have a \\label. This is not necessary for subexamples."),
-    (r"\ea.*",r"\label","All examples should have a \\label"),
-    (r"\gll.*[A-Z]",r"[\.?!] *\\\\ *$","All vernacular sentences should end with punctuation"),
-    (r"\glt.*[A-Z]",r"[\.?!]' *$","All translated sentences should end with punctuation"),
+    (r"\\ea.*",r"\label","All examples should have a \\label"),
+    (r"\\gll.*[A-Z]",r"[\.?!] *\\\\ *$","All vernacular sentences should end with punctuation"),
+    (r"\\glt.*[A-Z]",r"[\.?!]' *$","All translated sentences should end with punctuation"),
     )
     
   filechecks = (
@@ -122,7 +122,11 @@ class LSPDir:
       fileerrors = self.errors[fn]
       print '%i possible errors found' % len(fileerrors)
       for e in fileerrors:
-	print e
+	try:
+	  print e
+	except TypeError:
+	  print e.__dict__
+	  raise
   
   def check(self):
     for tfn in self.texfiles:
