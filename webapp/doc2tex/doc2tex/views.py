@@ -55,7 +55,9 @@ def _upload(filename,f,accept):
 
 @view_config(route_name='result', renderer='templates/result.pt')
 def result(request):  
-    filename = _upload(filename, f,('doc', 'docx', 'odt'))
+    fn = request.POST['docfile'].filename
+    input_file = request.POST['docfile'].file
+    filename = _upload(fn, input_file,('doc', 'docx', 'odt'))
     #convert file to tex
     try:
 	texdocument = convert(filename)
@@ -67,7 +69,7 @@ def result(request):
 	       ('mod',texdocument.modtext)
 	      )
     return {'project': 'doc2tex',
-	    'filename': inputfn,
+	    'filename': fn,
 	    'texttpl': texttpl, 
 	    'zipurl': "http://www.glottotopia.org/wlport/%s.zip"%texdocument.zipfn}
 	    
