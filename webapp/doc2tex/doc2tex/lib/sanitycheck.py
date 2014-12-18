@@ -77,14 +77,14 @@ class TexFile(LSPFile):
     (r"\gl[lt] *[a-z].*[\.?!] *\\\\ *$","Complete sentences should be capitalized in examples"), 
     (r"\section.*[A-Z].*[A-Z].*","Only capitalize this if it is a proper noun"), 
     (r"\section.*[A-Z].*[A-Z].*","Only capitalize this if it is a proper noun"), 
-    (r"[A-Z]{3,}","It is often a good idea to use \\textsc\{smallcaps\} instead of ALLCAPS"),                   
+    (r"(?<!\\)[A-Z]{3,}","It is often a good idea to use \\textsc\{smallcaps\} instead of ALLCAPS"),                   
       )
 
   posnegpatterns = (
     (r"\[sub]*section\{",r"\label","All sections should have a \\label. This is not necessary for subexamples."),
-    (r"\\ea.*",r"\label","All examples should have a \\label"),
-    (r"\\gll.*[A-Z]",r"[\.?!] *\\\\ *$","All vernacular sentences should end with punctuation"),
-    (r"\\glt.*[A-Z]",r"[\.?!]' *$","All translated sentences should end with punctuation"),
+    #(r"\\ea.*",r"\label","All examples should have a \\label"),
+    (r"\\gll\W+[A-Z]",r"[\.?!] *\\\\ *$","All vernacular sentences should end with punctuation"),
+    (r"\\glt\W+[A-Z]",r"[\.?!]' *$","All translated sentences should end with punctuation"),
     )
     
   filechecks = (

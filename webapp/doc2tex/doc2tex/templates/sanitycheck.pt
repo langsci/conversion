@@ -29,14 +29,16 @@
 	      <div tal:repeat="file files">
 		<h2> ${file.split('/')[-1]} </h2>
 		<div class="sanityresult">
-		  <div tal:repeat="error files[file]" class="errorblock">  
+		  <div tal:repeat="error files[file]" class="errorblock" id="${hash(error.pre+error.post)}" >  
 		    <div class="lsperrorstring">
+		    <div class="closer" onclick="document.getElementById('${hash(error.pre+error.post)}').parentNode.removeChild(document.getElementById('${hash(error.pre+error.post)}'))">X</div>
 		      <span class="lsperrorpre">${error.pre}</span>
 		      <span class="lspoffendingstring">${error.offendingstring}</span>
 		      <span class="lsperrorpost">${error.post}</span>
 		    </div> 
-		  <div class="errormsg">${error.msg}
-		  </div>
+		    <div class="errormsg">${error.msg}
+		    </div>
+		    </div>
 		</div>  
 	      </div>
             </div>
