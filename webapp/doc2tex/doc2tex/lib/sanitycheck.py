@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
 import re
 import glob
 import sys
 import fnmatch
 import os
+import textwrap
+import uuid
 
 class LSPError:
   def __init__(self,fn,linenr,line,offendingstring,msg):
@@ -13,6 +16,12 @@ class LSPError:
     self.msg = msg
     self.pre =self.line.split(self.offendingstring)[0]
     self.post =self.line.split(self.offendingstring)[1]
+    self.ID = uuid.uuid1()
+    self.name = str(hash(msg))[-6:]
+    t = textwrap.wrap(self.name,2)[-3:]
+    self.color =  "rgb({},{},{})".format(int(t[0])+140,int(t[1])+140,int(t[2])+140)
+    self.bordercolor = "rgb({},{},{})".format(int(t[0])+100,int(t[1])+100,int(t[2])+100)
+ 
     
   def __str__(self): 
     return u"{linenr}:{offendingstring}\n\t{msg}".format(**self.__dict__).encode('utf8')
@@ -62,9 +71,11 @@ class TexFile(LSPFile):
   antipatterns = (
     (r" et al.","Please use the citation commands \\citet and \\citep"),      #et al in main tex
     (r"setfont","You should not set fonts explicitely"),      #no font definitions
-    #(r"\\ref","It is often advisable to use the more specialized commands \\tabref, \\figref, \\sectref, and \\REF for examples"),      #no \ref
+    (r"\\(small|scriptsize|footnotesize)","Please consider whether changing font sizes manually is really a good idea here"),      #no font definitions
+    (r"([Tt]able|[Ff]igure|[Ss]ection|[Pp]art|[Cc]hapter\() *\\ref","It is often advisable to use the more specialized commands \\tabref, \\figref, \\sectref, and \\REF for examples"),      #no \ref
     #("",""),      #\ea\label
     #("",""),      #\section\label
+    (" \\footnote","Footnotes should not be preceded by a space"),
     ("\\caption\{.*[^\.]\} +$","The last character of a caption should be a '.'"),      #captions end with .
     #("",""),      #footnotes end with .
     (r"\[[0-9]+,[0-9]+\]","Please use a space after the comma in lists of numbers "),      #no 12,34 without spacing
@@ -77,14 +88,15 @@ class TexFile(LSPFile):
     (r"\gl[lt] *[a-z].*[\.?!] *\\\\ *$","Complete sentences should be capitalized in examples"), 
     (r"\section.*[A-Z].*[A-Z].*","Only capitalize this if it is a proper noun"), 
     (r"\section.*[A-Z].*[A-Z].*","Only capitalize this if it is a proper noun"), 
-    (r"(?<!\\)[A-Z]{3,}","It is often a good idea to use \\textsc\{smallcaps\} instead of ALLCAPS"),                   
+    (r"(?<!\\)[A-Z]{3,}","It is often a good idea to use \\textsc\{smallcaps} instead of ALLCAPS"), 
+    ("[?!;\.,][A-Z]","Please use a space after punctuation (or use smallcaps in abbreviations)"),        
       )
 
   posnegpatterns = (
     (r"\[sub]*section\{",r"\label","All sections should have a \\label. This is not necessary for subexamples."),
     #(r"\\ea.*",r"\label","All examples should have a \\label"),
-    (r"\\gll\W+[A-Z]",r"[\.?!] *\\\\ *$","All vernacular sentences should end with punctuation"),
-    (r"\\glt\W+[A-Z]",r"[\.?!]' *$","All translated sentences should end with punctuation"),
+    (r"\\gll\W+[A-Z]",r"[\.?!][ }]*\\\\ *$","All vernacular sentences should end with punctuation"),
+    (r"\\glt\W+[A-Z]",u"[\.?!]['’]+[ }]*$","All translated sentences should end with punctuation"),
     )
     
   filechecks = (
@@ -108,6 +120,7 @@ class BibFile(LSPFile):
     ("[Aa]uthor *=.* et al","Do not use et al. in the bib file. Give a full list of authors"), 
     ("[Aa]uthor *=.*&.*","Use 'and' rather than & in the bib file"), 
     ("[Tt]itle *=(.* )?[IVXLCDM]*[IVX]+[IVXLCDM]*[\.,\) ]","In order to keep the Roman numbers in capitals, enclose them in braces {}"), 
+    ("\.[A-Z]","Please use a space after a period or an abbreviated name"), 
     )
 
 #year not in order in multicite

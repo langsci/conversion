@@ -200,8 +200,10 @@ border-radius: 5px 5px 0 0;
 .errorblock{
   padding:5px;
   margin:5px;
-  background: #cdc;
+/*   background: #cdc; */
   color:black;
+  border-width:2px;
+  border-style:solid;
 }
 
 .lsperrorstring{ 
@@ -239,4 +241,12 @@ border-radius: 5px 5px 0 0;
   color:red;
   padding:5px;
   cursor:pointer;
+}
+
+.megacloser{
+  float:right;
+  color:red;
+  padding:5px;
+  cursor:pointer;
+  font-size:200%;
 }
