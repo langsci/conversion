@@ -250,3 +250,9 @@ border-radius: 5px 5px 0 0;
   cursor:pointer;
   font-size:200%;
 }
+
+.linenr {
+    margin-left: -3.5em;
+    position: absolute;
+    font-size:80%;
+}

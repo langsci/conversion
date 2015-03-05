@@ -63,7 +63,7 @@ def result(request):
 	texdocument = convert(filename)
     except ValueError:
 	raise FileFormatFailure(filetype)
-    os.remove(filename)
+    #os.remove(filename)
     texdocument.ziptex()    
     texttpl = (('raw',texdocument.text),
 	       ('mod',texdocument.modtext)

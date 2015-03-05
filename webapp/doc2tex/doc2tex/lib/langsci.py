@@ -16,22 +16,26 @@ def convert(fn):
     #print "converting %s" %fn
     odtfn = False
     os.chdir(wd)
-    if fn.endswith("docx"):
+    tmpdir = fn.split('/')[-2] 
+    if fn.endswith("docx"):	
+	os.chdir(tmpdir)
+	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
+	#print syscall
+	os.system(syscall)
 	odtfn = fn.replace("docx","odt") 
-	syscall = """soffice --headless --convert-to odt "%s"  """ %fn
+    elif fn.endswith("doc"):	
+	os.chdir(tmpdir)
+	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
 	#print syscall
 	os.system(syscall)
-    elif fn.endswith("doc"):
 	odtfn = fn.replace("doc","odt")
-	syscall = """soffice --headless --convert-to odt "%s"  """ %fn
-	#print syscall
-	os.system(syscall)
     elif fn.endswith("odt"):
 	odtfn = fn 
     else:
 	raise ValueError
     if odtfn == False:
 	return False
+    os.chdir(wd)
     texfn = odtfn.replace("odt","tex")
     w2loptions = ("-clean",
     "-wrap_lines_after=0",
@@ -48,7 +52,7 @@ def convert(fn):
     "-use_tipa=false", 
     "-use_bibtex=true", 
     "-ignore_empty_paragraphs=true",
-    #"-ignore_double_spaces=true", 
+    "-ignore_double_spaces=false", 
     #formatting
     "-formatting=convert_most",
     "-use_color=false",
@@ -56,7 +60,7 @@ def convert(fn):
     "-use_hyperref=true",
     #"-no_preamble=true"
     )
-    syscall = "w2l {} {} {}".format(" ".join(w2loptions), odtfn, texfn)
+    syscall = """w2l {} "{}" "{}" """.format(" ".join(w2loptions), odtfn, texfn)
     #print syscall
     os.system(syscall)
     w2lcontent = open(texfn).read().decode('utf8')
@@ -129,7 +133,22 @@ class Document:
 				("\\section","\\chapter"),  
 				("\\subsection","\\section"),  
 				("\\subsubsection","\\subsection"),  
-				("\\paragraph","\\subsection"),  
+				("\\begin{styleLangSciExample}\n","\\ea\label{ex:}\n\\gll "),
+				("\\end{styleLangSciExample}\n","\\\\"),
+				("\\begin{styleLangSciIMT}\n","      "),
+				("\\end{styleLangSciIMT}\n","\\\\"),
+				("\\begin{styleLangsciTranslation}\n","\\glt "),
+				("\\end{styleLangsciTranslation}","\z"), 
+				("{styleQuote}","{quote}"),  
+				("{styleAbstract}","{abstract}"),  
+				("textstyleLangSciCategory","textsc"),  
+				("\\begin{styleListParagraph}","%\\begin{epigram}"),
+				("\\end{styleListParagraph}","%\\end{epigram}"), 
+				("\\begin{styleEpigramauthor}","%\\begin{epigramauthor}"),
+				("\\end{styleEpigramauthor}","%\\end{epigramauthor}"),  
+				("{styleConversationTranscript}","{lstlisting}"),   
+				("\ "," "),  
+				
 			    )    
 	yanks =  ("\\begin{flushleft}",
 		    "\\end{flushleft}",
@@ -146,6 +165,10 @@ class Document:
 		    "\\hline",
 		    "\\begin{styleStandard}",
 		    "\\end{styleStandard}",
+		    "\\begin{styleTabelle}",
+		    "\\end{styleTabelle}",
+		    "\\begin{styleAbbildung}",
+		    "\\end{styleAbbildung}",
 		    "\\begin{styleTextbody}",
 		    "\\end{styleTextbody}",
 		    "\\hline",
@@ -231,7 +254,15 @@ class Document:
 \lsptoprule""",modtext) 
 	modtext = re.sub(r"\\end{tabular}",r"""\lspbottomrule
 \end{tabular}""",modtext) 
+
+	modtext = re.sub("""listWWNum[ivxlc]+level[ivxlc]+""","itemize",modtext) 
+	
+
+	
+	modtext = re.sub("""\n+\\z""","\\z",modtext) 
 	modtext = re.sub("""\n\n+""","\n\n",modtext) 
+	
+	
 	return modtext
 	    
 	    
