@@ -47,8 +47,8 @@ def convert(fn):
     #floats
     "-simple_table_limit=10"
     "-use_supertabular=false",
-    "-float_tables=true", 
-    "-float_figures=true", 
+    "-float_tables=false", 
+    "-float_figures=false", 
     "-use_caption=true", 
     '-image_options="width=\\textwidth"',
     #"use_colortbl=true",
@@ -193,6 +193,8 @@ class Document:
 		    "\\textstyleappleconvertedspace",
 		    "\\pagestyle{Standard}",
 		    "\\hline",
+		    "\\begin{center}",
+		    "\\end{center}",
 		    "\\begin{styleStandard}",
 		    "\\end{styleStandard}",
 		    "\\begin{styleIllustration}",
@@ -288,10 +290,9 @@ class Document:
 	modtext = modtext.replace(r"\newline",r"\\")
 
 
-	modtext = re.sub("Table ([0-9]+)[\.:](.*?)\n","\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
-	modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:\\1}",modtext)
-	#modtext = re.sub("Figure ([0-9]+)[\.:](.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{fig:\\1}\n\\end{figure}",modtext)	
-	modtext = re.sub("\nFigure ([0-9]+)[\.:](.*?)\n","\\caption{\\2}\n\\label{fig:\\1}",modtext)
+	modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular}\n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
+	modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:\\1}",modtext) 
+	modtext = re.sub("\nFigure ([0-9]+)[\.:] *(.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{fig:\\1}\n\\end{figure}",modtext)
 	modtext = re.sub("Figure ([0-9]+)","\\\\figref{fig:\\1}",modtext)
 	modtext = re.sub("Section ([0-9\.]+)","\\\\sectref{sec:\\1}",modtext) 
 	modtext = re.sub("\\\\(begin|end){minipage}.*?\n",'',modtext)
@@ -315,7 +316,9 @@ class Document:
 	  #i=1
 	  #while i!=0:
 	    #modtext,i = re.subn('\\%s\{([^\}]+) '%s,'\\%s{\\1} \\%s{'%(s,s),modtext) 
-	modtext = re.sub("\\\\includegraphics\[.*?width=\\\\textwidth","\includegraphics[width=\\\\textwidth",modtext)
+	modtext = re.sub("\\\\includegraphics\[.*?width=\\\\textwidth","%please move the includegraphics inside the {figure} environment\n%%\includegraphics[width=\\\\textwidth",modtext)
+	
+	modtext = re.sub("\\\\item *\n+",'\\item ',modtext)
 	return modtext
 	    
 if __name__ == '__main__':
