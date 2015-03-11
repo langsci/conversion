@@ -3,6 +3,7 @@ import re
 import shutil
 import codecs
 import uuid
+import sys 
 
 wd = '/home/doc2tex'
 wd = '/tmp'
@@ -15,16 +16,18 @@ wwwdir = '/var/www/wlport'
 def convert(fn):
     #print "converting %s" %fn
     odtfn = False
-    os.chdir(wd)
-    tmpdir = fn.split('/')[-2] 
+    #os.chdir(wd)
+    #tmpdir = fn.split('/')[-2] 
+    tmpdir = "."
+    #print tmpdir
     if fn.endswith("docx"):	
-	os.chdir(tmpdir)
+	#os.chdir(tmpdir)
 	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
 	#print syscall
 	os.system(syscall)
 	odtfn = fn.replace("docx","odt") 
     elif fn.endswith("doc"):	
-	os.chdir(tmpdir)
+	#os.chdir(tmpdir)
 	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
 	#print syscall
 	os.system(syscall)
@@ -35,8 +38,9 @@ def convert(fn):
 	raise ValueError
     if odtfn == False:
 	return False
-    os.chdir(wd)
+    #os.chdir(wd)
     texfn = odtfn.replace("odt","tex")
+    print texfn
     w2loptions = ("-clean",
     "-wrap_lines_after=0",
     "-multilingual=false", 
@@ -61,7 +65,7 @@ def convert(fn):
     #"-no_preamble=true"
     )
     syscall = """w2l {} "{}" "{}" """.format(" ".join(w2loptions), odtfn, texfn)
-    #print syscall
+    print syscall
     os.system(syscall)
     w2lcontent = open(texfn).read().decode('utf8')
     preamble, text = w2lcontent.split(r"\begin{document}")
@@ -265,4 +269,9 @@ class Document:
 	
 	return modtext
 	    
-	    
+if __name__ == '__main__':
+    fn = sys.argv[1]
+    mt = convert(fn).modtext
+    out = codecs.open("temp", "w", "utf-8")
+    out.write(mt)
+    out.close()
