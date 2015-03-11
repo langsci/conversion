@@ -144,7 +144,13 @@ class Document:
 \\setcounter{listWWNumiilevelii}{0}
 \\begin{listWWNumiilevelii}
 \\item 
-\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#MS
+				("""\\begin{listLangSciLanginfoiileveli}
+\\item 
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOi
+				("""\\begin{listLangSciLanginfoiilevelii}
+\\item 
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOii
 				("""\\end{styleLangSciLanginfo}
 
 
@@ -152,7 +158,8 @@ class Document:
 \\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"),				
 				("\\begin{styleLangSciLanginfo}\n","\\ea\label{ex:}\n\\langinfo{}{}{"),
 				("\n\\end{styleLangSciLanginfo}\n","}\\\\\n"),
-				("\\begin{styleLangSciExample}\n","\\ea\label{ex:}\n\\gll "),
+				#("\\begin{styleLangSciExample}\n","\\ea\label{ex:}\n\\gll "),
+				("\\begin{styleLangSciExample}\n","\n\\gll "),
 				("\\end{styleLangSciExample}\n","\\\\"),
 				("\\begin{styleLangSciSourceline}\n","\\gll "),
 				("\\end{styleLangSciSourceline}\n","\\\\"),
@@ -163,7 +170,15 @@ class Document:
 				("\\begin{styleLangSciTranslationSubexample}\n","\\glt "),
 				("\\end{styleLangSciTranslationSubexample}","\z\n%%1st subexample: change \\ea to \\ea\\ea; remove \\z\n%%further subexamples: change \\ea to \\ex; remove \\z\n%%last subexample: change \\z to \\z\\z"), 
 				("""\\setcounter{listWWNumiileveli}{0}
-\\ea\\label{ex:}""",""),
+\\ea\\label{ex:}""",""),#MS
+				#("""\\setcounter{listLangSciLanginfoiilevelii}{0}
+#\\ea\\label{ex:}""",""),#OO
+				("""\\begin{listLangSciLanginfoiileveli}
+\item""","\\ea\label{ex:}"),
+				("""\setcounter{listLangSciLanginfoiilevelii}{0}
+\\ea\label{ex:}""",""),
+				("\n\\end{listLangSciLanginfoiileveli}",""), 
+				("\n\\end{listLangSciLanginfoiilevelii}",""), 
 				#end examples
 				("{styleQuote}","{quote}"),  
 				("{styleAbstract}","{abstract}"),  
