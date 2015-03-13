@@ -5,30 +5,31 @@ import codecs
 import uuid
 import sys 
 
-wd = '/home/doc2tex'
-wd = '/tmp'
+WD = '/home/doc2tex'
+WD = '/tmp'
 lspskeletond = '/home/doc2tex/skeletonbase'
 #lspskeletond = '/home/snordhoff/versioning/git/langsci/lsp-converters/webapp/doc2tex/assets/skeletonbase'
 #wwwdir = os.path.join(wd,'www')
 wwwdir = '/var/www/wlport'	
 
 
-def convert(fn):
+def convert(fn, wd=WD, tmpdir=False):
     #print "converting %s" %fn
     odtfn = False
-    #os.chdir(wd)
-    #tmpdir = fn.split('/')[-2] 
-    tmpdir = "."
+    os.chdir(wd)
+    if tmpdir == False:
+      tmpdir = fn.split('/')[-2] 
+    #tmpdir = "."
     #print tmpdir
     if fn.endswith("docx"):	
 	#os.chdir(tmpdir)
-	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
-	print syscall
+	syscall = """soffice --headless   %s --convert-to odt "%s"  """ %(tmpdir,fn)
+	#print syscall
 	os.system(syscall)
 	odtfn = fn.replace("docx","odt") 
     elif fn.endswith("doc"):	
-	#os.chdir(tmpdir)
-	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
+	os.chdir(tmpdir)
+	syscall = """soffice --headless   %s --convert-to odt "%s"  """ %(tmpdir,fn)
 	#print syscall
 	os.system(syscall)
 	odtfn = fn.replace("doc","odt")
@@ -38,9 +39,9 @@ def convert(fn):
 	raise ValueError
     if odtfn == False:
 	return False
-    #os.chdir(wd)
+    os.chdir(wd)
     texfn = odtfn.replace("odt","tex")
-    print texfn
+    #print texfn
     w2loptions = ("-clean",
     "-wrap_lines_after=0",
     "-multilingual=false", 
@@ -67,7 +68,7 @@ def convert(fn):
     #"-no_preamble=true"
     )
     syscall = """w2l {} "{}" "{}" """.format(" ".join(w2loptions), odtfn, texfn)
-    print syscall
+    #print syscall
     os.system(syscall)
     w2lcontent = open(texfn).read().decode('utf8')
     preamble, text = w2lcontent.split(r"\begin{document}")
@@ -144,7 +145,10 @@ class Document:
 \\setcounter{listWWNumiilevelii}{0}
 \\begin{listWWNumiilevelii}
 \\item 
-\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#MS
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#MSi
+				("""\\begin{listWWNumiileveli}
+\\item 
+\\begin{styleLangSciLanginfo}\n""","\\ea\\label{exx:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii
 				("""\\begin{listLangSciLanginfoiileveli}
 \\item 
 \\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOi
@@ -155,20 +159,25 @@ class Document:
 
 
 \\end{listWWNumiilevelii}
+\\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"),	
+				("""\\end{styleLangSciLanginfo}
+
+\\end{listWWNumiilevelii}
 \\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"),				
 				("\\begin{styleLangSciLanginfo}\n","\\ea\label{ex:}\n\\langinfo{}{}{"),
-				("\n\\end{styleLangSciLanginfo}\n","}\\\\\n"),
-				#("\\begin{styleLangSciExample}\n","\\ea\label{ex:}\n\\gll "),
+				("\\begin{listWWNumiilevelii}\n\\item \n\\ea\\label{ex:}\n",""),
+				("\n\\end{styleLangSciLanginfo}\n","}\\\\\n"), 				
 				("\\begin{styleLangSciExample}\n","\n\\gll "),
 				("\\end{styleLangSciExample}\n","\\\\"),
 				("\\begin{styleLangSciSourceline}\n","\\gll "),
 				("\\end{styleLangSciSourceline}\n","\\\\"),
+				("\\end{listWWNumiileveli}\n\\gll","\\gll"),
 				("\\begin{styleLangSciIMT}\n","     "),
 				("\\end{styleLangSciIMT}\n","\\\\"),
 				("\\begin{styleLangSciTranslation}\n","\\glt "),
 				("\\end{styleLangSciTranslation}","\z"), 
 				("\\begin{styleLangSciTranslationSubexample}\n","\\glt "),
-				("\\end{styleLangSciTranslationSubexample}","\z\n%%1st subexample: change \\ea to \\ea\\ea; remove \\z\n%%further subexamples: change \\ea to \\ex; remove \\z\n%%last subexample: change \\z to \\z\\z"), 
+				("\\end{styleLangSciTranslationSubexample}","\z"), 
 				("""\\setcounter{listWWNumiileveli}{0}
 \\ea\\label{ex:}""",""),#MS
 				#("""\\setcounter{listLangSciLanginfoiilevelii}{0}
@@ -230,7 +239,13 @@ class Document:
 		    "\\maketitle",
 		    "\\textstyleAbsatzStandardschriftart{}",
 		    "\\textstyleAbsatzStandardschriftart",
-		    "[Warning: Image ignored] % Unhandled or unsupported graphics:"
+		    "[Warning: Image ignored] % Unhandled or unsupported graphics:",
+		    "%\\setcounter{listWWNumileveli}{0}\n",
+		    "%\\setcounter{listWWNumilevelii}{0}\n",
+		    "%\\setcounter{listWWNumiileveli}{0}\n",
+		    "%\\setcounter{listWWNumiilevelii}{0}\n",
+		    "%\\setcounter{listLangSciLanginfoiileveli}{0}\n"
+		    "%\\setcounter{itemize}{0}\n"
 		    ) 
 	for old, new in explicitreplacements:
 	    modtext = modtext.replace(old,new)
@@ -345,7 +360,8 @@ class Document:
 	    
 if __name__ == '__main__':
     fn = sys.argv[1]
-    d = convert(fn)
+    cwd = os.getcwd()
+    d = convert(fn,tmpdir=cwd,wd=cwd)
     tx = d.text
     mt = d.modtext
     out1 = codecs.open("temporig", "w", "utf-8")
