@@ -23,7 +23,7 @@ def convert(fn):
     if fn.endswith("docx"):	
 	#os.chdir(tmpdir)
 	syscall = """soffice --headless --outdir %s --convert-to odt "%s"  """ %(tmpdir,fn)
-	#print syscall
+	print syscall
 	os.system(syscall)
 	odtfn = fn.replace("docx","odt") 
     elif fn.endswith("doc"):	
@@ -193,6 +193,8 @@ class Document:
 				("\ "," "),  
 				#(" }","} "),  
 				("\\setcounter","%\\setcounter"),  
+				("\n\n\\item","\\item"),  
+				("\n\n\\end","\\end"),  
 				
 			    )    
 	yanks =  ("\\begin{flushleft}",
@@ -212,6 +214,10 @@ class Document:
 		    "\\end{center}",
 		    "\\begin{styleStandard}",
 		    "\\end{styleStandard}",
+		    "\\begin{styleBodytextC}",
+		    "\\end{styleBodytextC}",
+		    "\\begin{styleBodyTextFirst}",
+		    "\\end{styleBodyTextFirst}",
 		    "\\begin{styleIllustration}",
 		    "\\end{styleIllustration}",
 		    "\\begin{styleTabelle}",
@@ -305,7 +311,8 @@ class Document:
 	modtext = modtext.replace(r"\newline",r"\\")
 
 
-	modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular}\n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
+	modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular}. \n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
+	modtext = re.sub("\nTable ([0-9]+)[\.:] *(.*?) *\n","%%please move \\\\begin{table} just above \\\\begin{tabular\n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)#do not add } after tabular
 	modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:\\1}",modtext) 
 	modtext = re.sub("\nFigure ([0-9]+)[\.:] *(.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{fig:\\1}\n\\end{figure}",modtext)
 	modtext = re.sub("Figure ([0-9]+)","\\\\figref{fig:\\1}",modtext)
@@ -316,8 +323,8 @@ class Document:
 	
 	modtext = re.sub("(begin\{tabular\}[^\n]*)",r"""\1
 \lsptoprule""",modtext) 
-	modtext = re.sub(r"\\end{tabular}",r"""\lspbottomrule
-\end{tabular}""",modtext) 
+	modtext = re.sub(r"\\end{tabular}\n*",r"""\lspbottomrule
+\end{tabular}\n""",modtext) 
 
 	modtext = re.sub("""listWWNum[ivxlc]+level[ivxlc]+""","itemize",modtext) 
 	modtext = re.sub("""listL[ivxlc]+level[ivxlc]+""","itemize",modtext) 
