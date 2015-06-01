@@ -256,3 +256,11 @@ border-radius: 5px 5px 0 0;
     position: absolute;
     font-size:80%;
 }
+
+.spellingerror{
+  background:#ddd;
+  color:#111; 
+  margin: 2px 0px;
+  display:inline-block;
+  min-width:100px;
+}

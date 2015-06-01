@@ -7,6 +7,7 @@ import uuid
 from .lib.langsci import  convert
 from .lib.sanitycheck import  LSPDir
 import shutil
+import string
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
 def home(request):
@@ -27,7 +28,7 @@ def sanitycheck(request):
   
     
 def _upload(filename,f,accept):
-    inputfn = filename
+    inputfn = ''.join([c for c in filename if c in string.ascii_letters or c in string.digits or c =='.'])
     input_file = f
     filetype = inputfn.split('.')[-1]
     if filetype not in accept:

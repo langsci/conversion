@@ -6,6 +6,8 @@ import fnmatch
 import os
 import textwrap
 import uuid
+import enchant
+from enchant.tokenize import get_tokenizer
 
 class LSPError:
   def __init__(self,fn,linenr,line,offendingstring,msg):
@@ -32,6 +34,10 @@ class LSPFile:
     self.content = open(fn).read().decode('utf8')
     self.lines = self.split_(self.content)
     self.errors = []
+    self.spelld = enchant.Dict("en_UK") 
+    self.tknzr = get_tokenizer("en_UK")
+    self.spellerrors = []
+    self.latexterms = ("newpage","clearpage","textit","textbf","textsc","textwidth","tabref","figref","sectref","emph")
     
   def split_(self,c):
     result = self._removecomments(c).split('\n')
@@ -61,6 +67,11 @@ class LSPFile:
 	negm = re.search(negp,l)
 	if negm==None:
 	  self.errors.append(LSPError(self.fn,i,l,g,msg))
+	  
+  def spellcheck(self):
+    result = sorted(list(set([t[0] for t in self.tknzr(self.content) if self.spelld.check(t[0])==False and t[0] not in self.latexterms])))
+    self.spellerrors =  result
+
 	  
 	  
 	
@@ -131,7 +142,7 @@ class LSPDir:
     self.dirname = dirname
     self.texfiles = self.findallfiles('tex')
     self.bibfiles = self.findallfiles('bib')
-    self.errors={}
+    self.errors={} 
     
   def findallfiles(self, ext):
     matches = []
@@ -151,12 +162,16 @@ class LSPDir:
 	except TypeError:
 	  print e.__dict__
 	  raise
+    print "the following words were not found in the dictionary:", self.spellerrors
   
   def check(self):
     for tfn in self.texfiles:
       t = TexFile(tfn)
       t.check()
-      self.errors[tfn] = t.errors
+      t.spellcheck()
+      self.errors[tfn] = [None,None]
+      self.errors[tfn][0] = t.errors
+      self.errors[tfn][1] = t.spellerrors
     for bfn in self.bibfiles:
       b = BibFile(bfn)
       b.check()

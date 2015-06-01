@@ -22,7 +22,7 @@ def convert(fn, wd=WD, tmpdir=False):
     #tmpdir = "."
     #print tmpdir
     if fn.endswith("docx"):	
-	#os.chdir(tmpdir)
+	os.chdir(tmpdir)
 	syscall = """soffice --headless   %s --convert-to odt "%s"  """ %(tmpdir,fn)
 	#print syscall
 	os.system(syscall)
@@ -91,7 +91,7 @@ class Document:
 	self.modtext = self.getModtext()
 	
     def ziptex(self): 
-	localskeletond = os.path.join(wd,'skeleton')
+	localskeletond = os.path.join(WD,'skeleton')
 	try:
 	   shutil.rmtree(localskeletond)
 	except OSError:
@@ -114,7 +114,7 @@ class Document:
 	content.close()
 	contentorig.write(self.text)
 	contentorig.close()
-	os.chdir(wd)
+	os.chdir(WD)
 	self.zipfn = str(uuid.uuid4())
 	shutil.make_archive(self.zipfn, 'zip', localskeletond)
 	shutil.move(self.zipfn+'.zip',wwwdir) 
@@ -188,6 +188,7 @@ class Document:
 \\ea\label{ex:}""",""),
 				("\n\\end{listLangSciLanginfoiileveli}",""), 
 				("\n\\end{listLangSciLanginfoiilevelii}",""), 
+				("\n\\glt ~",""), 
 				#end examples
 				("{styleQuote}","{quote}"),  
 				("{styleAbstract}","{abstract}"),  
@@ -244,7 +245,7 @@ class Document:
 		    "%\\setcounter{listWWNumilevelii}{0}\n",
 		    "%\\setcounter{listWWNumiileveli}{0}\n",
 		    "%\\setcounter{listWWNumiilevelii}{0}\n",
-		    "%\\setcounter{listLangSciLanginfoiileveli}{0}\n"
+		    "%\\setcounter{listLangSciLanginfoiileveli}{0}\n",
 		    "%\\setcounter{itemize}{0}\n"
 		    ) 
 	for old, new in explicitreplacements:
@@ -268,7 +269,11 @@ class Document:
 	modtext = re.sub(r"\\fontsize\{.*?\}\\selectfont","",modtext)
     
 	#remove stupid Open Office styles 
-	modtext = re.sub(r"\\begin\{styleHeadingi}\n+(.*?)\n+\\end\{styleHeadingi\}","\\chapter{\\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectioni\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioni\\}","\\section{\\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectionii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectionii\\}","\\subsection{\\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectioniii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniii\\}","\\subsubsection{\\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectioniv\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniv\\}","\\subsubsubsection{\\1}",modtext)
+	modtext = re.sub(r"\\begin\{styleHeadingi}\n+(.*?)\n+\\end\{styleHeadingi\}","\\chapter{\\1}",modtext) 
 	modtext = re.sub("\\\\begin\\{styleHeadingii\\}\n+(.*?)\n+\\\\end\\{styleHeadingii\\}","\\section{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiii\}\n+(.*?)\n+\\\\end\{styleHeadingiii}","\\subsubsection{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiv\}\n+(.*?)\n+\\\\end\{styleHeadingiv}","\\subsubsection{\\1}",modtext)
@@ -326,7 +331,7 @@ class Document:
 	modtext = modtext.replace(r"\newline",r"\\")
 
 
-	modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular}. \n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
+	modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular . \n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
 	modtext = re.sub("\nTable ([0-9]+)[\.:] *(.*?) *\n","%%please move \\\\begin{table} just above \\\\begin{tabular\n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)#do not add } after tabular
 	modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:\\1}",modtext) 
 	modtext = re.sub("\nFigure ([0-9]+)[\.:] *(.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{fig:\\1}\n\\end{figure}",modtext)
