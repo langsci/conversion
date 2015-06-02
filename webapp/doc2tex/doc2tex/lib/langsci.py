@@ -204,7 +204,7 @@ class Document:
 				#(" }","} "),  
 				("\\setcounter","%\\setcounter"),  
 				("\n\n\\item","\\item"),  
-				("\n\n\\end","\\end"),  
+				("\n\n\\end","\\end") 
 				
 			    )    
 	yanks =  ("\\begin{flushleft}",
@@ -267,7 +267,8 @@ class Document:
 	modtext = re.sub("l\|","l",modtext)
 	modtext = re.sub("\|l","l",modtext)
 	modtext = re.sub(r"\\fontsize\{.*?\}\\selectfont","",modtext)
-    
+	modtext = modtext.replace("\\multicolumn{1}{l}{}","")
+	modtext = modtext.replace("\\multicolumn{1}{l}","")
 	#remove stupid Open Office styles 
 	modtext = re.sub("\\\\begin\\{styleLangSciSectioni\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioni\\}","\\section{ \\1}",modtext) #whitespace in front of capture due to some strange chars showing up without in Strik book
 	modtext = re.sub("\\\\begin\\{styleLangSciSectionii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectionii\\}","\\subsection{ \\1}",modtext)
@@ -349,7 +350,10 @@ class Document:
 	modtext = re.sub("""listWWNum[ivxlc]+level[ivxlc]+""","itemize",modtext) 
 	modtext = re.sub("""listL[ivxlc]+level[ivxlc]+""","itemize",modtext) 
 	
-
+	modtext = modtext.replace("& \\begin{itemize}\n\\item","& \n%%\\begin{itemize}\\item\n")  
+	modtext = modtext.replace("\\end{itemize}\\\\\n","\\\\\n%%\\end{itemize}\n")  
+	modtext = modtext.replace("& \\end{itemize}","& %%\\end{itemize}\n")
+	
 	
 	modtext = re.sub("""\n+\\z""","\\z",modtext) 
 	modtext = re.sub("""\n\n+""","\n\n",modtext) 
