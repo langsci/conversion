@@ -193,12 +193,12 @@ class Document:
 				("{styleQuote}","{quote}"),  
 				("{styleAbstract}","{abstract}"),  
 				("textstyleLangSciCategory","textsc"),  
-				("\\begin{styleListParagraph}","%\\begin{epigram}"),
-				("\\end{styleListParagraph}","%\\end{epigram}"), 
-				("\\begin{styleListenabsatz}","%\\begin{epigram}"),
-				("\\end{styleListenabsatz}","%\\end{epigram}"), 
-				("\\begin{styleEpigramauthor}","%\\begin{epigramauthor}"),
-				("\\end{styleEpigramauthor}","%\\end{epigramauthor}"),  
+				#("\\begin{styleListParagraph}","%\\begin{epigram}"),
+				#("\\end{styleListParagraph}","%\\end{epigram}"), 
+				#("\\begin{styleListenabsatz}","%\\begin{epigram}"),
+				#("\\end{styleListenabsatz}","%\\end{epigram}"), 
+				#("\\begin{styleEpigramauthor}","%\\begin{epigramauthor}"),
+				#("\\end{styleEpigramauthor}","%\\end{epigramauthor}"),  
 				("{styleConversationTranscript}","{lstlisting}"),   
 				("\ "," "),  
 				#(" }","} "),  
@@ -254,9 +254,9 @@ class Document:
 	for y in yanks:
 	    modtext = modtext.replace(y,'')
 	#unescape w2l unicode
-	#w2lunicodep = re.compile(r'(\[[0-9A-Ea-e]{3}\?\])')
-	#for m in w2lunicodep.findall(modtext):
-	#     modtext=modtext.replace(m,'\u0{}'.format(m[1:-2]).decode('unicode_escape'))
+	w2lunicodep = re.compile(r'(\[[0-9A-Ea-e]{3}\?\])')
+	for m in w2lunicodep.findall(modtext):
+	    modtext=modtext.replace(m,'\u0{}'.format(m[1:-2]).decode('unicode_escape'))
 	#remove marked up white space
 	modtext = re.sub("\\text(it|bf|sc)\{( *)\}","\\2",modtext)  
 	
@@ -269,10 +269,10 @@ class Document:
 	modtext = re.sub(r"\\fontsize\{.*?\}\\selectfont","",modtext)
     
 	#remove stupid Open Office styles 
-	modtext = re.sub("\\\\begin\\{styleLangSciSectioni\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioni\\}","\\section{\\1}",modtext)
-	modtext = re.sub("\\\\begin\\{styleLangSciSectionii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectionii\\}","\\subsection{\\1}",modtext)
-	modtext = re.sub("\\\\begin\\{styleLangSciSectioniii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniii\\}","\\subsubsection{\\1}",modtext)
-	modtext = re.sub("\\\\begin\\{styleLangSciSectioniv\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniv\\}","\\subsubsubsection{\\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectioni\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioni\\}","\\section{ \\1}",modtext) #whitespace in front of capture due to some strange chars showing up without in Strik book
+	modtext = re.sub("\\\\begin\\{styleLangSciSectionii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectionii\\}","\\subsection{ \\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectioniii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniii\\}","\\subsubsection{ \\1}",modtext)
+	modtext = re.sub("\\\\begin\\{styleLangSciSectioniv\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniv\\}","\\subsubsubsection{ \\1}",modtext)
 	modtext = re.sub(r"\\begin\{styleHeadingi}\n+(.*?)\n+\\end\{styleHeadingi\}","\\chapter{\\1}",modtext) 
 	modtext = re.sub("\\\\begin\\{styleHeadingii\\}\n+(.*?)\n+\\\\end\\{styleHeadingii\\}","\\section{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiii\}\n+(.*?)\n+\\\\end\{styleHeadingiii}","\\subsubsection{\\1}",modtext)
