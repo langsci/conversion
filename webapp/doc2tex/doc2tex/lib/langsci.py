@@ -254,9 +254,12 @@ class Document:
 	for y in yanks:
 	    modtext = modtext.replace(y,'')
 	#unescape w2l unicode
-	w2lunicodep = re.compile(r'(\[[0-9A-Ea-e]{3}\?\])')
-	for m in w2lunicodep.findall(modtext):
+	w2lunicodep3 = re.compile(r'(\[[0-9A-Ea-e]{3}\?\])')
+	w2lunicodep4 = re.compile(r'(\[[0-9A-Ea-e]{4}\?\])')
+	for m in w2lunicodep3.findall(modtext):
 	    modtext=modtext.replace(m,'\u0{}'.format(m[1:-2]).decode('unicode_escape'))
+	for m in w2lunicodep4.findall(modtext):
+	    modtext=modtext.replace(m,'\u{}'.format(m[1:-2]).decode('unicode_escape'))
 	#remove marked up white space
 	modtext = re.sub("\\text(it|bf|sc)\{( *)\}","\\2",modtext)  
 	
