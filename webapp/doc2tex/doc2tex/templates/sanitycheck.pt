@@ -30,7 +30,7 @@
 	      <div tal:repeat="file files">
 		<h2> ${file.split('/')[-1]} </h2>
 		<div class="sanityresult">
-		    <div class="errorcount">${len(files[file])} possible errors </div>
+		    <div class="errorcount">${len(files[file][0])} possible errors </div>
 		    <div tal:repeat="error files[file][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}" >  
 		      <div class="lsperrorstring">
 			<div class="closer" title="dismiss this message" onclick="document.getElementById('${error.ID}').parentNode.removeChild(document.getElementById('${error.ID}'))">X</div>

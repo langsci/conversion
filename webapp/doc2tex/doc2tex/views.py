@@ -21,8 +21,10 @@ def sanitycheck(request):
     filetype = filename.split('.')[-1]
     d = os.path.dirname(os.path.realpath(filename))
     lspdir = LSPDir(d)
-    lspdir.check()   
-    shutil.rmtree(d)
+    lspdir.check()  
+    print 7
+    print lspdir.errors
+    #shutil.rmtree(d)
     return {'project': 'doc2tex',
 	    'files':lspdir.errors}
   

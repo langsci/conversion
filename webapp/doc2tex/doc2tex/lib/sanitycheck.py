@@ -52,13 +52,13 @@ class LSPFile:
     self.errors=[]
     for i,l in enumerate(self.lines):
       if '\\chk' in l: #the line is explicitely marked as being correct
-	continue
+	continue 
       for ap,msg in self.antipatterns:
 	m = re.search('(%s)'%ap,l)
 	if m != None:
 	  g = m.group(1)
 	  if g!='':	    
-	    self.errors.append(LSPError(self.fn,i,l,g,msg))	    
+	    self.errors.append(LSPError(self.fn,i,l,g,msg))	 
       for posp,negp,msg in self.posnegpatterns:
 	posm = re.search('(%s)'%posp,l)
 	if posm==None:
@@ -66,7 +66,7 @@ class LSPFile:
 	g = posm.group(1)
 	negm = re.search(negp,l)
 	if negm==None:
-	  self.errors.append(LSPError(self.fn,i,l,g,msg))
+	  self.errors.append(LSPError(self.fn,i,l,g,msg)) 
 	  
   def spellcheck(self):
     result = sorted(list(set([t[0] for t in self.tknzr(self.content) if self.spelld.check(t[0])==False and t[0] not in self.latexterms])))
@@ -75,8 +75,7 @@ class LSPFile:
 	  
 	  
 	
-  antipatterns = ()
-  posnegpatterns = () #if first part, then second part, otherwise error
+ 
 
 class TexFile(LSPFile):  
   antipatterns = (
@@ -119,6 +118,7 @@ class TexFile(LSPFile):
     )
    
 
+#year not in order in multicite
 
 class BibFile(LSPFile):
   
@@ -133,8 +133,10 @@ class BibFile(LSPFile):
     ("[Tt]itle *=(.* )?[IVXLCDM]*[IVX]+[IVXLCDM]*[\.,\) ]","In order to keep the Roman numbers in capitals, enclose them in braces {}"), 
     ("\.[A-Z]","Please use a space after a period or an abbreviated name"), 
     )
+  posnegpatterns = []
+  filechecks = []
+  spellerrors = []
 
-#year not in order in multicite
 
 
 class LSPDir:
@@ -162,7 +164,7 @@ class LSPDir:
 	except TypeError:
 	  print e.__dict__
 	  raise
-    print "the following words were not found in the dictionary:", self.spellerrors
+    #print "the following words were not found in the dictionary:", self.spellerrors
   
   def check(self):
     for tfn in self.texfiles:
@@ -173,9 +175,12 @@ class LSPDir:
       self.errors[tfn][0] = t.errors
       self.errors[tfn][1] = t.spellerrors
     for bfn in self.bibfiles:
-      b = BibFile(bfn)
+      b = BibFile(bfn) 
       b.check()
-      self.errors[bfn] = b.errors
+      self.spellerrors = [] 
+      self.errors[bfn] = [None,None]
+      self.errors[bfn][0] = b.errors
+      self.errors[bfn][1] = b.spellerrors
     
  
     
