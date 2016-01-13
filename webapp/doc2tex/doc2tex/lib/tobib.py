@@ -5,6 +5,7 @@
 #book 
 import sys
 import re
+import pprint 
 
 YEAR = '[12][78901][0-9][0-9][a-f]'
 EDITOR = re.compile("(\(eds?\.?\))")
@@ -14,6 +15,8 @@ PAGES = re.compile("[Pp]*\.? *[0-9][-–]+[0-9]")
 PUBADDR = re.compile("(.+) *: *(.+)")
 VOLNUM = "([0-9]+) *(\(?[0-9]\)?)"
 BOOK = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<address>.+) *: *(?P<publisher>.+)")
+ARTICLE = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<journal>.*) (?P<number>[-0-9]+)\. (?P<pages>[-–0-9]+)")
+INCOLLECTION = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. In (?P<editor>.*) \(eds?\.\), (?P<booktitle>.*), (?P<pages>[-–0-9]+). (?P<address>.+) *: *(?P<publisher>.+)")
 
 class Record():
   def __init__(self,s):    
@@ -44,10 +47,28 @@ class Record():
     self.note = None
     
   def parsearticle(self,s):  
-    pass
-  
+    m = ARTICLE.search(s)
+    if m:
+      self.author = m.group('author')
+      self.title = m.group('title')
+      self.year = m.group('year')
+      self.journal = m.group('journal')
+      self.number = m.group('number')
+      self.pages = m.group('pages')      
+      pprint.pprint(self.__dict__)
+      
   def parseincollection(self,s):  
-    pass
+    m = INCOLLECTION.search(s)
+    if m:
+      self.author = m.group('author')
+      self.editor = m.group('editor')
+      self.title = m.group('title')
+      self.title = m.group('booktitle')
+      self.year = m.group('year')
+      self.address = m.group('address')
+      self.publisher = m.group('publisher')
+      self.pages = m.group('pages')
+      pprint.pprint(self.__dict__)
   
   def parsemisc(self,s):  
     pass
@@ -60,11 +81,12 @@ class Record():
       self.year = m.group('year')
       self.address = m.group('address')
       self.publisher = m.group('publisher')
-      print(self.__dict__)
+      pprint.pprint(self.__dict__)        
     
   def tobibtex(self):
-    print(self.typ)
-    #print(self.__dict__)
+    pass
+    #print(self.typ)
+    #pprint.pprint(self.__dict__)
 
 def getRecords(fn, splitter="\n\n"):
   c = open(fn).read()
