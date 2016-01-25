@@ -1,26 +1,50 @@
-# --* encoding=utf8 *--
-#bibliography converter
-#article
-#incollection
-#book 
+# --* encoding=utf8 *-- 
 import sys
 import re
 import pprint 
-
-YEAR = '[12][78901][0-9][0-9][a-f]'
-EDITOR = re.compile("(\(eds?\.?\))")
-IN = 'In'
-ENQUOTED = """["'`].*["']"""
+ 
+#pattern definitions
+year = '\(? *(?P<year>[12][78901][0-9][0-9][a-f]?) *\)?' 
 pages = "(?P<pages>[0-9]+[-–]+[0-9]+)"
-PAGES = re.compile(pages)
-pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)"
-PUBADDR = re.compile(pubaddr)
-VOLNUM = "([0-9]+) *(\(?[0-9]\)?)"
-BOOK = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +{}".format((pubaddr)))
-ARTICLE = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<journal>.*) (?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?[\.,] [Pp]*\.? *{pages}".format(pages=pages))
-INCOLLECTION = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. In (?P<editor>.+) \([Ee]ds?\.\), (?P<booktitle>.*)[\.,] (?P<pages>[-–0-9]+)\. +{pubaddr}".format(pubaddr=pubaddr))
-MISC = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\.? *(?P<note>.*)")
+pppages = "\(?[Pps\. ]*%s\)?"%pages
+author = "(?P<author>.*?)" #do not slurp the year
+editor = "(?P<editor>.+)"
+booktitle = "(?P<booktitle>.+)"
+title = "(?P<title>.*)"
+journal = "(?P<journal>.*)"
+numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)" 
 
+#compiled regexes
+BOOK = re.compile("{author}[., ]*{year}[., ]*{title}\. +{pubaddr}".format(author=author,
+                                                                          year=year,
+                                                                          title=title,
+                                                                          pubaddr=pubaddr))
+ARTICLE = re.compile("{author}[., ]*{year}[., ]*{title}\. +{journal},? *{numbervolume}[\.,] *{pages}"\
+            .format(pages=pppages,
+                    author=author,
+                    year=year,
+                    journal=journal,
+                    numbervolume=numbervolume,
+                    title=title)
+                    )
+INCOLLECTION = re.compile("{author}[., ]*{year}[., ]*{title}\. In {editor} \([Ee]ds?\. *\), {booktitle}[\.,]? {pages}\. +{pubaddr}\."\
+                      .format(author=author,
+                              year=year,
+                              title=title,
+                              editor=editor,
+                              booktitle=booktitle,
+                              pages=pppages,
+                              pubaddr=pubaddr)
+                              )
+MISC = re.compile("{author}[., ]*{year}[., ]*{title}\.? *(?P<note>.*)".format(author=author, year=year, title=title))
+
+#regexes for telling entry types    
+EDITOR = re.compile("(\([Ee]ds?\.?\))")
+PAGES = re.compile(pages)
+PUBADDR = re.compile(pubaddr)
+
+#fields to output
 FIELDS = ["key",
     "title",
     "booktitle",
@@ -35,6 +59,7 @@ FIELDS = ["key",
     "publisher",
     "note"
     ]
+    
     
 class Record():
   def __init__(self,s):    
