@@ -11,12 +11,14 @@ YEAR = '[12][78901][0-9][0-9][a-f]'
 EDITOR = re.compile("(\(eds?\.?\))")
 IN = 'In'
 ENQUOTED = """["'`].*["']"""
-PAGES = re.compile("[Pp]*\.? *[0-9][-–]+[0-9]")
-PUBADDR = re.compile("(.+) *: *(.+)")
+pages = "(?P<pages>[0-9]+[-–]+[0-9]+)"
+PAGES = re.compile(pages)
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)"
+PUBADDR = re.compile(pubaddr)
 VOLNUM = "([0-9]+) *(\(?[0-9]\)?)"
-BOOK = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)")
-ARTICLE = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<journal>.*) (?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?[\.,] (?P<pages>[-–0-9]+)")
-INCOLLECTION = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. In (?P<editor>.+) \([Ee]ds?\.\), (?P<booktitle>.*)[\.,] (?P<pages>[-–0-9]+)\. (?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)\.")
+BOOK = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +{}".format((pubaddr)))
+ARTICLE = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<journal>.*) (?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?[\.,] [Pp]*\.? *{pages}".format(pages=pages))
+INCOLLECTION = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. In (?P<editor>.+) \([Ee]ds?\.\), (?P<booktitle>.*)[\.,] (?P<pages>[-–0-9]+)\. +{pubaddr}".format(pubaddr=pubaddr))
 MISC = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\.? *(?P<note>.*)")
 
 FIELDS = ["key",
