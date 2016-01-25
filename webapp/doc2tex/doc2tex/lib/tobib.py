@@ -14,9 +14,10 @@ ENQUOTED = """["'`].*["']"""
 PAGES = re.compile("[Pp]*\.? *[0-9][-–]+[0-9]")
 PUBADDR = re.compile("(.+) *: *(.+)")
 VOLNUM = "([0-9]+) *(\(?[0-9]\)?)"
-BOOK = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<address>.+) *: *(?P<publisher>.*?)\.")
-ARTICLE = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<journal>.*) (?P<number>[-0-9]+)\. (?P<pages>[-–0-9]+)")
-INCOLLECTION = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. In (?P<editor>.*) \(eds?\.\), (?P<booktitle>.*), (?P<pages>[-–0-9]+). (?P<address>.+) *: *(?P<publisher>.+)\.")
+BOOK = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)")
+ARTICLE = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. +(?P<journal>.*) (?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?[\.,] (?P<pages>[-–0-9]+)")
+INCOLLECTION = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\. In (?P<editor>.+) \([Ee]ds?\.\), (?P<booktitle>.*)[\.,] (?P<pages>[-–0-9]+)\. (?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)\.")
+MISC = re.compile("(?P<author>.*?)[., ]*\(?(?P<year>[12][78901][0-9][0-9][a-f]?)\)?[., ]*(?P<title>.*)\.? *(?P<note>.*)")
 
 FIELDS = ["key",
     "title",
@@ -30,11 +31,13 @@ FIELDS = ["key",
     "pages",
     "address",
     "publisher",
+    "note"
     ]
     
 class Record():
   def __init__(self,s):    
-    self.orig = s
+    self.orig = s    
+    self.bibstring = s
     self.typ = "misc"    
     self.key = None
     self.title = None
@@ -70,6 +73,7 @@ class Record():
         self.year = m.group('year')
         self.journal = m.group('journal')
         self.number = m.group('number')
+        self.volume = m.group('volume')
         self.pages = m.group('pages')   
     elif PUBADDR.search(s):
       self.typ = "book"  
@@ -81,16 +85,19 @@ class Record():
         self.address = m.group('address')
         self.publisher = m.group('publisher')
     else:
-      self.parsemisc(s) 
-    #self.bibstring = self.tobibtex()   
+      m = MISC.search(s)
+      if m:
+        self.author = m.group('author')
+        self.title = m.group('title')
+        self.year = m.group('year')
+        self.note = m.group('note')
     try:
       self.author = self.author.replace('&', ' and ')
-    except AttributeError:
-      pass 
-    try:
-      self.editor = self.editor.replace('&', ' and ')
-    except AttributeError:
-      pass
+    except AttributeError: 
+      try:
+        self.editor = self.editor.replace('&', ' and ')
+      except AttributeError:
+        return
     authorpart = "Anonymous"
     yearpart = "9999" 
     try: 
@@ -100,10 +107,11 @@ class Record():
     try:
       yearpart = self.year[:4]
     except TypeError:
-      pass
+      return
     key = authorpart+yearpart 
     bibstring="@%s{%s,\n\t"%(self.typ,key)    
     fields = [(f,self.__dict__[f]) for f in self.__dict__ if f in FIELDS and self.__dict__[f]!=None]
+    fields.sort()
     bibstring+=",\n\t".join(["%s = {%s}"%f for f in fields])
     bibstring+="\n}"  
     #print bibstring
