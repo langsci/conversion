@@ -14,7 +14,7 @@ booktitle = "(?P<booktitle>.+)"
 title = "(?P<title>.*)"
 journal = "(?P<journal>.*?)"
 numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
-pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+?)\.?"
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+?)\.?\n"
 
 #compiled regexes
 BOOK = re.compile("{author} {ed}[., ]*{year}[., ]*{title}\. +{pubaddr}".format(author=author,
