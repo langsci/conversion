@@ -59,7 +59,8 @@ FIELDS = ["key",
     "pages",
     "address",
     "publisher",
-    "note"
+    "note",
+    "url"
     ]
     
     
@@ -136,8 +137,10 @@ class Record():
       except AttributeError:
         return
     if self.title and "http" in self.title:
+      print 2
       t = self.title.split("http:")[0]
       self.url="http:"+'http://zxZC'.join(self.title.split("http:")[1:])
+      self.title=t
     #http
     #series volume
     authorpart = "Anonymous"
