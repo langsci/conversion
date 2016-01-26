@@ -8,15 +8,17 @@ year = '\(? *(?P<year>[12][78901][0-9][0-9][a-f]?) *\)?'
 pages = "(?P<pages>[0-9]+[-–]+[0-9]+)"
 pppages = "\(?[Pps\. ]*%s\)?"%pages
 author = "(?P<author>.*?)" #do not slurp the year
+ed = "(?P<ed>\([Ee]ds?\.?\))?"
 editor = "(?P<editor>.+)"
 booktitle = "(?P<booktitle>.+)"
 title = "(?P<title>.*)"
 journal = "(?P<journal>.*)"
 numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
-pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+)" 
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+?)\.?\n" 
 
 #compiled regexes
-BOOK = re.compile("{author}[., ]*{year}[., ]*{title}\. +{pubaddr}".format(author=author,
+BOOK = re.compile("{author} {ed}[., ]*{year}[., ]*{title}\. +{pubaddr}".format(author=author,
+                                                                          ed=ed,
                                                                           year=year,
                                                                           title=title,
                                                                           pubaddr=pubaddr))
@@ -40,7 +42,7 @@ INCOLLECTION = re.compile("{author}[., ]*{year}[., ]*{title}\. In {editor} \([Ee
 MISC = re.compile("{author}[., ]*{year}[., ]*{title}\.? *(?P<note>.*)".format(author=author, year=year, title=title))
 
 #regexes for telling entry types    
-EDITOR = re.compile("(\([Ee]ds?\.?\))")
+EDITOR = re.compile("[0-9]{4}.*(\([Ee]ds?\.?\))") #make sure the editor of @incollection is only matched after the year
 PAGES = re.compile(pages)
 PUBADDR = re.compile(pubaddr)
 
@@ -81,8 +83,8 @@ class Record():
     self.note = None 
     if  EDITOR.search(s):
       self.typ = "incollection"
-      m = INCOLLECTION.search(s)
-      if m:
+      m = INCOLLECTION.search(s) 
+      if m: 
         self.author = m.group('author')
         self.editor = m.group('editor')
         self.title = m.group('title')
@@ -104,20 +106,23 @@ class Record():
         self.pages = m.group('pages')   
     elif PUBADDR.search(s):
       self.typ = "book"  
-      m = BOOK.search(s)
+      m = BOOK.search(s) 
       if m:
         self.author = m.group('author')
+        if m.group('ed') != None:
+          self.editor = m.group('author')
+          self.author = None
         self.title = m.group('title')
         self.year = m.group('year')
         self.address = m.group('address')
         self.publisher = m.group('publisher')
-    else:
+    else: 
       m = MISC.search(s)
       if m:
         self.author = m.group('author')
         self.title = m.group('title')
         self.year = m.group('year')
-        self.note = m.group('note')
+        self.note = m.group('note') 
     try:
       self.author = self.author.replace('&', ' and ')
     except AttributeError: 
