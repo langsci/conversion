@@ -12,9 +12,9 @@ ed = "(?P<ed>\([Ee]ds?\.?\))?"
 editor = "(?P<editor>.+)"
 booktitle = "(?P<booktitle>.+)"
 title = "(?P<title>.*)"
-journal = "(?P<journal>.*)"
+journal = "(?P<journal>.*?)"
 numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
-pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+?)\.?\n" 
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+?)\.?"
 
 #compiled regexes
 BOOK = re.compile("{author} {ed}[., ]*{year}[., ]*{title}\. +{pubaddr}".format(author=author,
@@ -81,10 +81,13 @@ class Record():
     self.address = None
     self.publisher = None
     self.note = None 
+    self.url = None 
     if  EDITOR.search(s):
       self.typ = "incollection"
       m = INCOLLECTION.search(s) 
+      #print 1
       if m: 
+        #print 2
         self.author = m.group('author')
         self.editor = m.group('editor')
         self.title = m.group('title')
@@ -93,6 +96,7 @@ class Record():
         self.address = m.group('address')
         self.publisher = m.group('publisher')
         self.pages = m.group('pages') 
+        #pprint.pprint(self.__dict__)
     elif  PAGES.search(s):      
       self.typ = "article"
       m = ARTICLE.search(s)
@@ -123,6 +127,7 @@ class Record():
         self.title = m.group('title')
         self.year = m.group('year')
         self.note = m.group('note') 
+    #print self.editor
     try:
       self.author = self.author.replace('&', ' and ')
     except AttributeError: 
@@ -130,6 +135,11 @@ class Record():
         self.editor = self.editor.replace('&', ' and ')
       except AttributeError:
         return
+    if self.title and "http" in self.title:
+      t = self.title.split("http:")[0]
+      self.url="http:"+'http://zxZC'.join(self.title.split("http:")[1:])
+    #http
+    #series volume
     authorpart = "Anonymous"
     yearpart = "9999" 
     try: 
