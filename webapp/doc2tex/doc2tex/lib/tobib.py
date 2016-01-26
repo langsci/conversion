@@ -13,15 +13,18 @@ editor = "(?P<editor>.+)"
 booktitle = "(?P<booktitle>.+)"
 title = "(?P<title>.*)"
 journal = "(?P<journal>.*?)"
+note = "(?P<note>.*)"
 numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
-pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+?)\.?\n"
-
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+[^\.\n])\.?"
+seriesnumber = "(?P<newtitle>.*) \((?P<series>.*?) +(?P<number>[-\.0-9/]+)\)"
+SERIESNUMBER =  re.compile(seriesnumber)
 #compiled regexes
-BOOK = re.compile("{author} {ed}[., ]*{year}[., ]*{title}\. +{pubaddr}".format(author=author,
+BOOK = re.compile("{author} {ed}[\., ]*{year}[\., ]*{title}\. +{pubaddr}{note}".format(author=author,
                                                                           ed=ed,
                                                                           year=year,
                                                                           title=title,
-                                                                          pubaddr=pubaddr))
+                                                                          pubaddr=pubaddr,
+                                                                          note=note))
 ARTICLE = re.compile("{author}[., ]*{year}[., ]*{title}\. +{journal},? *{numbervolume}[\.,] *{pages}"\
             .format(pages=pppages,
                     author=author,
@@ -60,7 +63,8 @@ FIELDS = ["key",
     "address",
     "publisher",
     "note",
-    "url"
+    "url",
+    "series"
     ]
     
     
@@ -111,7 +115,7 @@ class Record():
         self.pages = m.group('pages')   
     elif PUBADDR.search(s):
       self.typ = "book"  
-      m = BOOK.search(s) 
+      m = BOOK.match(s) 
       if m:
         self.author = m.group('author')
         if m.group('ed') != None:
@@ -121,6 +125,7 @@ class Record():
         self.year = m.group('year')
         self.address = m.group('address')
         self.publisher = m.group('publisher')
+        self.note = m.group('note')
     else: 
       m = MISC.search(s)
       if m:
@@ -139,8 +144,15 @@ class Record():
     if self.title and "http" in self.title:
       print 2
       t = self.title.split("http:")[0]
-      self.url="http:"+'http://zxZC'.join(self.title.split("http:")[1:])
+      self.url="http:"+'http://'.join(self.title.split("http:")[1:])
       self.title=t
+    if self.title:
+      m = SERIESNUMBER.match(self.title)
+      if m:
+        print 3
+        self.series = m.group('series')
+        self.number = m.group('number')
+        self.title = m.group('newtitle')
     #http
     #series volume
     authorpart = "Anonymous"
@@ -155,7 +167,7 @@ class Record():
       return
     key = authorpart+yearpart 
     bibstring="@%s{%s,\n\t"%(self.typ,key)    
-    fields = [(f,self.__dict__[f]) for f in self.__dict__ if f in FIELDS and self.__dict__[f]!=None]
+    fields = [(f,self.__dict__[f]) for f in self.__dict__ if f in FIELDS and self.__dict__[f] not in ('',None)]
     fields.sort()
     bibstring+=",\n\t".join(["%s = {%s}"%f for f in fields])
     bibstring+="\n}"  
