@@ -4,6 +4,7 @@ import shutil
 import codecs
 import uuid
 import sys 
+import langscibibtex
 
 WD = '/home/doc2tex'
 WD = '/tmp'
@@ -368,7 +369,14 @@ class Document:
 	modtext = re.sub("\\\\includegraphics\[.*?width=\\\\textwidth","%please move the includegraphics inside the {figure} environment\n%%\includegraphics[width=\\\\textwidth",modtext)
 	
 	modtext = re.sub("\\\\item *\n+",'\\item ',modtext)
-	return modtext
+	
+	bibliography = ''
+	a = re.compile("\n\s*References\s*\n").split(modtext)
+	if len(a)==2:
+		modtext = a[0]
+		refs = a[1].split('\n')
+		bibliography = '\n'.join([langscibibtex.Record(r).bibstring for r in refs])		
+	return modtext+"\n\\end{document}%%remove this line and move all lines below to localbibliography.bib\n"+bibliography
 	    
 if __name__ == '__main__':
     fn = sys.argv[1]

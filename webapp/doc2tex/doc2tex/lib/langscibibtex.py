@@ -135,21 +135,19 @@ class Record():
         self.note = m.group('note') 
     #print self.editor
     try:
-      self.author = self.author.replace('&', ' and ')
+      self.author = self.author.replace('&', ' and ').replace('\ ', ' ')
     except AttributeError: 
       try:
         self.editor = self.editor.replace('&', ' and ')
       except AttributeError:
         return
     if self.title and "http" in self.title:
-      print 2
       t = self.title.split("http:")[0]
       self.url="http:"+'http://'.join(self.title.split("http:")[1:])
       self.title=t
     if self.title:
       m = SERIESNUMBER.match(self.title)
       if m:
-        print 3
         self.series = m.group('series')
         self.number = m.group('number')
         self.title = m.group('newtitle')
