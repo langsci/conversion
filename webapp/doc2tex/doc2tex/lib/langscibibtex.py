@@ -5,7 +5,7 @@ import pprint
  
 #pattern definitions
 year = '\(? *(?P<year>[12][78901][0-9][0-9][a-f]?) *\)?' 
-pages = "(?P<pages>[0-9]+[-–]+[0-9]+)"
+pages = u"(?P<pages>[0-9xivXIV]+[-––]+[0-9xivXIV]+)"
 pppages = "\(?[Pps\. ]*%s\)?"%pages
 author = "(?P<author>.*?)" #do not slurp the year
 ed = "(?P<ed>\([Ee]ds?\.?\))?"
@@ -19,28 +19,30 @@ pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+[^\.\n])\.?"
 seriesnumber = "(?P<newtitle>.*) \((?P<series>.*?) +(?P<number>[-\.0-9/]+)\)"
 SERIESNUMBER =  re.compile(seriesnumber)
 #compiled regexes
-BOOK = re.compile("{author} {ed}[\., ]*{year}[\., ]*{title}\. +{pubaddr}{note}".format(author=author,
+BOOK = re.compile(u"{author} {ed}[\., ]*{year}[\., ]*{title}\. +{pubaddr}{note}".format(author=author,
                                                                           ed=ed,
                                                                           year=year,
                                                                           title=title,
                                                                           pubaddr=pubaddr,
                                                                           note=note))
-ARTICLE = re.compile("{author}[., ]*{year}[., ]*{title}\. +{journal},? *{numbervolume}[\.,] *{pages}"\
+ARTICLE = re.compile(u"{author}[., ]*{year}[., ]*{title}\. +{journal},? *{numbervolume}[\.,] *{pages}{note}"\
             .format(pages=pppages,
                     author=author,
                     year=year,
                     journal=journal,
                     numbervolume=numbervolume,
-                    title=title)
+                    title=title,
+                    note=note)
                     )
-INCOLLECTION = re.compile("{author}[., ]*{year}[., ]*{title}\. In {editor} \([Ee]ds?\. *\), {booktitle}[\.,]? {pages}\. +{pubaddr}\."\
+INCOLLECTION = re.compile(u"{author}[., ]*{year}[., ]*{title}\. In {editor} \([Ee]ds?\. *\), {booktitle}[\.,]? {pages}\. +{pubaddr}\.{note}"\
                       .format(author=author,
                               year=year,
                               title=title,
                               editor=editor,
                               booktitle=booktitle,
                               pages=pppages,
-                              pubaddr=pubaddr)
+                              pubaddr=pubaddr,
+                              note=note)
                               )
 MISC = re.compile("{author}[., ]*{year}[., ]*{title}\.? *(?P<note>.*)".format(author=author, year=year, title=title))
 
@@ -69,7 +71,8 @@ FIELDS = ["key",
     
     
 class Record():
-  def __init__(self,s):    
+  def __init__(self,s):  
+    s=s.strip()
     self.orig = s    
     self.bibstring = s
     self.typ = "misc"    
@@ -100,7 +103,8 @@ class Record():
         self.year = m.group('year') 
         self.address = m.group('address')
         self.publisher = m.group('publisher')
-        self.pages = m.group('pages') 
+        self.pages = m.group('pages')   
+        self.note = m.group('note')   
         #pprint.pprint(self.__dict__)
     elif  PAGES.search(s):      
       self.typ = "article"
@@ -113,6 +117,7 @@ class Record():
         self.number = m.group('number')
         self.volume = m.group('volume')
         self.pages = m.group('pages')   
+        self.note = m.group('note')   
     elif PUBADDR.search(s):
       self.typ = "book"  
       m = BOOK.match(s) 

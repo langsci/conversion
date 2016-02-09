@@ -8,10 +8,29 @@ from .lib.langsci import  convert
 from .lib.sanitycheck import  LSPDir
 import shutil
 import string
+from lib import langscibibtex
 
 @view_config(route_name='home', renderer='templates/mytemplate.pt')
 def home(request):
-    return {'project': 'doc2tex'}
+  return {'project': 'doc2tex'}
+	
+@view_config(route_name='doc2bib', renderer='templates/doc2bib.pt')
+def home(request):
+	print request.POST.__dict__
+	biboutput = ''
+	try:
+		bibinput = request.POST['bibinput'].strip()
+		biboutput = '\n\n'.join([langscibibtex.Record(l).bibstring for l in bibinput.split('\n')])
+		#biboutput = '\n'.join([str(len(l)) for l in bibinput.split('\n')])
+	except KeyError:
+		bibinput = "Paste your bibliography here"
+	print bibinput
+	print 2
+	#biboutput = bibinput
+	return {'project': 'doc2bib',
+	'bibinput': bibinput,
+	'biboutput': biboutput
+				}
     
 @view_config(route_name='sanitycheck', renderer='templates/sanitycheck.pt')
 def sanitycheck(request):   
