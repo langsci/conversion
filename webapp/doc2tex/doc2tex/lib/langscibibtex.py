@@ -15,7 +15,7 @@ title = "(?P<title>.*)"
 journal = "(?P<journal>.*?)"
 note = "(?P<note>.*)"
 numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
-pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+[^\.\n])\.?"
+pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+[^\.\n])"
 seriesnumber = "(?P<newtitle>.*) \((?P<series>.*?) +(?P<number>[-\.0-9/]+)\)"
 SERIESNUMBER =  re.compile(seriesnumber)
 #compiled regexes
@@ -138,6 +138,8 @@ class Record():
         self.title = m.group('title')
         self.year = m.group('year')
         self.note = m.group('note') 
+    if self.note=='.':
+      self.note = None
     #print self.editor
     try:
       self.author = self.author.replace('&', ' and ').replace('\ ', ' ')
