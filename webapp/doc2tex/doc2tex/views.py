@@ -10,22 +10,23 @@ import shutil
 import string
 from lib import langscibibtex
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def home(request):
+@view_config(route_name='doc2tex', renderer='templates/mytemplate.pt')
+def doc2tex(request):
   return {'project': 'doc2tex'}
 	
 @view_config(route_name='doc2bib', renderer='templates/doc2bib.pt')
-def home(request):
-	print request.POST.__dict__
+def home(request): 
 	biboutput = ''
 	try:
 		bibinput = request.POST['bibinput'].strip()
 		biboutput = '\n\n'.join([langscibibtex.Record(l).bibstring for l in bibinput.split('\n')])
 		#biboutput = '\n'.join([str(len(l)) for l in bibinput.split('\n')])
 	except KeyError:
-		bibinput = "Paste your bibliography here"
-	print bibinput
-	print 2
+		#bibinput = "Paste your bibliography here" 
+		bibinput = """Bloomfield, Leonard. 1925. On the sound-system of central Algonquian. Language 1(4). 130-156.
+
+Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change in phonology and morphology (Trends in Linguistics 127). Berlin: Mouton de Gruyter.
+"""
 	#biboutput = bibinput
 	return {'project': 'doc2bib',
 	'bibinput': bibinput,
