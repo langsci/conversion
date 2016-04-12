@@ -99,9 +99,9 @@ class Document:
 	    pass
 	shutil.copytree(lspskeletond, localskeletond)
 	os.chdir(localskeletond)
-	localcommands = codecs.open('localcommands.sty','a', encoding='utf-8')
-	localpackages = codecs.open('localpackages.sty','a', encoding='utf-8')
-	localcounters = codecs.open('localcounters.sty','a', encoding='utf-8') 
+	localcommands = codecs.open('localcommands.tex','a', encoding='utf-8')
+	localpackages = codecs.open('localpackages.tex','a', encoding='utf-8')
+	localcounters = codecs.open('localcounters.tex','a', encoding='utf-8') 
 	content =   codecs.open('chapters/filename.tex','w', encoding='utf-8') 
 	contentorig =   codecs.open('chapters/filenameorig.tex','w', encoding='utf-8')  
 	localcommands.write(self.commands)
