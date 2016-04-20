@@ -78,7 +78,7 @@ def convert(fn, wd=WD, tmpdir=False):
     newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l and 'labellistLi' not in l and 'textsubscript' not in l]) # or l.startswith('\\renewcommand')])
     #replace all definitions of new environments by {}{}
     newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')  and 'listLi' not in l]) # or l.startswith('\\renewcommand')])
-    newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage')])
+    newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage') and "fontenc" not in l and "inputenc" not in l])
     newcounters = '\n'.join([l for l in preamble if l.startswith('\\newcounter')])        
     return Document(newcommands,newenvironments, newpackages, newcounters, text)
     
@@ -203,7 +203,7 @@ class Document:
 				("{styleConversationTranscript}","{lstlisting}"),   
 				("\ "," "),  
 				#(" }","} "),  
-				("\\setcounter","%\\setcounter"),  
+				#("\\setcounter","%\\setcounter"),  
 				("\n\n\\item","\\item"),  
 				("\n\n\\end","\\end") 
 				
@@ -377,7 +377,7 @@ class Document:
 		modtext = a[0]
 		refs = a[1].split('\n')
 		bibliography = '\n'.join([langscibibtex.Record(r).bibstring for r in refs])		
-	return modtext+"\n\\end{document}%%remove this line and move all lines below to localbibliography.bib\n"+bibliography
+	return modtext+"\n\\begin{verbatim}%%move bib entries to  localbibliography.bib\n"+bibliography+'\\end{verbatim}'
 	    
 if __name__ == '__main__':
     fn = sys.argv[1]

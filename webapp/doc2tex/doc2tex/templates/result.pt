@@ -73,7 +73,7 @@
 <!-- 			<form action="https://www.writelatex.com/docs" method="get" target="_blank">  -->
 			    <textarea name="snip"  rows="30" cols="70">${texttpl[0][1]}  </textarea> 
 			    <p class="wlsubmitter"> 
-				<a href="https://www.overleaf.com/docs?snip_uri=${zipurl}&engine=xelatex" target="_blank"> open in writelatex </a>
+				<a href="https://www.overleaf.com/docs?snip_uri=${zipurl}&engine=xelatex" target="_blank"> open in Overleaf </a>
 			    </p>
 <!-- 			</form>  -->
 		    </div>    
@@ -81,7 +81,7 @@
 <!-- 			<form action="https://www.writelatex.com/docs" method="get" target="_blank">  -->
 			    <textarea name="snip"  rows="30" cols="70">${texttpl[1][1]} </textarea>  
 			    <p class="wlsubmitter"> 
-				<a href="https://www.overleaf.com/docs?snip_uri=${zipurl}&engine=xelatex" target="_blank"> open in writelatex </a>
+				<a href="https://www.overleaf.com/docs?snip_uri=${zipurl}&engine=xelatex" target="_blank"> open in Overleaf </a>
 			    </p>
 <!-- 			</form>  -->
 		    </div>   
