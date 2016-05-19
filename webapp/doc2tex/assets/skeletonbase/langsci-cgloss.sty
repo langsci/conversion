@@ -1,3 +1,13 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%      File: langsci-cgloss.sty
+%%    Author: Language Science Press (http://langsci-press.org)
+%%      Date: 2016-01-16 16:47:43 UTC 
+%%   Purpose: This file contains an adpated version of the cgloss
+%%            package for glossing linguistic examples.
+%%  Language: LaTeX
+%%   Licence: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % -*- LaTeX -*-
 
 % Modified version of cgloss4e.sty.  Hacked and renamed cgloss.sty
@@ -68,7 +78,8 @@
    {\def\@selfnt{\selectfont}}
 
 \def\gll%                  % Introduces 2-line text-and-gloss.
-   {\bgroup %\begin{flushleft}
+   {\raggedright%
+     \bgroup %\begin{flushleft}
      \ifx\@gsingle1%           conditionally force single spacing (hpk/MC)
 	 \def\baselinestretch{1}\@selfnt\fi
 %        \vskip\baselineskip\def\baselinestretch{1}%
@@ -187,14 +198,14 @@
 %\glossglue = 5pt plus 2pt minus 1pt % allow stretch/shrink between words
 \newif\ifnotdone
 
-\@ifundefined{eachwordone}{\let\eachwordone=\rm}{\relax}
-\@ifundefined{eachwordtwo}{\let\eachwordtwo=\rm}{\relax}
-\@ifundefined{eachwordthree}{\let\eachwordthree=\rm}{\relax}
-\@ifundefined{eachwordfour}{\let\eachwordfour=\rm}{\relax}
-\@ifundefined{eachwordfive}{\let\eachwordfive=\rm}{\relax}
-\@ifundefined{eachwordsix}{\let\eachwordsix=\rm}{\relax}
-\@ifundefined{eachwordseven}{\let\eachwordseven=\rm}{\relax}
-\@ifundefined{eachwordeight}{\let\eachwordeight=\rm}{\relax}
+\@ifundefined{eachwordone}{\let\eachwordone=\upshape}{\relax}
+\@ifundefined{eachwordtwo}{\let\eachwordtwo=\upshape}{\relax}
+\@ifundefined{eachwordthree}{\let\eachwordthree=\upshape}{\relax}
+\@ifundefined{eachwordfour}{\let\eachwordfour=\upshape}{\relax}
+\@ifundefined{eachwordfive}{\let\eachwordfive=\upshape}{\relax}
+\@ifundefined{eachwordsix}{\let\eachwordsix=\upshape}{\relax}
+\@ifundefined{eachwordseven}{\let\eachwordseven=\upshape}{\relax}
+\@ifundefined{eachwordeight}{\let\eachwordeight=\upshape}{\relax}
 
 \def\lastword#1#2#3% #1 = \each, #2 = line box, #3 = word box
    {\setbox#2=\vbox{\unvbox#2%
