@@ -10,27 +10,29 @@ import shutil
 import string
 from lib import langscibibtex
 
-@view_config(route_name='home', renderer='templates/mytemplate.pt')
-def home(request):
+@view_config(route_name='doc2tex', renderer='templates/mytemplate.pt')
+def doc2tex(request):
   return {'project': 'doc2tex'}
-	
+
+  
 @view_config(route_name='doc2bib', renderer='templates/doc2bib.pt')
-def home(request):
-	print request.POST.__dict__
-	biboutput = ''
-	try:
-		bibinput = request.POST['bibinput'].strip()
-		biboutput = '\n\n'.join([langscibibtex.Record(l).bibstring for l in bibinput.split('\n')])
-		#biboutput = '\n'.join([str(len(l)) for l in bibinput.split('\n')])
-	except KeyError:
-		bibinput = "Paste your bibliography here"
-	print bibinput
-	print 2
-	#biboutput = bibinput
-	return {'project': 'doc2bib',
-	'bibinput': bibinput,
-	'biboutput': biboutput
-				}
+def home(request): 
+        biboutput = ''
+        try:
+                bibinput = request.POST['bibinput'].strip()
+                biboutput = '\n\n'.join([langscibibtex.Record(l).bibstring for l in bibinput.split('\n')])
+                #biboutput = '\n'.join([str(len(l)) for l in bibinput.split('\n')])
+        except KeyError:
+                #bibinput = "Paste your bibliography here" 
+                bibinput = """Bloomfield, Leonard. 1925. On the sound-system of central Algonquian. Language 1(4). 130-156.
+
+Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change in phonology and morphology (Trends in Linguistics 127). Berlin: Mouton de Gruyter.
+"""
+        #biboutput = bibinput
+        return {'project': 'doc2bib',
+        'bibinput': bibinput,
+        'biboutput': biboutput
+                                }
     
 @view_config(route_name='sanitycheck', renderer='templates/sanitycheck.pt')
 def sanitycheck(request):   
@@ -45,7 +47,7 @@ def sanitycheck(request):
     print lspdir.errors
     #shutil.rmtree(d)
     return {'project': 'doc2tex',
-	    'files':lspdir.errors}
+            'files':lspdir.errors}
   
     
 def _upload(filename,f,accept):
@@ -53,7 +55,7 @@ def _upload(filename,f,accept):
     input_file = f
     filetype = inputfn.split('.')[-1]
     if filetype not in accept:
-	raise WrongFileFormatError(filetype)
+        raise WrongFileFormatError(filetype)
     tmpdir = '%s'%uuid.uuid4()
     os.mkdir(os.path.join('/tmp',tmpdir))
     #tmpfile = '%s.%s' % (uuid.uuid4(),filetype)
@@ -82,19 +84,21 @@ def result(request):
     filename = _upload(fn, input_file,('doc', 'docx', 'odt'))
     #convert file to tex
     try:
-	texdocument = convert(filename)
+        texdocument = convert(filename)
     except ValueError:
-	raise FileFormatFailure(filetype)
+        raise FileFormatFailure(filetype)
+    except IOError:
+        raise Writer2LatexError 
     #os.remove(filename)
     texdocument.ziptex()    
     texttpl = (('raw',texdocument.text),
-	       ('mod',texdocument.modtext)
-	      )
+               ('mod',texdocument.modtext)
+              )
     return {'project': 'doc2tex',
-	    'filename': fn,
-	    'texttpl': texttpl, 
-	    'zipurl': "http://www.glottotopia.org/wlport/%s.zip"%texdocument.zipfn}
-	    
+            'filename': fn,
+            'texttpl': texttpl, 
+            'zipurl': "http://www.glottotopia.org/wlport/%s.zip"%texdocument.zipfn}
+            
 
 class FileFormatFailure(Exception):
     pass
@@ -118,5 +122,23 @@ def wrongfileformat(exc, request):
     filetype = exc.args[0] if exc.args else ""
     msg =  'Files of type %s are not accepted. The only file types accepted are docx, doc, and odt' %filetype
     return {'project': 'doc2tex',
-	    'msg': msg }
-	    
+            'msg': msg }
+            
+             
+class Writer2LatexError(Exception):
+    pass
+
+@view_config(context=Writer2LatexError, renderer='templates/error.pt')
+def w2lerror(exc, request):
+    # If the view has two formal arguments, the first is the context.
+    # The context is always available as ``request.context`` too.
+    filetype = exc.args[0] if exc.args else ""
+    msg =  """The file could not be converted. Common causes are:
+                 1. file format. *odt is best, *doc is also possible, *docx is the most problematic format 
+                 2. an automatic table of contents
+                 3. many graphics 
+                 4. complicated tables. Remove problematic elements from your file, save in another format and retry.
+    """ 
+    return {'project': 'doc2tex',
+            'msg': msg }
+            

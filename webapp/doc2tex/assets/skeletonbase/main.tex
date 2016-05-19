@@ -8,9 +8,16 @@
 % Everything following a % is ignored
 % Some lines start with %. Remove the % to include them
 
+<<<<<<< HEAD
 \documentclass[output=book,
   modfonts 
 		  ]{langscibook}    
+=======
+\documentclass[output=short% short|inprep|coverbod|covercreatespace              
+%  	        ,draftmode  
+%			,coverus
+		  ]{langsci/langscibook}    
+>>>>>>> 243fa13c2a5b92c85ebf4a19980a5bdbcdba932d
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%                                              %%%
@@ -22,6 +29,10 @@
 % following files. {I}f you do not know what this might 
 % mean, you can safely ignore this section
 
+<<<<<<< HEAD
+=======
+\title{Converted document} %remove this line and set the real title in localmetadata.tex
+>>>>>>> 243fa13c2a5b92c85ebf4a19980a5bdbcdba932d
 \input{localmetadata.tex}
 \input{localpackages.tex}
 \input{localhyphenation.tex}
@@ -34,6 +45,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 \begin{document}     
 \input{localcommands.tex} 
+<<<<<<< HEAD
+=======
+\input{localcounters.tex} 
+>>>>>>> 243fa13c2a5b92c85ebf4a19980a5bdbcdba932d
  
 
 \maketitle                
@@ -54,9 +69,14 @@
 %%%                                              %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  
+<<<<<<< HEAD
 \include{chapters/filename}
 \include{chapters/01}  %add a percentage sign in front of the line to exclude this chapter from book
 \include{chapters/02}
+=======
+\include{chapters/filename}  %add a percentage sign in front of the line to exclude this chapter from book
+
+>>>>>>> 243fa13c2a5b92c85ebf4a19980a5bdbcdba932d
 
 % % copy the lines above and adapt as necessary
 
@@ -66,7 +86,10 @@
 %%%                                              %%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+<<<<<<< HEAD
 \input{localseealso.tex} 
+=======
+>>>>>>> 243fa13c2a5b92c85ebf4a19980a5bdbcdba932d
 % There is normally no need to change the backmatter section
 \input{backmatter.tex} 
 \end{document} 

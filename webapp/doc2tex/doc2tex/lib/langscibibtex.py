@@ -1,4 +1,4 @@
-# --* encoding=utf8 *-- 
+## --* encoding=utf8 *-- 
 import sys
 import re
 import pprint 
@@ -6,7 +6,7 @@ import pprint
 #pattern definitions
 year = '\(? *(?P<year>[12][78901][0-9][0-9][a-f]?) *\)?' 
 pages = u"(?P<pages>[0-9xivXIV]+[-––]+[0-9xivXIV]+)"
-pppages = "\(?[Pps\. ]*%s\)?"%pages
+pppages = u"\(?[Pps\. ]*%s\)?"%pages
 author = "(?P<author>.*?)" #do not slurp the year
 ed = "(?P<ed>\([Ee]ds?\.?\))?"
 editor = "(?P<editor>.+)"
@@ -14,7 +14,7 @@ booktitle = "(?P<booktitle>.+)"
 title = "(?P<title>.*)"
 journal = "(?P<journal>.*?)"
 note = "(?P<note>.*)"
-numbervolume = "(?P<number>[-\.0-9/]+) *(\((?P<volume>[-0-9/]+)\))?"
+numbervolume = "(?P<volume>[-\.0-9/]+) *(\((?P<number>[-0-9/]+)\))?"
 pubaddr = "(?P<address>.+) *:(?!/) *(?P<publisher>[^:]+[^\.\n])"
 seriesnumber = "(?P<newtitle>.*) \((?P<series>.*?) +(?P<number>[-\.0-9/]+)\)"
 SERIESNUMBER =  re.compile(seriesnumber)
@@ -25,7 +25,7 @@ BOOK = re.compile(u"{author} {ed}[\., ]*{year}[\., ]*{title}\. +{pubaddr}{note}"
                                                                           title=title,
                                                                           pubaddr=pubaddr,
                                                                           note=note))
-ARTICLE = re.compile(u"{author}[., ]*{year}[., ]*{title}\. +{journal},? *{numbervolume}[\.,] *{pages}{note}"\
+ARTICLE = re.compile(u"{author}[., ]*{year}[., ]*{title}\. +{journal},? *{numbervolume}[\.,:] *{pages}{note}"\
             .format(pages=pppages,
                     author=author,
                     year=year,
@@ -34,7 +34,7 @@ ARTICLE = re.compile(u"{author}[., ]*{year}[., ]*{title}\. +{journal},? *{number
                     title=title,
                     note=note)
                     )
-INCOLLECTION = re.compile(u"{author}[., ]*{year}[., ]*{title}\. In {editor} \([Ee]ds?\. *\), {booktitle}[\.,]? {pages}\. +{pubaddr}\.{note}"\
+INCOLLECTION = re.compile(u"{author}[., ]*{year}[., ]*{title}\. In {editor} \([Ee]ds?\. *\)[\.,]? {booktitle}[\.,]? {pages}\. +{pubaddr}\.{note}"\
                       .format(author=author,
                               year=year,
                               title=title,

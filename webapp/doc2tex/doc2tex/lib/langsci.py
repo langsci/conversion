@@ -78,7 +78,7 @@ def convert(fn, wd=WD, tmpdir=False):
     newcommands = '\n'.join([l for l in preamble if l.startswith('\\newcommand') and '@' not in l and 'writerlist' not in l and 'labellistLi' not in l and 'textsubscript' not in l]) # or l.startswith('\\renewcommand')])
     #replace all definitions of new environments by {}{}
     newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')  and 'listLi' not in l]) # or l.startswith('\\renewcommand')])
-    newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage')])
+    newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage') and "fontenc" not in l and "inputenc" not in l])
     newcounters = '\n'.join([l for l in preamble if l.startswith('\\newcounter')])        
     return Document(newcommands,newenvironments, newpackages, newcounters, text)
     
@@ -99,9 +99,9 @@ class Document:
 	    pass
 	shutil.copytree(lspskeletond, localskeletond)
 	os.chdir(localskeletond)
-	localcommands = codecs.open('localcommands.sty','a', encoding='utf-8')
-	localpackages = codecs.open('localpackages.sty','a', encoding='utf-8')
-	localcounters = codecs.open('localcounters.sty','a', encoding='utf-8') 
+	localcommands = codecs.open('localcommands.tex','a', encoding='utf-8')
+	localpackages = codecs.open('localpackages.tex','a', encoding='utf-8')
+	localcounters = codecs.open('localcounters.tex','a', encoding='utf-8') 
 	content =   codecs.open('chapters/filename.tex','w', encoding='utf-8') 
 	contentorig =   codecs.open('chapters/filenameorig.tex','w', encoding='utf-8')  
 	localcommands.write(self.commands)
@@ -136,7 +136,7 @@ class Document:
 				#("\\end","\n\\end"), 
 				#(" }","} "),%causes problems with '\ '
 				("supertabular","tabular"),  
-				("\~{}","{\\Tilde}"), 
+				("\~{}","{\\textasciitilde}"), 
 				("\\section","\\chapter"),  
 				("\\subsection","\\section"),  
 				("\\subsubsection","\\subsection"),  
@@ -203,7 +203,7 @@ class Document:
 				("{styleConversationTranscript}","{lstlisting}"),   
 				("\ "," "),  
 				#(" }","} "),  
-				("\\setcounter","%\\setcounter"),  
+				#("\\setcounter","%\\setcounter"),  
 				("\n\n\\item","\\item"),  
 				("\n\n\\end","\\end") 
 				
@@ -237,8 +237,9 @@ class Document:
 		    "\\end{styleAbbildung}",
 		    "\\begin{styleTextbody}",
 		    "\\end{styleTextbody}",
-		    "\\hline",
 		    "\\maketitle",
+		    "\\hline",
+		    "\\arraybslash",
 		    "\\textstyleAbsatzStandardschriftart{}",
 		    "\\textstyleAbsatzStandardschriftart",
 		    "[Warning: Image ignored] % Unhandled or unsupported graphics:",
@@ -376,7 +377,7 @@ class Document:
 		modtext = a[0]
 		refs = a[1].split('\n')
 		bibliography = '\n'.join([langscibibtex.Record(r).bibstring for r in refs])		
-	return modtext+"\n\\end{document}%%remove this line and move all lines below to localbibliography.bib\n"+bibliography
+	return modtext+"\n\\begin{verbatim}%%move bib entries to  localbibliography.bib\n"+bibliography+'\\end{verbatim}'
 	    
 if __name__ == '__main__':
     fn = sys.argv[1]

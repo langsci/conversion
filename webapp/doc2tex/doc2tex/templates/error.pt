@@ -34,7 +34,7 @@
           <div class="col-md-10">
 	    <div class="content error">
 		<h3>Error</h3> 
-		 <span>${msg} </span>
+     <p>${msg} </p> 
 	    </div>
         </div>
         <div class="row">
