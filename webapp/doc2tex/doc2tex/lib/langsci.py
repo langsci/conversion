@@ -79,7 +79,7 @@ def convert(fn, wd=WD, tmpdir=False):
     #replace all definitions of new environments by {}{}
     newenvironments = '\n'.join(['%s}{}{}'%l.split('}')[0] for l in preamble if l.startswith('\\newenvironment')  and 'listLi' not in l]) # or l.startswith('\\renewcommand')])
     newpackages = '\n'.join([l for l in preamble if l.startswith('\\usepackage') and "fontenc" not in l and "inputenc" not in l])
-    newcounters = '\n'.join([l for l in preamble if l.startswith('\\newcounter')])        
+    newcounters = '\n'.join([l for l in preamble if l.startswith('\\newcounter')]+['\\newcounter{itemize}'])        
     return Document(newcommands,newenvironments, newpackages, newcounters, text)
     
 class Document:
