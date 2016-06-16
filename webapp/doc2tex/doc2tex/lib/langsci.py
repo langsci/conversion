@@ -211,6 +211,8 @@ class Document:
 	yanks =  ("\\begin{flushleft}",
 		    "\\end{flushleft}",
 		    "\\centering",
+		    "\\raggedright",
+		    "\\par ",
 		    "\\tablehead{}", 
 		    "\\textstylepagenumber",
 		    "\\textstyleCharChar", 
@@ -268,7 +270,7 @@ class Document:
 	#remove explicit counters. These are not usefull when from autoconversion 
 	
 	#remove explicit table widths
-	modtext = re.sub("m\{-?[0-9.]+(in|cm)\}","l",modtext)  
+	modtext = re.sub("m\{-?[0-9.]+(in|cm)\}","X",modtext)  
 	modtext = re.sub("l\|","l",modtext)
 	modtext = re.sub("\|l","l",modtext)
 	modtext = re.sub(r"\\fontsize\{.*?\}\\selectfont","",modtext)
@@ -351,6 +353,10 @@ class Document:
 \lsptoprule""",modtext) 
 	modtext = re.sub(r"\\end{tabular}\n*",r"""\lspbottomrule
 \end{tabular}\n""",modtext) 
+
+        modtext = modtext.replace("begin{tabular}","begin{tabularx}{\\textwidth}")
+        modtext = modtext.replace("end{tabular}","end{tabularx}")
+
 
 	modtext = re.sub("""listWWNum[ivxlc]+level[ivxlc]+""","itemize",modtext) 
 	modtext = re.sub("""listL[ivxlc]+level[ivxlc]+""","itemize",modtext) 

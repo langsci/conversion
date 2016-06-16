@@ -106,7 +106,7 @@ class TexFile(LSPFile):
     (r"\[sub]*section\{",r"\label","All sections should have a \\label. This is not necessary for subexamples."),
     #(r"\\ea.*",r"\label","All examples should have a \\label"),
     (r"\\gll\W+[A-Z]",r"[\.?!][ }]*\\\\ *$","All vernacular sentences should end with punctuation"),
-    (r"\\glt\W+[A-Z]",u"[\.?!]['’]+[ }]*$","All translated sentences should end with punctuation"),
+    (r"\\glt\W+[A-Z]",r"[\.?!]['’]+[ }\\]*$","All translated sentences should end with punctuation"),
     )
     
   filechecks = (
