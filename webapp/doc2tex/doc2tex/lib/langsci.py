@@ -271,8 +271,8 @@ class Document:
 	
 	#remove explicit table widths
 	modtext = re.sub("m\{-?[0-9.]+(in|cm)\}","X",modtext)  
-	modtext = re.sub("l\|","l",modtext)
-	modtext = re.sub("\|l","l",modtext)
+	modtext = re.sub("X\|","X",modtext)
+	modtext = re.sub("\|X","X",modtext)
 	modtext = re.sub(r"\\fontsize\{.*?\}\\selectfont","",modtext)
 	modtext = modtext.replace("\\multicolumn{1}{l}{}","")
 	modtext = modtext.replace("\\multicolumn{1}{l}","")
