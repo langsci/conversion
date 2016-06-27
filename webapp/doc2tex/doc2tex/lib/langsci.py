@@ -290,7 +290,7 @@ class Document:
 	modtext = re.sub("\\\\(sub)*section(\[.*?\])\{(\\text[bfmd][bfmd])\?(.*)\}","\\\\1section{\\4}",modtext) 
 	#                        several subs | options       formatting           title ||   subs      title
 	#move explict section number to end of line and comment out
-	modtext = re.sub("section\{([0-9\.]+ )(.*)","section{\2 %\1/",modtext)
+	modtext = re.sub("section\{([0-9\.]+ )(.*)","section{\\2 %\\1/",modtext)
 	modtext = re.sub("section\[.*?\]","section",modtext)
 	#                                 number    title         title number
 	#table cells in one row
