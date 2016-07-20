@@ -141,59 +141,124 @@ class Document:
 				("\\subsection","\\section"),  
 				("\\subsubsection","\\subsection"),  
 				
-				("""\\begin{listWWNumiileveli}
+                                ("""\\begin{listWWNumiileveli}
 \\item 
 \\setcounter{listWWNumiilevelii}{0}
 \\begin{listWWNumiilevelii}
 \\item 
-\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#MSi
-				("""\\begin{listWWNumiileveli}
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#MSi langsci
+                                
+                                ("""\\begin{listWWNumiileveli}
 \\item 
-\\begin{styleLangSciLanginfo}\n""","\\ea\\label{exx:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii
-				("""\\begin{listLangSciLanginfoiileveli}
+\\setcounter{listWWNumiilevelii}{0}
+\\begin{listWWNumiilevelii}
 \\item 
-\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOi
-				("""\\begin{listLangSciLanginfoiilevelii}
+\\begin{stylelsLanginfo}""","\\begin{stylelsLanginfo}"),#MSi ls
+                                
+                                ("""\\begin{listWWNumiileveli}
 \\item 
-\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOii
+\\begin{styleLangSciLanginfo}\n""","\\ea\\label{exx:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii langsci
+                                
+                                ("""\\begin{listWWNumiileveli}
+\\item 
+\\begin{stylelsLanginfo}\n""","\\ea\\label{exx:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii ls
+                                
+                                ("""\\begin{listLangSciLanginfoiileveli}
+\\item 
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOi langsci
+                                
+                                ("""\\begin{listlsLanginfoiileveli}
+\\item 
+\\begin{stylelsLanginfo}""","\\begin{stylelsLanginfo}"),#OOi ls
+                                
+                                ("""\\begin{listLangSciLanginfoiilevelii}
+\\item 
+\\begin{styleLangSciLanginfo}""","\\begin{styleLangSciLanginfo}"),#OOii langsci
+                                
+                                ("""\\begin{listlsLanginfoiilevelii}
+\\item 
+\\begin{stylelsLanginfo}""","\\begin{stylelsLanginfo}"),#OOii ls
+                                
 				("""\\end{styleLangSciLanginfo}
 
 
 \\end{listWWNumiilevelii}
-\\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"),	
-				("""\\end{styleLangSciLanginfo}
+\\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"),   #langsci  
+                                
+                                ("""\\end{stylelsLanginfo}
+
 
 \\end{listWWNumiilevelii}
-\\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"),				
+\\end{listWWNumiileveli}""","\\end{stylelsLanginfo}"),     #ls
+                                
+                                ("""\\end{styleLangSciLanginfo}
+
+\\end{listWWNumiilevelii}
+\\end{listWWNumiileveli}""","\\end{styleLangSciLanginfo}"), #langsci
+                                
+                                
+                                ("""\\end{stylelsLanginfo}
+
+\\end{listWWNumiilevelii}
+\\end{listWWNumiileveli}""","\\end{stylelsLanginfo}"), #ls
+                                 
+                                
 				("\\begin{styleLangSciLanginfo}\n","\\ea\label{ex:}\n\\langinfo{}{}{"),
-				("\\begin{listWWNumiilevelii}\n\\item \n\\ea\\label{ex:}\n",""),
-				("\n\\end{styleLangSciLanginfo}\n","}\\\\\n"), 				
-				("\\begin{styleLangSciExample}\n","\n\\gll "),
-				("\\end{styleLangSciExample}\n","\\\\"),
-				("\\begin{styleLangSciSourceline}\n","\\gll "),
-				("\\end{styleLangSciSourceline}\n","\\\\"),
+                                ("\\begin{stylelsLanginfo}\n","\\ea\label{ex:}\n\\langinfo{}{}{"),
+
+                                ("\\begin{listWWNumiilevelii}\n\\item \n\\ea\\label{ex:}\n",""),
+
+                                ("\n\\end{styleLangSciLanginfo}\n","}\\\\\n"),                          
+                                ("\\begin{styleLangSciExample}\n","\n\\gll "),
+                                ("\\end{styleLangSciExample}\n","\\\\"),
+                                ("\\begin{styleLangSciSourceline}\n","\\gll "),
+                                ("\\end{styleLangSciSourceline}\n","\\\\"),
+
+                                ("\n\\end{stylelsLanginfo}\n","}\\\\\n"),                          
+                                ("\\begin{stylelsExample}\n","\n\\gll "),
+                                ("\\end{stylelsExample}\n","\\\\"),
+                                ("\\begin{stylelsSourceline}\n","\\gll "),
+                                ("\\end{stylelsSourceline}\n","\\\\"),
 				("\\end{listWWNumiileveli}\n\\gll","\\gll"),
-				("\\begin{styleLangSciIMT}\n","     "),
-				("\\end{styleLangSciIMT}\n","\\\\"),
-				("\\begin{styleLangSciTranslation}\n","\\glt "),
-				("\\end{styleLangSciTranslation}","\z"), 
-				("\\begin{styleLangSciTranslationSubexample}\n","\\glt "),
-				("\\end{styleLangSciTranslationSubexample}","\z"), 
+
+                                ("\\begin{styleLangSciIMT}\n","     "),
+                                ("\\end{styleLangSciIMT}\n","\\\\"),
+                                ("\\begin{styleLangSciTranslation}\n","\\glt "),
+                                ("\\end{styleLangSciTranslation}","\z"), 
+                                ("\\begin{styleLangSciTranslationSubexample}\n","\\glt "),
+                                ("\\end{styleLangSciTranslationSubexample}","\z"), 
+
+                                ("\\begin{stylelsIMT}\n","     "),
+                                ("\\end{stylelsIMT}\n","\\\\"),
+                                ("\\begin{stylelsTranslation}\n","\\glt "),
+                                ("\\end{stylelsTranslation}","\z"), 
+                                ("\\begin{stylelsTranslationSubexample}\n","\\glt "),
+                                ("\\end{stylelsTranslationSubexample}","\z"), 
+
 				("""\\setcounter{listWWNumiileveli}{0}
 \\ea\\label{ex:}""",""),#MS
 				#("""\\setcounter{listLangSciLanginfoiilevelii}{0}
 #\\ea\\label{ex:}""",""),#OO
-				("""\\begin{listLangSciLanginfoiileveli}
+                                ("""\\begin{listLangSciLanginfoiileveli}
 \item""","\\ea\label{ex:}"),
-				("""\setcounter{listLangSciLanginfoiilevelii}{0}
+                                ("""\setcounter{listLangSciLanginfoiilevelii}{0}
 \\ea\label{ex:}""",""),
-				("\n\\end{listLangSciLanginfoiileveli}",""), 
-				("\n\\end{listLangSciLanginfoiilevelii}",""), 
+                                ("\n\\end{listLangSciLanginfoiileveli}",""), 
+                                ("\n\\end{listLangSciLanginfoiilevelii}",""), 
+
+                                ("""\\begin{listlsLanginfoiileveli}
+\item""","\\ea\label{ex:}"),
+                                ("""\setcounter{listlsLanginfoiilevelii}{0}
+\\ea\label{ex:}""",""),
+                                ("\n\\end{listlsLanginfoiileveli}",""), 
+                                ("\n\\end{listlsLanginfoiilevelii}",""), 
+
 				("\n\\glt ~",""), 
 				#end examples
 				("{styleQuote}","{quote}"),  
 				("{styleAbstract}","{abstract}"),  
-				("textstyleLangSciCategory","textsc"),  
+                                ("textstylelsCategory","textsc"),  
+                                ("textstylelsCategory","textsc"),  
 				#("\\begin{styleListParagraph}","%\\begin{epigram}"),
 				#("\\end{styleListParagraph}","%\\end{epigram}"), 
 				#("\\begin{styleListenabsatz}","%\\begin{epigram}"),
@@ -249,7 +314,8 @@ class Document:
 		    "%\\setcounter{listWWNumilevelii}{0}\n",
 		    "%\\setcounter{listWWNumiileveli}{0}\n",
 		    "%\\setcounter{listWWNumiilevelii}{0}\n",
-		    "%\\setcounter{listLangSciLanginfoiileveli}{0}\n",
+                    "%\\setcounter{listLangSciLanginfoiileveli}{0}\n",
+                    "%\\setcounter{listlsLanginfoiileveli}{0}\n",
 		    "%\\setcounter{itemize}{0}\n"
 		    ) 
 	for old, new in explicitreplacements:
@@ -278,10 +344,16 @@ class Document:
 	modtext = modtext.replace("\\multicolumn{1}{l}","")
 	#remove stupid Open Office styles 
 	modtext = re.sub("\\\\begin\\{styleLangSciSectioni\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioni\\}","\\section{ \\1}",modtext) #whitespace in front of capture due to some strange chars showing up without in Strik book
-	modtext = re.sub("\\\\begin\\{styleLangSciSectionii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectionii\\}","\\subsection{ \\1}",modtext)
-	modtext = re.sub("\\\\begin\\{styleLangSciSectioniii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniii\\}","\\subsubsection{ \\1}",modtext)
-	modtext = re.sub("\\\\begin\\{styleLangSciSectioniv\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniv\\}","\\subsubsubsection{ \\1}",modtext)
-	modtext = re.sub(r"\\begin\{styleHeadingi}\n+(.*?)\n+\\end\{styleHeadingi\}","\\chapter{\\1}",modtext) 
+        modtext = re.sub("\\\\begin\\{styleLangSciSectionii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectionii\\}","\\subsection{ \\1}",modtext)
+        modtext = re.sub("\\\\begin\\{styleLangSciSectioniii\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniii\\}","\\subsubsection{ \\1}",modtext)
+        modtext = re.sub("\\\\begin\\{styleLangSciSectioniv\\}\n+(.*?)\n+\\\\end\\{styleLangSciSectioniv\\}","\\subsubsubsection{ \\1}",modtext)
+        
+        modtext = re.sub("\\\\begin\\{stylelsSectioni\\}\n+(.*?)\n+\\\\end\\{stylelsSectioni\\}","\\section{ \\1}",modtext) #whitespace in front of capture due to some strange chars showing up without in Strik book
+        modtext = re.sub("\\\\begin\\{stylelsSectionii\\}\n+(.*?)\n+\\\\end\\{stylelsSectionii\\}","\\subsection{ \\1}",modtext)
+        modtext = re.sub("\\\\begin\\{stylelsSectioniii\\}\n+(.*?)\n+\\\\end\\{stylelsSectioniii\\}","\\subsubsection{ \\1}",modtext)
+        modtext = re.sub("\\\\begin\\{stylelsSectioniv\\}\n+(.*?)\n+\\\\end\\{stylelsSectioniv\\}","\\subsubsubsection{ \\1}",modtext)
+        
+        modtext = re.sub(r"\\begin\{styleHeadingi}\n+(.*?)\n+\\end\{styleHeadingi\}","\\chapter{\\1}",modtext) 
 	modtext = re.sub("\\\\begin\\{styleHeadingii\\}\n+(.*?)\n+\\\\end\\{styleHeadingii\\}","\\section{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiii\}\n+(.*?)\n+\\\\end\{styleHeadingiii}","\\subsubsection{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiv\}\n+(.*?)\n+\\\\end\{styleHeadingiv}","\\subsubsection{\\1}",modtext)
