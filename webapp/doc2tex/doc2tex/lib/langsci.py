@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import os
 import re
 import shutil
@@ -124,7 +126,68 @@ class Document:
 	
     def getModtext(self):
 	modtext = self.text
-	explicitreplacements = (("{\\textquoteleft}","`"),
+	explicitreplacements = ( #'`^v~
+		
+	(r"\'{a}",u"á"),
+	(r"\'{e}",u"é"),
+	(r"\'{i}",u"í"),
+	(r"\'{o}",u"ó"),
+	(r"\'{u}",u"ú"),
+	(r"\'{y}",u"ý"),
+	(r"\'{m}",u"ḿ"),
+	(r"\'{n}",u"ń"),
+	(r"\'{r}",u"ŕ"),
+	(r"\'{l}",u"ĺ"),
+	(r"\'{c}",u"ć"),
+	(r"\'{s}",u"ś"),
+	(r"\'{z}",u"ź"),
+	
+	(r"\`{a}",u"à"),
+	(r"\`{e}",u"è"),
+	(r"\`{i}",u"ì"),
+	(r"\`{o}",u"ò"),
+	(r"\`{u}",u"ù"),
+	(r"\`{y}",u"ỳ"),
+	(r"\`{n}",u"ǹ"),	
+	
+	(r"\^{a}",u"â"),
+	(r"\^{e}",u"ê"),
+	(r"\^{i}",u"î"),
+	(r"\^{o}",u"ô"),
+	(r"\^{u}",u"û"),
+	(r"\^{y}",u"ŷ"),
+	(r"\^{c}",u"ĉ"),
+	(r"\^{s}",u"ŝ"),
+	(r"\^{z}",u"ẑ"),
+	
+	
+	(r"\~{a}",u"ã"),
+	(r"\~{e}",u"ẽ"),
+	(r"\~{i}",u"ĩ"),
+	(r"\~{o}",u"õ"),
+	(r"\~{u}",u"ũ"),
+	(r"\~{y}",u"ỹ"),
+	(r"\~{n}",u"ñ"),
+	
+	
+	(r"\v{a}",u"ǎ"),
+	(r"\v{e}",u"ě"),
+	(r"\v{i}",u"ǐ"),
+	(r"\v{o}",u"ǒ"),
+	(r"\v{u}",u"ǔ"), 
+	(r"\v{n}",u"ň"),
+	(r"\v{r}",u"ř"), 
+	(r"\v{c}",u"č"),
+	(r"\v{s}",u"š"),
+	(r"\v{z}",u"ž"), 
+	
+	(r"\u{a}",u"ă"),
+	(r"\u{e}",u"ĕ"),
+	(r"\u{i}",u"ĭ"),
+	(r"\u{o}",u"ŏ"),
+	(r"\u{u}",u"ŭ"),
+	
+        ("{\\textquoteleft}","`"),
 				("{\\textquotedblleft}","``"), 
 				("{\\textquoteright}","'"),
 				("{\\textquotedblright}","''"),
