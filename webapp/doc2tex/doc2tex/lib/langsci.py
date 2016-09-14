@@ -387,8 +387,8 @@ class Document:
 	for y in yanks:
 	    modtext = modtext.replace(y,'')
 	#unescape w2l unicode
-	w2lunicodep3 = re.compile(r'(\[[0-9A-Ea-e]{3}\?\])')
-	w2lunicodep4 = re.compile(r'(\[[0-9A-Ea-e]{4}\?\])')
+	w2lunicodep3 = re.compile(r'(\[[0-9A-Fa-f]{3}\?\])')
+	w2lunicodep4 = re.compile(r'(\[[0-9A-Fa-f]{4}\?\])')
 	for m in w2lunicodep3.findall(modtext):
 	    modtext=modtext.replace(m,'\u0{}'.format(m[1:-2]).decode('unicode_escape'))
 	for m in w2lunicodep4.findall(modtext):
