@@ -316,7 +316,8 @@ class Document:
 		    "%\\setcounter{listWWNumiilevelii}{0}\n",
                     "%\\setcounter{listLangSciLanginfoiileveli}{0}\n",
                     "%\\setcounter{listlsLanginfoiileveli}{0}\n",
-		    "%\\setcounter{itemize}{0}\n"
+                    "%\\setcounter{itemize}{0}\n"
+                    "%\\setcounter{page}{1}\n"
 		    ) 
 	for old, new in explicitreplacements:
 	    modtext = modtext.replace(old,new)
@@ -330,8 +331,8 @@ class Document:
 	    modtext=modtext.replace(m,'\u0{}'.format(m[1:-2]).decode('unicode_escape'))
 	for m in w2lunicodep4.findall(modtext):
 	    modtext=modtext.replace(m,'\u{}'.format(m[1:-2]).decode('unicode_escape'))
-	#remove marked up white space
-	modtext = re.sub("\\text(it|bf|sc)\{( *)\}","\\2",modtext)  
+	#remove marked up white space and punctuation
+	modtext = re.sub("\\text(it|bf|sc)\{([ \.,]*)\}","\\2",modtext)  
 	
 	#remove explicit counters. These are not usefull when from autoconversion 
 	
@@ -357,7 +358,7 @@ class Document:
 	modtext = re.sub("\\\\begin\\{styleHeadingii\\}\n+(.*?)\n+\\\\end\\{styleHeadingii\\}","\\section{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiii\}\n+(.*?)\n+\\\\end\{styleHeadingiii}","\\subsubsection{\\1}",modtext)
 	modtext = re.sub("\\\\begin\{styleHeadingiv\}\n+(.*?)\n+\\\\end\{styleHeadingiv}","\\subsubsection{\\1}",modtext)
-    
+        
 	#remove explicit shorttitle for sections
 	modtext = re.sub("\\\\(sub)*section(\[.*?\])\{(\\text[bfmd][bfmd])\?(.*)\}","\\\\1section{\\4}",modtext) 
 	#                        several subs | options       formatting           title ||   subs      title
@@ -381,7 +382,8 @@ class Document:
 	modtext = re.sub("([A-Z][a-z]+) +et al. +\(([12][0-9]{3}[a-z]?)\)","\\citet{\\1EtAl\\2}",modtext)
 	modtext = re.sub("([A-Z][a-z]+) +\(([12][0-9]{3}[a-z]?)\)","\\citet{\\1\\2}",modtext)
 	#modtext = re.sub("([A-Z][a-z]+) +([12][0-9]{3}[a-z]?)","\\citet{\\1\\2}",modtext)i
-
+        #very last thing: catch all citealt
+        modtext = re.sub("([A-Z][a-z]+) +([12][0189][0-9]{2}[a-z]?)","\\citealt{\\1\\2}",modtext)        
 	#examples
 	modtext = modtext.replace("\n()", "\n\\ea \n \\gll \\\\\n   \\\\\n \\glt\n\\z\n\n")
 	modtext = re.sub("\n\(([0-9]+)\)", """\n\ea%\\1
@@ -441,13 +443,29 @@ class Document:
 	modtext = re.sub("""\n+\\z""","\\z",modtext) 
 	modtext = re.sub("""\n\n+""","\n\n",modtext) 
 	
+	#merge useless chains of formatting
+        modtext = re.sub("(\\textbf\{[^}]+)\}\\textbf\{","\\1",modtext)
+        modtext = re.sub("(\\textit\{[^}]+)\}\\textit\{","\\1",modtext)
+        modtext = re.sub("(\\textsc\{[^}]+)\}\\textsc\{","\\1",modtext)
+        modtext = re.sub("(\\texttt\{[^}]+)\}\\texttt\{","\\1",modtext)
+        modtext = re.sub("(\\emph\{[^}]+)\}\\emph\{","\\1",modtext)
+        
+        
+        #TODO propagate textbf in gll
+        
 	#for s in ('textit','textbf','textsc','texttt','emph'):
 	  #i=1
 	  #while i!=0:
 	    #modtext,i = re.subn('\\%s\{([^\}]+) '%s,'\\%s{\\1} \\%s{'%(s,s),modtext) 
 	modtext = re.sub("\\\\includegraphics\[.*?width=\\\\textwidth","%please move the includegraphics inside the {figure} environment\n%%\includegraphics[width=\\\\textwidth",modtext)
 	
-	modtext = re.sub("\\\\item *\n+",'\\item ',modtext)
+        modtext = re.sub("\\\\item *\n+",'\\item ',modtext)
+        
+        modtext = re.sub("\\footnote\{ +",'\\footnote\{',modtext)
+        
+        #duplicated section names 
+        modtext = re.sub("(chapter|section|paragraph)\[.*?\](\{.*\}.*)","\\1\\2",modtext)
+        
 	
 	bibliography = ''
 	a = re.compile("\n\s*References\s*\n").split(modtext)
