@@ -462,6 +462,11 @@ class Document:
         modtext = re.sub("\\\\item *\n+",'\\item ',modtext)
         
         modtext = re.sub("\\footnote\{ +",'\\footnote\{',modtext)
+        #put spaces on right side of formatting
+        #right
+        modtext = re.sub(" +}",'} ',modtext)
+        #left
+        modtext = re.sub("\\text(it|bf|sc|tt)\{  +",' \\text\\1{',modtext)
         
         #duplicated section names 
         modtext = re.sub("(chapter|section|paragraph)\[.*?\](\{.*\}.*)","\\1\\2",modtext)
