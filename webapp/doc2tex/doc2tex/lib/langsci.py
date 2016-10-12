@@ -316,8 +316,9 @@ class Document:
 		    "%\\setcounter{listWWNumiilevelii}{0}\n",
                     "%\\setcounter{listLangSciLanginfoiileveli}{0}\n",
                     "%\\setcounter{listlsLanginfoiileveli}{0}\n",
-                    "%\\setcounter{itemize}{0}\n"
-                    "%\\setcounter{page}{1}\n"
+                    "\\setcounter{itemize}{0}",                    
+                    "\\setcounter{page}{1}",
+                    "\\mdseries "
 		    ) 
 	for old, new in explicitreplacements:
 	    modtext = modtext.replace(old,new)
