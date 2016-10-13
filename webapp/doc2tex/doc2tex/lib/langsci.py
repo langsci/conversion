@@ -390,7 +390,7 @@ class Document:
 	    modtext = modtext.replace(y,'')
 	#unescape w2l unicode
 	w2lunicodep3 = re.compile(r'(\[[0-9A-Fa-f]{3}\?\])')
-	w2lunicodep4 = re.compile(r'(\[[0-9A-Fa-f]{4}\?\])')
+	w2lunicodep4 = re.compile(r'(\[[0-9A-Ea-e][0-9A-Fa-f]{3}\?\])') #intentionally leaving out PUA
 	for m in w2lunicodep3.findall(modtext):
 	    modtext=modtext.replace(m,'\u0{}'.format(m[1:-2]).decode('unicode_escape'))
 	for m in w2lunicodep4.findall(modtext):
