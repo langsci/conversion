@@ -55,7 +55,7 @@ def _upload(filename,f,accept):
     input_file = f
     filetype = inputfn.split('.')[-1]
     if filetype not in accept:
-        raise WrongFileFormatError(filetype)
+        raise WrongFileFormatError(filetype,accept)
     tmpdir = '%s'%uuid.uuid4()
     os.mkdir(os.path.join('/tmp',tmpdir))
     #tmpfile = '%s.%s' % (uuid.uuid4(),filetype)
@@ -119,8 +119,8 @@ class WrongFileFormatError(Exception):
 def wrongfileformat(exc, request):
     # If the view has two formal arguments, the first is the context.
     # The context is always available as ``request.context`` too.
-    filetype = exc.args[0] if exc.args else ""
-    msg =  'Files of type %s are not accepted. The only file types accepted are docx, doc, and odt' %filetype
+    filetype,accept = exc.args[0] if exc.args else "",""
+    msg =  'Files of type %s are not accepted. The only file types accepted are %s' % (filetype, ", ".join(accept))
     return {'project': 'doc2tex',
             'msg': msg }
             
