@@ -38,13 +38,11 @@ Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change i
 def sanitycheck(request):   
     fn = request.POST['texbibzip'].filename 
     input_file = request.POST['texbibzip'].file
-    filename = _upload(fn, input_file,('tex', 'bib', 'zip')) 
+    filename = _upload(fn, input_file,('tex', 'bib')) 
     filetype = filename.split('.')[-1]
     d = os.path.dirname(os.path.realpath(filename))
     lspdir = LSPDir(d)
     lspdir.check()  
-    print 7
-    print lspdir.errors
     #shutil.rmtree(d)
     return {'project': 'doc2tex',
             'files':lspdir.errors}
