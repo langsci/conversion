@@ -331,8 +331,8 @@ class Document:
                                 #("\\begin{styleEpigramauthor}","%\\begin{epigramauthor}"),
                                 #("\\end{styleEpigramauthor}","%\\end{epigramauthor}"),  
                                 ("{styleConversationTranscript}","{lstlisting}"),   
-                                ("\ "," "),  
-                                #(" }","} "),  
+                                ("\ "," "), 					    
+				#(" }","} "),  
                                 #("\\setcounter","%\\setcounter"),  
                                 ("\n\n\\item","\\item"),  
                                 ("\n\n\\end","\\end") 
@@ -449,7 +449,9 @@ class Document:
         modtext = re.sub("([A-Z][a-z]+) +\(([12][0-9]{3}[a-z]?)\)","\\citet{\\1\\2}",modtext)
         #modtext = re.sub("([A-Z][a-z]+) +([12][0-9]{3}[a-z]?)","\\citet{\\1\\2}",modtext)i
         #very last thing: catch all citealt
-        modtext = re.sub("([A-Z][a-z]+) +([12][0189][0-9]{2}[a-z]?)","\\citealt{\\1\\2}",modtext)        
+        modtext = re.sub("([A-Z][a-z]+) +([12][0189][0-9]{2}[a-z]?)","\\citealt{\\1\\2}",modtext)    
+        modtext = re.sub("([A-Z][a-z]+) \\& \\citet{","\\citet{\\1",modtext)        
+        modtext = re.sub("([A-Z][a-z]+) \\& \\citealt{","\\citealt{\\1",modtext)        
         #examples
         modtext = modtext.replace("\n()", "\n\\ea \n \\gll \\\\\n   \\\\\n \\glt\n\\z\n\n")
         modtext = re.sub("\n\(([0-9]+)\)", """\n\ea%\\1
@@ -509,12 +511,13 @@ class Document:
         modtext = re.sub("""\n+\\z""","\\z",modtext) 
         modtext = re.sub("""\n\n+""","\n\n",modtext) 
         
+        
         #merge useless chains of formatting
-        modtext = re.sub("(\\textbf\{[^}]+)\}\\textbf\{","\\1",modtext)
-        modtext = re.sub("(\\textit\{[^}]+)\}\\textit\{","\\1",modtext)
-        modtext = re.sub("(\\textsc\{[^}]+)\}\\textsc\{","\\1",modtext)
-        modtext = re.sub("(\\texttt\{[^}]+)\}\\texttt\{","\\1",modtext)
-        modtext = re.sub("(\\emph\{[^}]+)\}\\emph\{","\\1",modtext)
+        modtext = re.sub("(\\\\textbf\{[^}]+)\}\\\\textbf\{","\\1",modtext)
+        modtext = re.sub("(\\\\textit\{[^}]+)\}\\\\textit\{","\\1",modtext)
+        modtext = re.sub("(\\\\textsc\{[^}]+)\}\\\\textsc\{","\\1",modtext)
+        modtext = re.sub("(\\\\texttt\{[^}]+)\}\\\\texttt\{","\\1",modtext)
+        modtext = re.sub("(\\\\emph\{[^}]+)\}\\\\emph\{","\\1",modtext)
         
         
         #TODO propagate textbf in gll
@@ -527,12 +530,15 @@ class Document:
         
         modtext = re.sub("\\\\item *\n+",'\\item ',modtext)
         
-        modtext = re.sub("\\footnote\{ +",'\\footnote\{',modtext)
+        modtext = re.sub("\\\\footnote\{ +",'\\\\footnote{',modtext)
         #put spaces on right side of formatting
         #right
-        modtext = re.sub(" +}",'} ',modtext)
+        modtext = re.sub(" +\\}",'} ',modtext)
         #left
-        modtext = re.sub("\\text(it|bf|sc|tt)\{  +",' \\text\\1{',modtext)
+        modtext = re.sub("\\\\text(it|bf|sc|tt|up|rm)\\{ +",' \\\\text\\1{',modtext)
+        modtext = re.sub("\\\\text(it|bf|sc|tt|up|rm)\\{([!?\(\)\[\]\.\,\>]*)\\}",'\\2',modtext)
+        
+        
         
         #duplicated section names 
         modtext = re.sub("(chapter|section|paragraph)\[.*?\](\{.*\}.*)","\\1\\2",modtext)
