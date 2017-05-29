@@ -9,31 +9,38 @@ class lingPaper():
     
   def __str__(self):   
     return '\n'.join([str(ch) for ch in self.chapters])
+ 
 
-class paragraph():
+class textelement():
   def __init__(self,el):
     self.el = el
     self.tag = el.tag 
-    self.text = el.text
+    self.text = self.getText(el)
+    
+  def getText(self,el):  
+    return "".join(self.treatTextElement(te) for te in  self.el.iter())
   
-class figure():
-  def __init__(self,el):
-    self.el = el
-    self.tag = el.tag 
-    self.text = el.text    
+  def treatTextElement(self,te):
+    if te.tag == 'object':
+      typ = te.attrib["type"]
+      if typ == 'tItalic':
+        return '\\textit{%s}%s'%(te.text,te.tail)
+      raise ValueError
+    if te.text == None:
+      return ''
+    return te.text
   
-class example():
-  def __init__(self,el):
-    self.el = el
-    self.tag = el.tag 
-    self.text = el.text
+class paragraph(textelement):
+  pass
   
-class tablenumbered():
-  def __init__(self,el):
-    self.el = el
-    self.tag = el.tag 
-    self.text = el.text
+class figure(textelement):
+  pass
   
+class example(textelement):
+  pass
+  
+class tablenumbered(textelement):
+  pass    
 
 class genericsection():
   def __init__(self,el):
