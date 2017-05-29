@@ -13,6 +13,7 @@ class lingPaper():
 class genericsection():
   def __init__(self,el):
     self.el = el
+    self.tag = el.tag
     self.ID = el.attrib["id"]
     self.title = el.find("secTitle").text 
     if self.title == None:
@@ -20,39 +21,44 @@ class genericsection():
     self.preamble = self.getPreamble()
     self.subsections = self.getSubsections()
     self.sectionlevel = False
-    self.sectionlevel = self.setLevel()
-    self.nextXMLLevel = self.setNextXMLLevel()
+    self.sectionlevel = self.setLevel() 
+    #print(self.nextXMLLevel)
     #print(self.subsections)
     
   def getPreamble(self):
-    pass
+    children4preamble = []
+    for ch in self.el:      
+      if ch.tag == 'secTitle':
+        continue      
+      if ch.tag != self.getNextXMLLevel():
+        children4preamble.append(ch)
+      else:
+        return children4preamble
+      
     
   def getSubsections(self):
     pass
   
   def setLevel(self):
     pass
-  
-  def setNextXMLLevel(self):
-    pass
-  
+   
   def title2latex(self):
     return "\\%s{%s}\\label{sec:%s}\n" %(self.sectionlevel,self.title,self.ID)
   
   def __str__(self):
     titlestring = self.title2latex()
     preamblestring = ''
+    if self.preamble:
+      preamblestring = ' '.join(["<%s>"%el.tag for el in self.preamble])
     subsectionstring =  '\n'.join([str(ch) for ch in self.subsections])
     return '\n'.join([titlestring,preamblestring,subsectionstring])
   
-  
-
 class chapter(genericsection):
   
   def setLevel(self):
     return 'chapter'
-  
-  def setNextXMLLevel(self):
+   
+  def getNextXMLLevel(self): 
     return 'section1'
     
   def getSubsections(self):
@@ -66,7 +72,7 @@ class section1(genericsection):
   def setLevel(self):
     return 'section'
   
-  def setNextXMLLevel(self):
+  def getNextXMLLevel(self): 
     return 'section2'
     
   def getSubsections(self):
@@ -78,7 +84,9 @@ class section2(genericsection):
   
   def setLevel(self):
     return 'subsection'
-    
+      
+  def getNextXMLLevel(self): 
+    return 'section3'
   
   def getSubsections(self):
     return self.el.findall('section3')
