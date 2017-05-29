@@ -19,6 +19,7 @@ class genericsection():
     if self.title == None:
       self.title = ''
     self.preamble = self.getPreamble()
+    print(self.tag,self.preamble)
     self.subsections = self.getSubsections()
     self.sectionlevel = False
     self.sectionlevel = self.setLevel() 
