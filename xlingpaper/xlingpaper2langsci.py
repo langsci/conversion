@@ -21,6 +21,7 @@ class genericsection():
     self.subsections = self.getSubsections()
     self.sectionlevel = False
     self.sectionlevel = self.setLevel()
+    self.nextXMLLevel = self.setNextXMLLevel()
     #print(self.subsections)
     
   def getPreamble(self):
@@ -30,6 +31,9 @@ class genericsection():
     pass
   
   def setLevel(self):
+    pass
+  
+  def setNextXMLLevel(self):
     pass
   
   def title2latex(self):
@@ -47,6 +51,9 @@ class chapter(genericsection):
   
   def setLevel(self):
     return 'chapter'
+  
+  def setNextXMLLevel(self):
+    return 'section1'
     
   def getSubsections(self):
     return [section1(s) for s in self.el.findall('section1')]
@@ -58,6 +65,9 @@ class chapter(genericsection):
 class section1(genericsection):
   def setLevel(self):
     return 'section'
+  
+  def setNextXMLLevel(self):
+    return 'section2'
     
   def getSubsections(self):
     return [section2(s) for s in self.el.findall('section2')]
