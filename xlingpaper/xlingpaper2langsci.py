@@ -21,6 +21,7 @@ class textelement():
     return "".join(self.treatTextElement(te) for te in  self.el.iter())
   
   def treatTextElement(self,te):
+    print(te.tag)
     if te.tag == 'object':
       typ = te.attrib["type"]
       if typ == 'tItalic':
