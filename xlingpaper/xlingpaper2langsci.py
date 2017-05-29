@@ -18,17 +18,42 @@ class textelement():
     self.text = self.getText(el)
     
   def getText(self,el):  
-    return "".join(self.treatTextElement(te) for te in  self.el.iter())
+    return "".join([self.treatTextElement(te) for te in  self.el.iter() if te!=el])
   
   def treatTextElement(self,te):
-    print(te.tag)
+    tail = ''
+    text = ''
+    if te.tail:
+      tail = te.tail
+    if te.text:
+      text = te.text
     if te.tag == 'object':
       typ = te.attrib["type"]
       if typ == 'tItalic':
-        return '\\textit{%s}%s'%(te.text,te.tail)
+        return '\\textit{%s}%s'%(text,tail)
       raise ValueError
+    if te.tag == 'langData':
+      lang = te.attrib["lang"]
+      if lang == 'lVernacular':
+        return '\\vernacular{%s}%s'%(text,tail) 
+      raise ValueError
+    if te.tag == 'gloss':
+      lang = te.attrib["lang"]
+      if lang == 'lGloss':
+        return '\\gloss{%s}%s'%(text,tail) 
+      raise ValueError
+    if te.tag == 'caption':
+        return '\\caption{%s}%s'%(text,tail)  
+    if te.tag == 'free':
+        return '\\glt %s\n %s'%(text,tail)  
+    if te.tag == 'td':
+        return '%s & %s'%(text,tail)  
+    if te.tag == 'th':
+        return '%s & %s'%(text,tail)  
     if te.text == None:
-      return ''
+      return ''  
+    print(te,te.text)
+    raise ValueError
     return te.text
   
 class paragraph(textelement):
