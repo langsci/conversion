@@ -10,6 +10,31 @@ class lingPaper():
   def __str__(self):   
     return '\n'.join([str(ch) for ch in self.chapters])
 
+class paragraph():
+  def __init__(self,el):
+    self.el = el
+    self.tag = el.tag 
+    self.text = el.text
+  
+class figure():
+  def __init__(self,el):
+    self.el = el
+    self.tag = el.tag 
+    self.text = el.text    
+  
+class example():
+  def __init__(self,el):
+    self.el = el
+    self.tag = el.tag 
+    self.text = el.text
+  
+class tablenumbered():
+  def __init__(self,el):
+    self.el = el
+    self.tag = el.tag 
+    self.text = el.text
+  
+
 class genericsection():
   def __init__(self,el):
     self.el = el
@@ -18,13 +43,11 @@ class genericsection():
     self.title = el.find("secTitle").text 
     if self.title == None:
       self.title = ''
-    self.preamble = self.getPreamble()
-    print(self.tag,self.preamble)
+    self.preamble = self.getPreamble() 
     self.subsections = self.getSubsections()
     self.sectionlevel = False
     self.sectionlevel = self.setLevel() 
-    #print(self.nextXMLLevel)
-    #print(self.subsections)
+    
     
   def getPreamble(self):
     children4preamble = []
@@ -34,8 +57,21 @@ class genericsection():
       if ch.tag != self.getNextXMLLevel():
         children4preamble.append(ch)
       else:
-        return children4preamble
+        break
+    return [self.treatelement(el) for el in children4preamble]
       
+    
+  def treatelement(self,el):
+    if el.tag=='p':
+      return paragraph(el)
+    if el.tag=='figure':
+      return figure(el)
+    if el.tag=='example':
+      return example(el)
+    if el.tag=='tablenumbered':
+      return tablenumbered(el)
+    raise ValueError
+    
     
   def getSubsections(self):
     pass
@@ -50,7 +86,7 @@ class genericsection():
     titlestring = self.title2latex()
     preamblestring = ''
     if self.preamble:
-      preamblestring = ' '.join(["<%s>"%el.tag for el in self.preamble])
+      preamblestring = ' '.join(["%s"%el.text for el in self.preamble])
     subsectionstring =  '\n'.join([str(ch) for ch in self.subsections])
     return '\n'.join([titlestring,preamblestring,subsectionstring])
   
