@@ -19,6 +19,8 @@ class genericsection():
       self.title = ''
     self.preamble = self.getPreamble()
     self.subsections = self.getSubsections()
+    self.sectionlevel = False
+    self.sectionlevel = self.setLevel()
     #print(self.subsections)
     
   def getPreamble(self):
@@ -27,8 +29,14 @@ class genericsection():
   def getSubsections(self):
     pass
   
+  def setLevel(self):
+    pass
+  
+  def title2latex(self):
+    return "\\%s{%s}\\label{sec:%s}\n" %(self.sectionlevel,self.title,self.ID)
+  
   def __str__(self):
-    titlestring = self.title
+    titlestring = self.title2latex()
     preamblestring = ''
     subsectionstring =  '\n'.join([str(ch) for ch in self.subsections])
     return '\n'.join([titlestring,preamblestring,subsectionstring])
@@ -36,17 +44,31 @@ class genericsection():
   
 
 class chapter(genericsection):
+  
+  def setLevel(self):
+    return 'chapter'
+    
   def getSubsections(self):
     return [section1(s) for s in self.el.findall('section1')]
   
+  #def __str__(self):
+    #return str(title)
+  
   
 class section1(genericsection):
+  def setLevel(self):
+    return 'section'
+    
   def getSubsections(self):
     return [section2(s) for s in self.el.findall('section2')]
   
   
   
 class section2(genericsection):
+  
+  def setLevel(self):
+    return 'subsection'
+    
   
   def getSubsections(self):
     return self.el.findall('section3')
