@@ -100,9 +100,13 @@ class textelement():
       return '\\figref{ ex:%s} %s'% (label, tail)
     if te.tag == 'sectionRef': 
       label  = te.attrib.get('sec')
+      return '\\sectref{ sec:%s} %s'% (label, tail)
     if te.tag == 'tablenumberedRef': 
       label  = te.attrib.get('table')
       return '\\tabref{ ex:%s} %s'% (label, tail)
+    if te.tag == 'citation': 
+      key  = te.attrib.get('ref')
+      return '\\citealt{%s} %s'% (key, tail)
     if te.tag == 'example': 
       label = te.attrib.get('num', False) 
       labelstring = ''
@@ -124,7 +128,7 @@ class textelement():
     return te.text
   
   def treattabular(self,el):
-    numberofcolumns = len(el.find('tr'))
+    numberofcolumns = len(el.find('tr'))+1 #hack to take care of extra & at end #TODO
     columntypes = numberofcolumns * 'l'
     caption = el.find('caption').text
     trs = el.findall('tr')
