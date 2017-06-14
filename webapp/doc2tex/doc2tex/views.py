@@ -38,13 +38,11 @@ Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change i
 def sanitycheck(request):   
     fn = request.POST['texbibzip'].filename 
     input_file = request.POST['texbibzip'].file
-    filename = _upload(fn, input_file,('tex', 'bib', 'zip')) 
+    filename = _upload(fn, input_file,('tex', 'bib')) 
     filetype = filename.split('.')[-1]
     d = os.path.dirname(os.path.realpath(filename))
     lspdir = LSPDir(d)
     lspdir.check()  
-    print 7
-    print lspdir.errors
     #shutil.rmtree(d)
     return {'project': 'doc2tex',
             'files':lspdir.errors}
@@ -55,7 +53,7 @@ def _upload(filename,f,accept):
     input_file = f
     filetype = inputfn.split('.')[-1]
     if filetype not in accept:
-        raise WrongFileFormatError(filetype)
+        raise WrongFileFormatError(filetype,accept)
     tmpdir = '%s'%uuid.uuid4()
     os.mkdir(os.path.join('/tmp',tmpdir))
     #tmpfile = '%s.%s' % (uuid.uuid4(),filetype)
@@ -119,8 +117,8 @@ class WrongFileFormatError(Exception):
 def wrongfileformat(exc, request):
     # If the view has two formal arguments, the first is the context.
     # The context is always available as ``request.context`` too.
-    filetype = exc.args[0] if exc.args else ""
-    msg =  'Files of type %s are not accepted. The only file types accepted are docx, doc, and odt' %filetype
+    filetype,accept = exc.args[0] if exc.args else "",""
+    msg =  'Files of type %s are not accepted. The only file types accepted are %s' % (filetype, ", ".join(accept))
     return {'project': 'doc2tex',
             'msg': msg }
             

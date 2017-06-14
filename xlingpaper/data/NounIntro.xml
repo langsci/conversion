@@ -1,0 +1,1032 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE lingPaper PUBLIC "-//XMLmind//DTD XLingPap//EN"
+"XLingPap.dtd">
+<lingPaper automaticallywrapinterlinears="yes" version="2.27.0">
+  <frontMatter>
+    <title></title>
+    <author></author>
+  </frontMatter>
+  <chapter id="cNounIntro">
+    <secTitle>Wanga Nouns</secTitle>
+    <section1 id="sNounIntro">
+      <secTitle>Introduction</secTitle>
+      <p>The Wanga nominal system is comprised of noun classes corresponding to 19 grammatical genders. These noun classes are easily differentiated by their characteristic noun class prefix. In most instances, a Wanga noun class prefix is composed of an 
+      <object type="tItalic">augment</object>, also sometimes called the pre-prefix, followed by a 
+      <object type="tItalic">class prefix</object>. These two elements are then followed by the noun stem itself. In a few notable instances, a noun's augment is not realized. The presence of a class prefix is almost always obligatory in every noun, although again, there are some exception cases discussed below.</p>
+      <p>In some instances, there is a degree of semantic uniformity within a given noun class, but this is not the rule. Some classes indicate other properties of a noun such as countablility, kinship, abstractness, location, size, and finiteness. We adopt the convention in Bantu descriptive linguistics of identifying noun classes by distinct numbers. We can group most Wanga noun classes into singular/plural pairs that are numbered successively. For example, the noun stem 
+      <langData lang="lVernacular">-saatsa</langData>belongs to Class 1/2. Its singular form belongs to Class 1 and accordingly takes the Class 1 prefix 
+      <langData lang="lVernacular">omu-</langData>. The combination of the Class 1 prefix and this stem yields the singular noun 
+      <langData lang="lVernacular">omusaatsa</langData>
+      <gloss lang="lGloss">man</gloss>. Its corresponding plural belongs to Class 2 and takes the Class 2 prefix 
+      <langData lang="lVernacular">aβa-</langData>to yield the plural noun 
+      <langData lang="lVernacular">aβasaatsa</langData>
+      <gloss lang="lGloss">men</gloss>.</p>
+      <p>While most Wanga noun classes follow a similar singular/plural pairing, others have additional sub-classes. Still others have no pair owing to the fact that they are either uncountable or otherwise inherently plural. For example, mass or uncountable nouns in Wanga belong to Class 6a. Other Class 6 nouns in Wanga are plural and have a singular Class 5 counterpart (compare, for example Class 5 
+      <langData lang="lVernacular">lioni</langData>
+      <gloss lang="lGloss">bird</gloss>and Class 6 
+      <langData lang="lVernacular">amajoni</langData>
+      <gloss lang="lGloss">birds</gloss>). Class 6a nouns like 
+      <langData lang="lVernacular">amaatsi</langData>
+      <gloss lang="lGloss">water</gloss>take the Class 6 prefix but have no corresponding singular. Analogously, Class 14 nouns like 
+      <langData lang="lVernacular">oβulalu</langData>
+      <gloss lang="lGloss">insanity</gloss>are abstract and have no plural counterpart. While most singular/plural noun class pairs in Wanga are numbered successively, there are some notable exceptions. Class 10 is the plural counterpart to Class 9, yet the very similar Class 10a is the plural counterpart to Class 11 nouns. Along these same lines, augmentative nouns in Class 20 take for their plurals nouns in Class 4. We discuss further details of these and other noun classes in 
+      <sectionRef sec="sNounClass" textBefore="capitalizedSingular"></sectionRef>.</p>
+      <p>New morphological forms of a given noun can be derived simply by changing a noun class prefix. This is observed in noun classes containing diminutive and augmentative nouns; these are Classes 12/13 and Classes 20/4, respectively, in Wanga. For example, the Class 9 noun 
+      <langData lang="lVernacular">iβaka</langData>
+      <gloss lang="lGloss">python</gloss>has the Class 12 diminutive 
+      <langData lang="lVernacular">xaβaka</langData>
+      <gloss lang="lGloss">small python</gloss>and the Class 20 augmentative 
+      <langData lang="lVernacular">kuβaka</langData>
+      <gloss lang="lGloss">large python</gloss>. A similar situation is found in Classes 16, 17, and 18, which contain locative nouns derived from another noun. Consider, for example, the Class 3 noun 
+      <langData lang="lVernacular">omwaalo</langData>
+      <gloss lang="lGloss">river</gloss>, which has the locative Class 16 counterpart 
+      <langData lang="lVernacular">amwaalo</langData>
+      <gloss lang="lGloss">near a river</gloss>. Such operations are widespread, as seen, for example, in the derivation of the Class 14 abstract noun 
+      <langData lang="lVernacular">oβutʃeesi</langData>
+      <gloss lang="lGloss">intelligence</gloss>from the closely related Class 1 noun 
+      <langData lang="lVernacular">omutʃeesi</langData>
+      <gloss lang="lGloss">intelligent person</gloss>.</p>
+      <p>A schematization of Wanga nouns is in 
+      <figureRef figure="fNounTemplate" textBefore="capitalizedSingular"></figureRef>. This template illustrates that a Wanga noun is typically composed of three morphemes: i) the augment or pre-prefix; ii) the class prefix; and iii) the stem stem. As mentioned just above, the first two of these constituent form the noun class prefix. Most Wanga augments are a single vowel, except in two locative classes (17 and 18) in which the augment is arguably CV. The class prefix is typically a CV sequence, except in two classes (9 and 10) in which it is a single segment. A noun stem, as discussed further in 
+      <sectionRef sec="sNounStem" textBefore="capitalizedSingular"></sectionRef>, may be vowel-initial or consonant-initial, and may be of a variety of shapes and sizes. The initial segment of a noun stem will often have some effect on the realization of a class prefix which may, in turn, have an effect on the realization of the augment in some instances.</p>
+      <figure id="fNounTemplate">
+        <chart>
+          <img src="MelodicDoubling.pdf"></img>
+        </chart>
+        <caption>Wanga noun template (placeholder)</caption>
+      </figure>
+      <p>A key component of the Wanga noun class system is that it is intimately tied to patterns of agreement or concord between a noun and its modifiers in the formation of noun phrases. As seen in Example 
+      <exampleRef letter="xNounAGR" num="xNounAGR"></exampleRef>, the head noun of the noun phrase, 
+      <langData lang="lVernacular">omuxaasi</langData>
+      <gloss lang="lGloss">woman</gloss>, is a Class 1 noun, as indicated by its 
+      <langData lang="lVernacular">omu-</langData>prefix. This noun is followed by a sequence of three modifiers--a possessive pronoun, an adjective, and a demonstrative determiner. Each of these modifiers is inflected with a Class 1 prefix, thereby allowing them to agree in grammatical gender with the head noun that they modify. It is important to note, however, that not all Wanga nominal modifiers follow the same patterns of prefixal agreement. Thus, not all modifiers of the same noun will exhibit the same agreement prefixes. This is clearly illustrated in Example 
+      <exampleRef letter="xNounAGR" num="xNounAGR"></exampleRef>, wherein the possessive and demonstrative follow one agreement pattern, while the adjective follows another. These and other modifier agreement patterns are discussed in detail in 
+      <sectionRef sec="sNounModifier" textBefore="capitalizedSingular"></sectionRef>.</p>
+      <example num="xNounAGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">omuxaasi waandʒe omulayi wuno</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">omu-xaasi u-andʒe omu-layi u-no</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">1-wife 1-my 1-good 1-this</gloss>
+            </line>
+          </lineGroup>
+          <free>'this good wife of mine'</free>
+        </interlinear>
+      </example>
+      <p>There are some instances in noun phrases where patterns of concord between a noun and its modifiers are less clear. Consider Example 
+      <exampleRef letter="xLocativeClassGR" num="xLocativeClassGR"></exampleRef>, which illustrates that the noun class prefix of the locative noun 
+      <langData lang="lVernacular">amwaalo</langData>
+      <gloss lang="lGloss">by a river</gloss>is composed of the locative Class 16 augment 
+      <langData lang="lVernacular">a-</langData>, followed by the Class 3 prefix 
+      <langData lang="lVernacular">mu-</langData>, which is typically associated with this noun. When this locative noun is modified, rather than the modifier agreeing with the grammatical gender of the locative Class 16, its agreement prefix instead is associate with Class 3.</p>
+      <example num="xLocativeClassGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">amwaalo kuliya</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">a-mu-aalo ku-liya</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">16-3-river 3-that</gloss>
+            </line>
+          </lineGroup>
+          <free>'by that river'</free>
+        </interlinear>
+      </example>
+      <p>Turning to larger clauses, the grammatical gender of a noun that is the syntactic subject of a verb will govern that verb's patterns of gender and number agreement. We illustrate this in Example 
+      <exampleRef letter="xNounVerbAGR" num="xNounVerbAGR"></exampleRef>, whose Class 9 singular subject is reflected in a corresponding Class 9 verbal subject prefix, and Example 
+      <exampleRef letter="xClass1NounVerbAGR" num="xClass1NounVerbAGR"></exampleRef>, whose Class 2 plural subject likewise agrees with a corresponding Class 2 verbal subject prefix.</p>
+      <example num="xNounVerbAGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Imbwa ilimaaŋga litixo.</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">iN-bwa i-lim-aŋg-a li-tixo</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">9-dog 9-dig-IMPF-FV 5-hole</gloss>
+            </line>
+          </lineGroup>
+          <free>'The dog is digging a hole.'</free>
+        </interlinear>
+      </example>
+      <example num="xClass1NounVerbAGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Abasaatsa basiɲixaaŋga.</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">aba-saatsa ba-siɲix-aŋg-a</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">2-man 3PL-be.angry-IMPF-FV</gloss>
+            </line>
+          </lineGroup>
+          <free>'The men are becoming angry.'</free>
+        </interlinear>
+      </example>
+      <p>The clarity of these agreement patterns is also somewhat obscured in other instances, such as in subordinate clauses, where so-called 
+      <object type="tItalic">anti-agreement effects</object>result in the requirement for alternative forms of subject prefixes on relativizers and relative clause verbs. In Example 
+      <exampleRef letter="xAntiAGRRelCl" num="xAntiAGRRelCl"></exampleRef>, the Class 1 noun 
+      <langData lang="lVernacular">omusaatsa</langData>
+      <gloss lang="lGloss">man</gloss>is modified by the anti-agreement Class 1 relativizer 
+      <langData lang="lVernacular">owu</langData>; recall that many Class 1 modifiers take the Class 1 prefix 
+      <langData lang="lVernacular">omu-</langData>. (In this and other examples, the relative clause is indicated by square brackets.) Similarly, in Example 
+      <exampleRef letter="xAntiAGRSent" num="xAntiAGRSent"></exampleRef>, the relative clause verb requires the same anti-agreement subject prefix 
+      <langData lang="lVernacular">owu-</langData>, rather than the third person singular subject prefix 
+      <langData lang="lVernacular">a-</langData>, as would be required in a corresponding main clause verb.</p>
+      <example num="xAntiAGRRelCl">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Ndalola omusaatsa [owu naawiimbe].</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">nd-a-lol-a omu-saatsa owu na-a-iimb-e</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">1SG-REM.PST-see-FV 1-man 1.REL CRAS.FUT-3SG-sing-FV</gloss>
+            </line>
+          </lineGroup>
+          <free>'I saw the man who will sing.'</free>
+        </interlinear>
+      </example>
+      <example num="xAntiAGRSent">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Ndalola omusaatsa [owiimbaaŋga].</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">nd-a-lol-a omu-saatsa owu-iimb-aŋg-a</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">1SG-REM.PST-see-FV 1-man 1-sing-IMPF-FV</gloss>
+            </line>
+          </lineGroup>
+          <free>'I saw the man who is singing.'</free>
+        </interlinear>
+      </example>
+      <p>***Something here about the shape of nouns as it relates to their tonology</p>
+      <p>***Something here about the tonal contrasts</p>
+      <p>In the chapters that follow, we employ a classification system that divides Wanga nouns into distinct 
+      <object type="tItalic">Patterns</object>based primarily upon a combination of their behavior both in isolation, as well as in phrasal constructs. It is necessary to consider the tonal behavior of nouns in both contexts as certain tonal properties of some nouns are neutralized when they occur in one context or the other; it is only when we view their behavior in both contexts that the true nature of their tonal characteristics become clear. As such, for each Pattern, we begin by discussing the defining characteristics of each tonal Pattern and then turn to presenting data not only for nouns in isolation, but also for three phrase-medial contexts: i) noun + adjective; ii) noun + possessive; and iii) noun + demonstrative.</p>
+      <p>Each noun tone Pattern is identified by an alphabetic label (A, B, C, etc.), the main reason for this being to keep them distinct from the verb tone Patterns that we discuss later in this monograph which are identified primarily by a numeric label.</p>
+      <section2 id="sNTonePatterns">
+        <secTitle>Summary of noun tone patterns</secTitle>
+        <p>Pattern A: toneless/all L in phrase-final position; they acquire a H phrase-medially when followed by a toneless modifier, which then spreads leftward until the augment. When they are followed by a H tone modifier, this spreads via HTA through the same span. These are compared to Class G which are all L in all contexts.</p>
+        <p>Pattern B: H prefix, downstepped H on only syl (mono), two syllables (CVCV), or first syllable (CVVCV) or all in CVVCV in two exceptional cases (Class B'). No alternations with possessives, but downstep where relevant. There is decontouring between a stem final H and a following augment with adjective. With toneless final vowel in CVVCV, adjective H spreads onto the concentenated syllable. With certain agreement markers, there is no HTA. (5, 9, 10)</p>
+        <p>Pattern C: Stem-initial H, followed by DS where relevant. No alternations with possessives. Same alternations as Class B with adjectives</p>
+      </section2>
+    </section1>
+    <section1 id="sNounStem">
+      <secTitle>Noun stems</secTitle>
+      <p>Wanga noun stems come in a variety of shapes and sizes. They can be either consonant-initial or vowel-initial, but they always end with a vowel. While it appears that the majority of Wanga noun stems are disyllabic, there are also many monosyllabic stems, as well as those containing more than two syllables. Representative examples are shown in 
+      <tablenumberedRef table="ntNounStems" textBefore="capitalizedSingular"></tablenumberedRef>. **Waiting on this until we know more about the possibility tone patterns on nouns</p>
+      <tablenumbered id="ntNounStems">
+        <table border="1">
+          <caption>Wanga noun stems</caption>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th></th>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <th></th>
+            <td></td>
+            <td></td>
+          </tr>
+        </table>
+      </tablenumbered>
+    </section1>
+    <section1 id="sNounClass">
+      <secTitle>Noun classes</secTitle>
+      <p>We introduced above that the Wanga nominal system is composed of noun classes corresponding to grammatical gender. These classes, generally speaking, can be characterized based on their respective noun class prefixes. In nearly every instances, a noun class has a specific noun class prefix composed of an augment (pre-prefix) followed by a class prefix. In all but a few notable instances ( 
+      <citation paren="none" ref="rGreenFarrisTrimble2010"></citation>; 
+      <citation paren="none" ref="rGreen2012"></citation>), Wanga nouns always appear with both morphemes of their noun class prefix. There are, however, some noun class sub-types that exhibit unique properties. These are discussed further below.</p>
+      <p>We will follow the standard convention in the Bantu linguistics literature by referring to Wanga noun classes by number, either individually (e.g., Class 1) or as a singular/plural pair (e.g., Class 1/2). To begin, 
+      <tablenumberedRef table="ntNounClasses" textBefore="capitalizedSingular"></tablenumberedRef>summarizes Wanga noun classes by drawing attention to the augment and class prefix that can be used to indentify each noun class. A representive example from each noun class is also given, and further information pertaining to each noun class or pair of noun classes will follow in the remainder of this section. In this table, the absence of an overt moprheme is indicated by Ø, while a morpheme whose presence vs. absence varies under certain conditions is indicated in parentheses. Finally, and pertaining to Classes 16 through 18, with the augment used in these classes is constant, the class prefix used varies; this is indicated by * and discussed further below.</p>
+      <tablenumbered id="ntNounClasses">
+        <table align="center" border="1">
+          <caption>Wanga noun classes</caption>
+          <tr>
+            <th>Noun class</th>
+            <th>Augment</th>
+            <th>Class prefix</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td>o-</td>
+            <td>-mu-</td>
+            <td>
+              <langData lang="lVernacular">omusaatsa</langData>
+              <gloss lang="lGloss">man</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>1a</th>
+            <td>Ø-</td>
+            <td>-Ø-</td>
+            <td>
+              <langData lang="lVernacular">koxo</langData>
+              <gloss lang="lGloss">grandmother</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>a-</td>
+            <td>-βa-</td>
+            <td>
+              <langData lang="lVernacular">aβasaatsa</langData>
+              <gloss lang="lGloss">men</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>o-</td>
+            <td>-mu-</td>
+            <td>
+              <langData lang="lVernacular">omusaala</langData>
+              <gloss lang="lGloss">tree</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>e-</td>
+            <td>-mi-</td>
+            <td>
+              <langData lang="lVernacular">emisaala</langData>
+              <gloss lang="lGloss">trees</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>(e)-</td>
+            <td>-li-</td>
+            <td>
+              <langData lang="lVernacular">lijoni</langData>
+              <gloss lang="lGloss">bird</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>6</th>
+            <td>a-</td>
+            <td>-ma-</td>
+            <td>
+              <langData lang="lVernacular">amajoni</langData>
+              <gloss lang="lGloss">birds</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>7</th>
+            <td>e-</td>
+            <td>-ʃi-</td>
+            <td>
+              <langData lang="lVernacular">eʃisaala</langData>
+              <gloss lang="lGloss">chair</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>8</th>
+            <td>e-</td>
+            <td>-fi-</td>
+            <td>
+              <langData lang="lVernacular">efisaala</langData>
+              <gloss lang="lGloss">chairs</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>9</th>
+            <td>i-</td>
+            <td>-(N)-</td>
+            <td>
+              <langData lang="lVernacular">ifisi</langData>
+              <gloss lang="lGloss">hyena</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>10</th>
+            <td>tsi-</td>
+            <td>-(N)-</td>
+            <td>
+              <langData lang="lVernacular">tsifisi</langData>
+              <gloss lang="lGloss">hyenas</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>11</th>
+            <td>o-</td>
+            <td>-lu-</td>
+            <td>
+              <langData lang="lVernacular">olufwa</langData>
+              <gloss lang="lGloss">seed</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>10a</th>
+            <td>tsi-</td>
+            <td>-(N)-</td>
+            <td>
+              <langData lang="lVernacular">tsifwa</langData>
+              <gloss lang="lGloss">seeds</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>12</th>
+            <td>(a)-</td>
+            <td>-xa-</td>
+            <td>
+              <langData lang="lVernacular">axafisi</langData>
+              <gloss lang="lGloss">small hyena</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>13</th>
+            <td>(o)-</td>
+            <td>-ru-</td>
+            <td>
+              <langData lang="lVernacular">orufisi</langData>
+              <gloss lang="lGloss">small hyenas</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>14</th>
+            <td>o-</td>
+            <td>-βu-</td>
+            <td>
+              <langData lang="lVernacular">oβuɲaasi</langData>
+              <gloss lang="lGloss">grass</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>o-</td>
+            <td>-xu-</td>
+            <td>
+              <langData lang="lVernacular">oxulola</langData>
+              <gloss lang="lGloss">to see</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>16</th>
+            <td>a-</td>
+            <td>*</td>
+            <td>
+              <langData lang="lVernacular">anzu</langData>
+              <gloss lang="lGloss">near the house</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>17</th>
+            <td>xu-</td>
+            <td>*</td>
+            <td>
+              <langData lang="lVernacular">xunzu</langData>
+              <gloss lang="lGloss">at the house</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>18</th>
+            <td>mu-</td>
+            <td>*</td>
+            <td>
+              <langData lang="lVernacular">munzu</langData>
+              <gloss lang="lGloss">in the house</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>20</th>
+            <td>(o)-</td>
+            <td>-ku-</td>
+            <td>
+              <langData lang="lVernacular">okutsu</langData>
+              <gloss lang="lGloss">big house</gloss>
+            </td>
+          </tr>
+        </table>
+      </tablenumbered>
+      <p>Class 1/2 contains nouns that refer to humans, including some family members, ethnic groups, and professions. Class 1 nouns are singular and take the prefix 
+      <langData lang="lVernacular">omu-</langData>, while corresponding Class 2 nouns are plural and take the prefix 
+      <langData lang="lVernacular">aβa-</langData>. Wanga has a sub-type of Class 1 nouns that we shall refer to as Class 1a. This subclass contains several kinship terms, as well as nouns referring to other human or divine entities that require no augment. Class 1a singular nouns take Class 2 pluralization.</p>
+      <p>Nouns in Class 3/4 do not closely pertain to a particular semantic category; although many nouns in this class refer to body parts, items found in nature, as well as long things. Although both Class 1 and Class 3 have the same noun class prefix 
+      <langData lang="lVernacular">omu-</langData>, they can be differentiated from one another based upon their respective plurals; the prefix for Class 4 plurals is 
+      <langData lang="lVernacular">emi-</langData>. Note that Class 4 is also used as the plural for augmentative nouns whose singular is in Class 20.</p>
+      <p>Nouns in Class 5/6 do not fit a well-fined semantic category, although it contains many nouns for animals and certain pluralizable abstract nouns derived from verbs. The noun class prefix for singular Class 5 nouns has two forms, 
+      <langData lang="lVernacular">eli-</langData>and 
+      <langData lang="lVernacular">lii-</langData>, the former of which is found only preceding vowel-initial stems. The latter is found in other instances. Plural Class 6 nouns take the prefix 
+      <langData lang="lVernacular">ama-</langData>; however, there is an additional sub-type of Class 6 that we refer to as Class 6a. This subclass of nouns contains liquids, mass nouns, and other uncountables. As such, Class 6a nouns are inherently plural and have no corresponding singular in Class 5.</p>
+      <p>Nouns in Class 7/8 have no particular semantic contiguity, although a number of nouns in these classes refer insects, animals, and inanimate objects, particular those that are wooden or hard. Class 7 singular nouns take the prefix 
+      <langData lang="lVernacular">eʃi-</langData>while Class 8 plural nouns take the prefix 
+      <langData lang="lVernacular">efi-</langData>.</p>
+      <p>The behavior of nouns in Class 9/10 is especially interesting. The prefixes for these classes have two allomorphs, the choice of which depends on the initial segment of the noun stem. The default forms of these prefixes are 
+      <langData lang="lVernacular">iN-</langData>and 
+      <langData lang="lVernacular">tsiN-</langData>, respectively, where 
+      <langData lang="lVernacular">N</langData>stands for a nasal segment whose place of articulation matches that of a following consonant. This nasal segment of the prefix appears only in combination with nouns whose stem begins with a voiced obstruent (e.g., 
+      <langData lang="lVernacular">/iN-busi/ →</langData>
+      <langData lang="lVernacular">imbusi</langData>
+      <gloss lang="lGloss">goat</gloss>or 
+      <langData lang="lVernacular">/tsiN-zoxa/ →</langData>
+      <langData lang="lVernacular">tsinzoxa</langData>
+      <gloss lang="lGloss">snakes</gloss>). However, before stems beginning with a voiceless obstruent, the nasal segment is lost (e.g., 
+      <langData lang="lVernacular">/iN-sindani/ → 
+      <langData lang="lVernacular">isindani</langData></langData>
+      <gloss lang="lGloss">needle</gloss>or 
+      <langData lang="lVernacular">/tsiN-talani/ → 
+      <langData lang="lVernacular">tsitalani</langData></langData>
+      <gloss lang="lGloss">lions</gloss>). The prefix nasal is also lost before vowel-initial stems (e.g., 
+      <langData lang="lVernacular">/iN-ajwa/ →</langData>
+      <langData lang="lVernacular">ijaajwa</langData>
+      <gloss lang="lGloss">axe</gloss>). Finally, noun stems in these classes that begin with a nasal have a somewhat lengthened nasal that appears to result from a combination of the prefix nasal and stem-initial nasal (e.g., 
+      <langData lang="lVernacular">/tsiN-maamba/ →</langData>
+      <langData lang="lVernacular">tsimmaamba</langData>
+      <gloss lang="lGloss">biceps</gloss>). Note that the vowel of the Class 10 prefix is short. Class 9/10 contains many animals and some body part; this class is also the default class for borrowings from other languages.</p>
+      <p>Class 11 contains singular nouns that can be identified by their 
+      <langData lang="lVernacular">olu-</langData>prefix. The plural counterparts to this class largely resemble the Class 10 nouns discussed just above, but they have a few unique properties that merit their being treated as a separate sub-class, namely Class 10a. While Class 10a plural nouns behave identicallly to Class 10 in having two allomorphs, 
+      <langData lang="lVernacular">tsiN-</langData>and 
+      <langData lang="lVernacular">tsi-</langData>, that emerge under the conditions described above for Class 9/10. One difference, however, is that the vowel of the Class 10a prefix is long. These slight differences have implications elsewhere in the grammar. This noun class contains words for languages, as well for long and/or thin things, among others</p>
+      <p>Thus far, we have described the properties of those Wanga noun classes that have are straightforwardly derived and have singular and plural counterparts. In the remainder of this section, we discuss some more idiosyncratic properties of nouns found in other noun classes. We begin with nouns in Class 14 and Class 15. Class 14 nouns are abstract or otherwise uncountable items taking the prefix 
+      <langData lang="lVernacular">oβu-</langData>that are uncountable (e.g., 
+      <langData lang="lVernacular">oβutʃeesi</langData>
+      <gloss lang="lGloss">intelligence</gloss>); thus, they are neither singular nor plural. Similarly, Class 15 nouns take the prefix 
+      <langData lang="lVernacular">oxu-</langData>and serve as the infinitival or gerundative form of a verb (e.g., 
+      <langData lang="lVernacular">oxutʃeenda</langData>
+      <gloss lang="lGloss">to walk, walking</gloss>); these nouns, therefore, are not singular or plural.</p>
+      <p>The next noun classes that we introduce are different in that they are singular/plural diminutive (Class 12/13) and augmentative (Class 20/4) nouns derived from nouns typically found in other classes. In their default forms, the prefixes for Class 12/13 nouns are 
+      <langData lang="lVernacular">axa-</langData>and 
+      <langData lang="lVernacular">oru-</langData>, while those for Class 20/4 nouns are 
+      <langData lang="lVernacular">oku-</langData>and 
+      <langData lang="lVernacular">emi-</langData>. Thus, the Class 3 noun 
+      <langData lang="lVernacular">omwaanda</langData>
+      <gloss lang="lGloss">road</gloss>has for its corresponding Class 12 diminutive 
+      <langData lang="lVernacular">axaanda</langData>
+      <gloss lang="lGloss">small road</gloss>; its Class 20 augmentative counterpart is 
+      <langData lang="lVernacular">okwaanda</langData>
+      <gloss lang="lGloss">big road</gloss>.</p>
+      <p>The prefixes in the diminutive and augmentative classes each have a second allomorph that lacks an augment. These prefixes are 
+      <langData lang="lVernacular">xa-</langData>, 
+      <langData lang="lVernacular">ru-</langData>, 
+      <langData lang="lVernacular">ku-</langData>and 
+      <langData lang="lVernacular">mi-</langData>, and they occur only in specific instances. First, and as discussed at length in 
+      <citation paren="both" ref="rGreenFarrisTrimble2010"></citation>and 
+      <citation paren="both" ref="rGreen2012"></citation>, these prefix allomorphs are used in conjunction with nouns from Class 9/10 that lose their prefix nasal. 
+      <endnote id="nDimAugFric">
+        <p>The exception to this is for certain Class 9/10 nouns whose stem begins with a fricative. Those stems beginning with 
+        <langData lang="lVernacular">s</langData>or 
+        <langData lang="lVernacular">x</langData>follow the typical pattern in which loss of the nasal prefix corresponds to augment loss. Surprisingly, however, those stems beginning with 
+        <langData lang="lVernacular">f</langData>or 
+        <langData lang="lVernacular">ʃ</langData>lose their nasal prefix but retain their augment. This matter is quite unexpected and must be left to further inquiry.</p>
+      </endnote>Compare, for example, the Class 9 noun 
+      <langData lang="lVernacular">imbako</langData>
+      <gloss lang="lGloss">hoe</gloss>, which retains its prefix nasal, to its Class 12 counterpart 
+      <langData lang="lVernacular">axaβaxo</langData>
+      <gloss lang="lGloss">small hoe</gloss>; the prefix of the Class 12 noun exhibits an augment. Next, compare the Class 9 noun 
+      <langData lang="lVernacular">ikweena</langData>
+      <gloss lang="lGloss">crocodile</gloss>, which has no prefix nasal, to its Class 12 counterpart 
+      <langData lang="lVernacular">xakweena</langData>
+      <gloss lang="lGloss">small crocodile</gloss>, which has no augment. The same outcome is found in the augmentative classes (i.e., 
+      <langData lang="lVernacular">okuβaxo</langData>
+      <gloss lang="lGloss">big hoe</gloss>and 
+      <langData lang="lVernacular">kuweena</langData>
+      <gloss lang="lGloss">big crocodile</gloss>). Another instance in which these prefixes lacking an augment arise is in borrowings in Class 9/10 (e.g., 
+      <langData lang="lVernacular">imeesa</langData>
+      <gloss lang="lGloss">table</gloss>; 
+      <langData lang="lVernacular">xameesa</langData>
+      <gloss lang="lGloss">small table</gloss>; cf. 
+      <langData lang="lVernacular">mesa</langData>
+      <gloss lang="lGloss">table</gloss>, through Swahili). Importantly, Class 10a nouns whose singular counterpart is Class 11 realize no such prefix alternation in augmentative and diminutive classes. Compare: 
+      <langData lang="lVernacular">olusaala</langData>
+      <gloss lang="lGloss">stick</gloss>, 
+      <langData lang="lVernacular">tsisaala</langData>
+      <gloss lang="lGloss">sticks</gloss>, and 
+      <langData lang="lVernacular">axasaala</langData>
+      <gloss lang="lGloss">small stick</gloss>.</p>
+      <p>Finally, we come to Classes 16, 17, and 18, which contain locative nouns. These classes are unique in that the class indicator in each instance is the augment; these are 
+      <langData lang="lVernacular">a-</langData>, 
+      <langData lang="lVernacular">xu-</langData>, and 
+      <langData lang="lVernacular">mu-</langData>, respectively. The class prefix for each, however, is from the noun class in which the noun is typically found. For example, the locative noun 
+      <langData lang="lVernacular">mumwaalo</langData>
+      <gloss lang="lGloss">in the river</gloss>is composed of the Class 18 augment 
+      <langData lang="lVernacular">mu-</langData>followed by the Class 3 class prefix 
+      <langData lang="lVernacular">-mu-</langData>(cf. 
+      <langData lang="lVernacular">omwaalo</langData>
+      <gloss lang="lGloss">river</gloss>), which is then followed by the noun stem.</p>
+    </section1>
+    <section1 id="sNounModifier">
+      <secTitle>Noun modifiers</secTitle>
+      <p>The Wanga noun phrase minimally contains a head noun, but it may also include a variety of different modifiers, including determiners, adjectives, and numerals, all of which much agree with the head noun in grammatical gender. While it perhaps most common for the head noun to begin a noun phrase and to be followed by its modifiers, this is not necessarily the rule. While is not our intent in this monograph to enter into detailed discussion of the syntax of the Wanga noun phrase, we believe that it is important to provide a brief overview of various nominal modifiers that may be encountered as these modifiers can be grouped into distinct types which in turn require different agreement morphology. As we discuss in later chapters, the morphosyntactic relationship between a noun and its modifiers (i.e., their order relative to one another) has important tonal consequences.</p>
+      <p>Wanga noun modifiers can be divided into three types that are defined by their agreement patterns The agreement morphology for each of the modifier types is summarized for each Wanga noun class in 
+      <tablenumberedRef table="ntModifierAGR"></tablenumberedRef>.</p>
+      <p>Generally speaking, Type 1 modifiers exhibit agreement morphology that mirrors that of most nouns; that is, these modifiers have prefixes containing an augment and prefix that match those of the head noun's noun class. The exception to this is Classes 9, 10, 10a, which have no prefix nasal, as well the locative classes, with have only their characteristic augment. Certain adjectives are Type 1 modifiers, which can be seen in the noun phrase 
+      <langData lang="lVernacular">omusaatsa omuβi</langData>
+      <gloss lang="lGloss">a bad man</gloss>, in which the modifier 
+      <langData lang="lVernacular">omuβi</langData>takes the prefix 
+      <langData lang="lVernacular">omu-</langData>, which corresponds to that found associated with a typical Class 1 noun.</p>
+      <p>Type 2 modifiers similarly have prefixes containing both and augment and prefix, but in some instances these differ slightly from those prefixes found on other nouns. Once again, Class 1 patterns are somewhat different, and surprisingly, Class 17 and 18 locatives have an augment. An example of a modifer from Type 2 is the medio-distal demonstrativ. This can be seen in the noun phrase 
+      <langData lang="lVernacular">omusaala okwo</langData>
+      <gloss lang="lGloss">that tree</gloss>, in which the modifier prefix is 
+      <langData lang="lVernacular">oku-</langData>, rather than 
+      <langData lang="lVernacular">*omu-</langData>.</p>
+      <p>Type 3 modifiers are somewhat different in that, on the one hand, their prefixes lack an augment (except locative classes), while on the other, they require the alternative class prefixes characteristic of Type 2 modifiers. For example, the proximal demonstrative is a Type 3 modifier. This can be seen in the noun phrase 
+      <langData lang="lVernacular">amajoni kano</langData>
+      <gloss lang="lGloss">these birds</gloss>, in which the prefix of the modifier is simply 
+      <langData lang="lVernacular">ka-</langData>, rather than 
+      <langData lang="lVernacular">*aka-</langData>or 
+      <langData lang="lVernacular">*ama-</langData>. In exceptional case involving partitives, there are alternative forms for Type 3 modifier for Class 4 and Class 6, as shown in parentheses.</p>
+      <tablenumbered id="ntModifierAGR">
+        <table align="center" border="1">
+          <caption>Modifier agreement types</caption>
+          <tr>
+            <th>Noun class</th>
+            <th>Type 1</th>
+            <th>Type 2</th>
+            <th>Type 3</th>
+          </tr>
+          <tr>
+            <th>1/1a</th>
+            <td>omu-</td>
+            <td>o-</td>
+            <td>u- [w-]</td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>aβa-</td>
+            <td>aβa-</td>
+            <td>βa-</td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>omu-</td>
+            <td>oku-</td>
+            <td>ka- [k-]</td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>emi-</td>
+            <td>etʃi-</td>
+            <td>tʃi- (mi-)</td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>li-</td>
+            <td>eli-</td>
+            <td>li- [lj-]</td>
+          </tr>
+          <tr>
+            <th>6</th>
+            <td>ama-</td>
+            <td>aka-</td>
+            <td>ka- (ma-)</td>
+          </tr>
+          <tr>
+            <th>7</th>
+            <td>eʃi-</td>
+            <td>eʃi-</td>
+            <td>ʃi- [ʃj-]</td>
+          </tr>
+          <tr>
+            <th>8</th>
+            <td>efi-</td>
+            <td>efi-</td>
+            <td>fi-</td>
+          </tr>
+          <tr>
+            <th>9</th>
+            <td>i-</td>
+            <td>e-</td>
+            <td>i- [j-]</td>
+          </tr>
+          <tr>
+            <th>10/10a</th>
+            <td>tsi-</td>
+            <td>etsi-</td>
+            <td>tsi- [tsj-]</td>
+          </tr>
+          <tr>
+            <th>11</th>
+            <td>olu-</td>
+            <td>olu-</td>
+            <td>lu-</td>
+          </tr>
+          <tr>
+            <th>12</th>
+            <td>axa-</td>
+            <td>axa-</td>
+            <td>xa-</td>
+          </tr>
+          <tr>
+            <th>13</th>
+            <td>oru-</td>
+            <td>oru-</td>
+            <td>ru-</td>
+          </tr>
+          <tr>
+            <th>14</th>
+            <td>oβu-</td>
+            <td>oβu-</td>
+            <td>βu-</td>
+          </tr>
+          <tr>
+            <th>15</th>
+            <td>oxu-</td>
+            <td>oxu-</td>
+            <td>xu-</td>
+          </tr>
+          <tr>
+            <th>16</th>
+            <td>a-</td>
+            <td>a-</td>
+            <td>a-</td>
+          </tr>
+          <tr>
+            <th>17</th>
+            <td>xu-</td>
+            <td>ox-</td>
+            <td>xu-</td>
+          </tr>
+          <tr>
+            <th>18</th>
+            <td>mu-</td>
+            <td>om-</td>
+            <td>mu-</td>
+          </tr>
+          <tr>
+            <th>20</th>
+            <td>oku-</td>
+            <td>oku-</td>
+            <td>ku-</td>
+          </tr>
+        </table>
+      </tablenumbered>
+      <p>Wanga encodes no morphological difference between indefinite and definite, and accordingly, it has no definite determiners; such these distinctions are recoverable only by context. The language does, however, have three demonstrative determiners: proximal, medio-distal, and distal. The proximal demonstrative determiner 
+      <langData lang="lVernacular">-no</langData>is a Type 3 modifier (e.g., 
+      <langData lang="lVernacular">βano</langData>
+      <gloss lang="lGloss">these Cl.2</gloss>), the medio-distal demonstrative determiner 
+      <langData lang="lVernacular">-lja</langData>is also a Type 3 modifier (e.g., 
+      <langData lang="lVernacular">βalja</langData>
+      <gloss lang="lGloss">those Cl. 2</gloss>), while the distal demonstrative determiner 
+      <langData lang="lVernacular">-o</langData>is a Type 2 modifier (e.g, 
+      <langData lang="lVernacular">aβo</langData>
+      <gloss lang="lGloss">those (distant) Cl.2</gloss>).</p>
+      <p>Possessive determiners are inflected for person and number; there is no distinction between masculine and feminine gender. These are Type 3 determiners, and their basic shapes are summarized in 
+      <tablenumberedRef table="ntPossessiveDet"></tablenumberedRef>. The 2nd and 3rd person singular possessive determiners have a copy of the first consonant of their prefix, shown as 
+      <langData lang="lVernacular">C</langData>. These determiners also have a second, short form that omits their prefix. For example, the phrase 
+      <gloss lang="lGloss">your chairs</gloss>is either 
+      <langData lang="lVernacular">efisaala fifyo</langData>or 
+      <langData lang="lVernacular">efisaala fyo</langData>.</p>
+      <tablenumbered id="ntPossessiveDet">
+        <table align="center" border="1">
+          <caption>Possessive determiners</caption>
+          <tr>
+            <th></th>
+            <th>Singular</th>
+            <th>Plural</th>
+          </tr>
+          <tr>
+            <th>1st person</th>
+            <td>
+              <langData lang="lVernacular">-andʒe</langData>
+              <gloss lang="lGloss">my</gloss>
+            </td>
+            <td>
+              <langData lang="lVernacular">-efu</langData>
+              <gloss lang="lGloss">our</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>2nd person</th>
+            <td>
+              <langData lang="lVernacular">-Co</langData>
+              <gloss lang="lGloss">your</gloss>
+            </td>
+            <td>
+              <langData lang="lVernacular">-eɲu</langData>
+              <gloss lang="lGloss">your</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>3rd person</th>
+            <td>
+              <langData lang="lVernacular">-Ce</langData>
+              <gloss lang="lGloss">his/her/its</gloss>
+            </td>
+            <td>
+              <langData lang="lVernacular">-aβo</langData>
+              <gloss lang="lGloss">their</gloss>
+            </td>
+          </tr>
+        </table>
+      </tablenumbered>
+      <p>Wanga numerals generally follow the agreement pattern associated with Type 2 modifiers, but there are exceptions to this in a few instances. These include: i) the word for 
+      <gloss lang="lGloss">one</gloss>never takes an augment in any noun class; ii) there are two words for 
+      <gloss lang="lGloss">six</gloss>, one which takes and augment and one which does not; and iii) words for the numerals 
+      <gloss lang="lGloss">seven</gloss>through 
+      <gloss lang="lGloss">ten</gloss>in contemporary Wanga are derived from Swahili and behave unlike other numerals. The stem forms for Wanga numerals are given in 
+      <tablenumberedRef table="ntNumerals"></tablenumberedRef>, followed by an example of each with a noun from Class 1/2.</p>
+      <tablenumbered id="ntNumerals">
+        <table align="center" border="1">
+          <caption>Numerals</caption>
+          <tr>
+            <th>Numeral</th>
+            <th>Stem</th>
+            <th>Example</th>
+          </tr>
+          <tr>
+            <th>1</th>
+            <td>
+              <langData lang="lVernacular">-lala</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">omuxaasi mulala</langData>
+              <gloss lang="lGloss">one woman</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>2</th>
+            <td>
+              <langData lang="lVernacular">-βiri</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi aβaβiri</langData>
+              <gloss lang="lGloss">two women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>3</th>
+            <td>
+              <langData lang="lVernacular">-taro</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi aβataro</langData>
+              <gloss lang="lGloss">three women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>4</th>
+            <td>
+              <langData lang="lVernacular">-nee</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi aβanee</langData>
+              <gloss lang="lGloss">four women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>5</th>
+            <td>
+              <langData lang="lVernacular">-rano</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi aβarano</langData>
+              <gloss lang="lGloss">five women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th rowspan="2">6</th>
+            <td>
+              <langData lang="lVernacular">-sasaβa</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi aβasasaβa</langData>
+              <gloss lang="lGloss">six women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <langData lang="lVernacular">sita</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi sita</langData>
+              <gloss lang="lGloss">six women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>7</th>
+            <td>
+              <langData lang="lVernacular">saβaa</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi saβaa</langData>
+              <gloss lang="lGloss">seven women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>8</th>
+            <td>
+              <langData lang="lVernacular">munane</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi munane</langData>
+              <gloss lang="lGloss">eight women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>9</th>
+            <td>
+              <langData lang="lVernacular">tisa</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi tisa</langData>
+              <gloss lang="lGloss">nine women</gloss>
+            </td>
+          </tr>
+          <tr>
+            <th>10</th>
+            <td>
+              <langData lang="lVernacular">exomi</langData>
+            </td>
+            <td>
+              <langData lang="lVernacular">aβaxaasi exomi</langData>
+              <gloss lang="lGloss">ten women</gloss>
+            </td>
+          </tr>
+        </table>
+      </tablenumbered>
+      <p>In addition to being used for counting, the word for 
+      <gloss lang="lGloss">one</gloss>can be used as a partitive, as in 
+      <langData lang="lVernacular">aβaandu βalala</langData>
+      <gloss lang="lGloss">some people</gloss>. When it is used in this way, it follows Type 3 modifier agreement, with two slight changes. The forms for this alternative Type 3 agreement in Class 4 and Class 6 are 
+      <langData lang="lVernacular">mi-</langData>and 
+      <langData lang="lVernacular">ma-</langData>, respectively. Similarly, the word for 
+      <gloss lang="lGloss">two</gloss>is used to mean 
+      <gloss lang="lGloss">both</gloss>, as in 
+      <langData lang="lVernacular">aβaandu βaβiri</langData>
+      <gloss lang="lGloss">both people</gloss>.</p>
+      <p>While nominal attribution in Wanga is accomplished in a variety of ways, the language does have a small class of lexical adjectives that behave like other modifiers in that they must agreement in grammatical gender with their head noun. Depending on the adjective, it may be require either Type 1 or Type 3 modifier agreement. For example, adjectives like 
+      <gloss lang="lGloss">big</gloss>and 
+      <gloss lang="lGloss">bad</gloss>are Type 1 agreement adjectives, as in 
+      <langData lang="lVernacular">emisaala emixooŋgo</langData>
+      <gloss lang="lGloss">big trees</gloss>and 
+      <langData lang="lVernacular">amajoni amaβi</langData>
+      <gloss lang="lGloss">bad birds</gloss>. Adjectives like 
+      <gloss lang="lGloss">all</gloss>and 
+      <gloss lang="lGloss">light</gloss>, however, take Type modifier agreement, as in 
+      <langData lang="lVernacular">tsifwa tsjosi</langData>
+      <gloss lang="lGloss">all seeds</gloss>and 
+      <langData lang="lVernacular">lijoni lilafu</langData>
+      <gloss lang="lGloss">light bird</gloss>. The same patterns of agreement are found in predicates adjectives:</p>
+      <example num="xPredAdjAGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Omwaanda kuno ni omuraambi.</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">omu-aanda ku-no ni omu-raambi</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">3-road 3-this COP 3-long</gloss>
+            </line>
+          </lineGroup>
+          <free>'This road, it is long.'</free>
+        </interlinear>
+      </example>
+      <p>In other equative sentences, a form of the irregular copular verb 
+      <langData lang="lVernacular">oxuβa</langData>
+      <gloss lang="lGloss">to be</gloss>is used, namely 
+      <langData lang="lVernacular">-li</langData>. The subject of the copular verb must agree with the subject of the equative sentence:</p>
+      <example num="xCopVerbAGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Eʃisaala ʃili awo.</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">eʃi-saala ʃi-li awo</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">7-chair 7-be there</gloss>
+            </line>
+          </lineGroup>
+          <free>'The chair is there.'</free>
+        </interlinear>
+      </example>
+      <p>Temporals? Locatives? Spatials? Partitives?</p>
+      <p>It is important to note that the presence of an adjective following one type of modifier agreement does not affect the agreement pattern of other modifiers in the phrase:</p>
+      <example num="xMultiModifierAGR">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">Emisaala tʃjaandʒe emijaxano emiraambi tʃjosi tʃili awo.</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">emi-saala tʃi-andʒe emi-jaxano emi-raambi tʃi-osi tʃi-li awo.</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">3-tree 3-my 3-red 3-tall 3-all 3-be here</gloss>
+            </line>
+          </lineGroup>
+          <free>'All my tall red trees are here.'</free>
+        </interlinear>
+      </example>
+      <p>Another instance in which grammatical gender agreement comes into play is in associative constructions of the form 'X of Y.' In Wanga, the associative particle must agree in gender with the first, head noun of the construction, and in doing so, it following Type 3 modifier agreement. The second noun of the construction retains its own grammatical gender.</p>
+      <example num="xClass14ASSOC">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">oβweeru βwe tsimbao</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">oβu-eru βu-e tsiN-bao</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">14-floor 14-ASSOC 10-wood</gloss>
+            </line>
+          </lineGroup>
+          <free>'floor of wood'</free>
+        </interlinear>
+      </example>
+      <example num="xClass9ASSOC">
+        <interlinear>
+          <lineGroup>
+            <line>
+              <langData lang="lVernacular">iβakuuli je liloβa</langData>
+            </line>
+            <line>
+              <langData lang="lVernacular">i-βakuuli i-e li-loβa</langData>
+            </line>
+            <line>
+              <gloss lang="lGloss">9-pot 9-ASSOC 5-clay</gloss>
+            </line>
+          </lineGroup>
+          <free>'pot of clay'</free>
+        </interlinear>
+      </example>
+    </section1>
+    <section1 id="sNToneProcesses">
+      <secTitle>General noun tone rules</secTitle>
+      <p></p>
+      <section2 id="sNDecontouring">
+        <secTitle>Decontouring</secTitle>
+        <p></p>
+      </section2>
+    </section1>
+    <section1 id="sNPhrase">
+      <secTitle>Tonal rules in noun phrases</secTitle>
+      <p></p>
+      <section2 id="sNHTA">
+        <secTitle>High Tone Anticipation</secTitle>
+        <p>High Tone Anticipation (HTA) is a tonal phenomenon found in Wanga noun phrases (and in its verb phrases as well; see 
+        <sectionRef sec="sVHTA" textBefore="capitalizedSingular"></sectionRef>) wherein the lexical H tone of a modifier will spread anticipatorily leftward onto an adjacent noun. HTA is triggered only by certain modifiers (what else other than adjectives?), and it does not affect nouns in all tonal classes.</p>
+        <p>In those instances where HTA is applicable, the extent of leftward H tone spread varies fairly freely. In many instances, the H tone span will proceed through the noun stem and end on the class prefix, which is the morpheme that immediately precedes the stem. However, we observe a number of instances in which the span continues leftward to the left edge of the noun, ending on the augment. It is unclear if there is any overarching phrasal or clausal intonative factor that contributes to this choice; for the sake of consistency in relevant examples, we transcribe the H tone span as ending on the class prefix in all instances.</p>
+      </section2>
+      <section2 id="sHTI">
+        <secTitle>High Tone Insertion</secTitle>
+        <p>High Tone Insertion (HTI) is another tonal rule witnessed in Wanga noun phrases. HTI places a H tone on the final vowel of a noun stem when a noun is followed by certain modifiers (e.g., possessive and demonstratives). Importantly, HTI occurs regardless of whether the involved modifier is lexically toneless or associated with a H tone. HTI in noun phrases is followed by a second tonal rule, Unbounded Spreading, which we describe in 
+        <sectionRef sec="sNUS" textBefore="capitalizedSingular"></sectionRef>.</p>
+      </section2>
+      <section2 id="sNUS">
+        <secTitle>Unbounded Spreading</secTitle>
+        <p>whose outcomes are similar, but not identical to High Tone Anticipation</p>
+      </section2>
+    </section1>
+  </chapter>
+  <chapter id="c2">
+    <secTitle></secTitle>
+    <p></p>
+  </chapter>
+  <backMatter>
+    <endnotes></endnotes>
+    <xi:include href="References_Master.xml" xpointer="element(/1)" xmlns:xi="http://www.w3.org/2001/XInclude"></xi:include>
+  </backMatter>
+  <languages>
+    <language id="lVernacular" name="vernacular"></language>
+    <language id="lGloss" name="gloss"></language>
+    <language id="en"></language>
+  </languages>
+  <types>
+    <comment>The following types are provided as pre-set examples. You may well want to create your own types that refer to one or more of these. You do that by typing in the names of the types in the types attribute of your type.</comment>
+    <type font-weight="bold" id="tBold"></type>
+    <type font-style="italic" font-weight="bold" id="tBoldItalic"></type>
+    <type font-weight="bold" id="tEmphasis"></type>
+    <type id="tGrammaticalGloss" types="tSmallCaps"></type>
+    <type font-style="italic" id="tItalic"></type>
+    <type cssSpecial="text-decoration:none" id="tNoOverline" xsl-foSpecial="text-decoration=&quot;no-overline&quot;"></type>
+    <type font-variant="normal" id="tNoSmallCaps"></type>
+    <type cssSpecial="text-decoration:none" id="tNoStrikethrough" xsl-foSpecial="text-decoration=&quot;no-line-through&quot;"></type>
+    <type cssSpecial="text-decoration:none" id="tNoUnderline" xsl-foSpecial="text-decoration=&quot;no-underline&quot;"></type>
+    <type cssSpecial="text-decoration:overline" id="tOverline" xsl-foSpecial="text-decoration=&quot;overline&quot;"></type>
+    <type font-style="normal" font-variant="normal" font-weight="normal" id="tRegular"></type>
+    <type font-family="Charis SIL Small Caps" id="tSmallCaps"></type>
+    <type XeLaTeXSpecial="line-through" cssSpecial="text-decoration:line-through" id="tStrikethrough" xsl-foSpecial="text-decoration=&quot;line-through&quot;"></type>
+    <type XeLaTeXSpecial="subscript" cssSpecial="vertical-align:sub;" font-size="65%" id="tSubscript" xsl-foSpecial="baseline-shift='sub'"></type>
+    <type XeLaTeXSpecial="superscript" cssSpecial="vertical-align:super;" font-size="65%" id="tSuperscript" xsl-foSpecial="baseline-shift='super'"></type>
+    <type XeLaTeXSpecial="underline" cssSpecial="text-decoration:underline" id="tUnderline" xsl-foSpecial="text-decoration=&quot;underline&quot;"></type>
+    <comment>Add your custom types here.</comment>
+  </types>
+</lingPaper>
