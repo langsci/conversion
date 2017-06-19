@@ -121,6 +121,8 @@ class textelement():
     if te.tag == 'chart':
         return ''.join([self.treatTextElement(x) for x in te]) 
     if te.tag == 'interlinear':
+        return ''.join([self.treatTextElement(x) for x in te]) 
+    if te.tag == 'single':
         return ''.join([self.treatTextElement(x) for x in te])   
     if te.tag == 'img':
         return '\\includegraphics[width=\\textwidth]{ %s}'%te.attrib['src']
@@ -128,10 +130,24 @@ class textelement():
       typ = te.attrib["type"]
       if typ == 'tItalic':
         return '\\textit{%s}%s'%(text,tail)
+      if typ == 'tBold':
+        return '\\textbf{%s}%s'%(text,tail)
+      if typ == 'tSuperscript':
+        return '\\textsuperscript{%s}%s'%(text,tail)
+      if typ == 'tSubscript':
+        return '\\textsubscript{%s}%s'%(text,tail)
+      if typ == 'tUnderline':
+        return '\\ul{%s}%s'%(text,tail)
     if te.tag == 'langData':
       lang = te.attrib["lang"]
-      if lang == 'lVernacular':
+      if lang == 'lVernacular' or lang == 'lVernacularProse':
         return '\\vernacular{%s}%s'%(text,tail) 
+      if lang in ('lGloss','lGlossProse','lGlossHeader'):
+        return '\\gloss{%s}%s'%(text,tail) 
+      if lang in ('lRule','lRuleHeader'):
+        return '\\regel{%s}%s'%(text,tail) 
+      if lang in ('lExampleHeader',):
+        return '%s%s'%(text,tail)       
     if te.tag == 'gloss':
       lang = te.attrib["lang"]
       if lang == 'lGloss':
@@ -145,12 +161,21 @@ class textelement():
     if te.tag == 'sectionRef': 
       label  = te.attrib.get('sec')
       return '\\sectref{sec:%s} %s'% (label, tail)
+    if te.tag == 'appendixRef': 
+      label  = te.attrib.get('app')
+      return '\\appref{sec:%s} %s'% (label, tail)
+    if te.tag == 'endnoteRef': 
+      label  = te.attrib.get('note')
+      return '\\fnref{fn:%s} %s'% (label, tail)
     if te.tag == 'tablenumberedRef': 
       label  = te.attrib.get('table')
       return '\\tabref{tab:%s} %s'% (label, tail)
     if te.tag == 'citation': 
       key  = te.attrib.get('ref')
       return '\\citealt{%s} %s'% (key, tail)
+    if te.tag == 'link': 
+      key  = te.attrib.get('href')
+      return '\\href{%s}{%s}%s'% (key, text, tail)
     if te.tag == 'lineGroup':
         numberoflines = len(te)
         lls = numberoflines * 'l' #count how many src/imt lines there are
@@ -180,7 +205,7 @@ class textelement():
     if te.tag == 'tr':   
         trbody = ' '.join([self.treatTextElement(x) for x in te])
         return '%s\\\\\n' % (trbody)   
-    if te.tag == 'p':  
+    if te.tag == 'p' or te.tag == 'pc':  
         text = ' '
         try:
           text=te.text.strip()
@@ -194,6 +219,13 @@ class textelement():
         labelstring = '\\label{ex:%s} '%label 
       exbody = ''.join([self.treatTextElement(x) for x in te])
       return '\n\\ea%s\n%s\n\\z\n\n' % (labelstring, exbody)   
+    if te.tag == 'exampleHeading': 
+      text = ' '
+      try:
+        text=te.text.strip()
+      except AttributeError:
+        pass 
+      return "%s %s\n\n" %(text, ''.join([self.treatTextElement(x) for x in te]))
     if te.tag == 'endnote':        
         label = te.attrib.get('id', False)
         labelstring = ''
@@ -210,7 +242,10 @@ class textelement():
   def treattabular(self,el):
     numberofcolumns = len(el.find('tr'))+1 #hack to take care of extra & at end #TODO
     columntypes = numberofcolumns * 'l'
-    caption = el.find('caption').text
+    try:
+      caption = el.find('caption').text
+    except AttributeError:
+      caption = '\\nocaption'
     trs = el.findall('tr')
     rows = ''.join([self.treatTextElement(tr) for tr in trs])      
     return """\n\\begin{ tabular}{%s}  
