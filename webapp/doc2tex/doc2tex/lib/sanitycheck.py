@@ -91,7 +91,7 @@ class TexFile(LSPFile):
     (r"\[[0-9]+,[0-9]+\]","Please use a space after the comma in lists of numbers "),      #no 12,34 without spacing
     ("\([^)]+\\cite[pt][^)]+\)","In order to avoid double parentheses, it can be a good idea to use \\citealt instead of \\citet or \\citep"),    
     ("([0-9]+-[0-9]+)","Please use -- for ranges instead of -"),      
-    (r"[0-9]+ *ff","Do not use ff. Give full page ranges"),
+    #(r"[0-9]+ *ff","Do not use ff. Give full page ranges"),
     (r"[^-]---[^-]","Use -- with spaces rather than ---"), 
     (r"tabular.*\|","Vertical lines in tables should be avoided"),   
     (r"\hline","Use \\midrule rather than \\hline in tables"),      
@@ -106,7 +106,7 @@ class TexFile(LSPFile):
     (r"\[sub]*section\{",r"\label","All sections should have a \\label. This is not necessary for subexamples."),
     #(r"\\ea.*",r"\label","All examples should have a \\label"),
     (r"\\gll\W+[A-Z]",r"[\.?!][ }]*\\\\ *$","All vernacular sentences should end with punctuation"),
-    (r"\\glt\W+[A-Z]",r"[\.?!]['’]+[ }\\]*$","All translated sentences should end with punctuation"),
+    (r"\\glt\W+[A-Z]",r"[\.?!]['’”ʼ]+[ }\\]*$","All translated sentences should end with punctuation"),
     )
     
   filechecks = (
