@@ -98,6 +98,7 @@ class TexFile(LSPFile):
     (r"\gl[lt] *[a-z].*[\.?!] *\\\\ *$","Complete sentences should be capitalized in examples"), 
     (r"\section.*[A-Z].*[A-Z].*","Only capitalize this if it is a proper noun"), 
     (r"\section.*[A-Z].*[A-Z].*","Only capitalize this if it is a proper noun"), 
+    (r"[ (][12][8901][0-9][0-9]","Please check whether this should be part of a bibliographic reference"), 
     (r"(?<!\\)[A-Z]{3,}","It is often a good idea to use \\textsc\{smallcaps} instead of ALLCAPS"), 
     ("[?!;\.,][A-Z]","Please use a space after punctuation (or use smallcaps in abbreviations)"),        
       )
