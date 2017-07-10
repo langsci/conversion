@@ -564,8 +564,8 @@ class Document:
         
         bibliography = ''
         modtext = modtext.replace(r'\\textbf{References}','References')
-        modtext = modtext.replace(r'\\section{References}','References')
-        modtext = modtext.replace(r'\\chapter{References}','References')
+        modtext = modtext.replace('\\section{References}','References')
+        modtext = modtext.replace('\\chapter{References}','References') 
         a = re.compile("\n\s*References\s*\n").split(modtext)
         if len(a)==2:
                 modtext = a[0]
