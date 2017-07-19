@@ -4,11 +4,15 @@ import xml.etree.ElementTree as ET
 class lingPaper():
   def __init__(self,el):
     self.chapters = [chapter(c) for c in el.findall('chapter')]
+    backmatter = el.find('backMatter')
+    self.appendices = [chapter(c) for c in backmatter.findall('appendix')]
     self.frontmatter = el.find('frontmatter')
     self.backmatter = el.findall('backmatter')  
     
   def __str__(self):   
-    return '\n'.join([str(ch) for ch in self.chapters])
+    return '%s%s'%('\n'.join([str(ch) for ch in self.chapters]),
+                   '\n'.join([str(ch) for ch in self.appendices]),
+                   )
 
 
 
@@ -84,7 +88,19 @@ class section2(genericsection):
     return 'section3'
   
   def getSubsections(self):
-    return self.el.findall('section3')
+    return [section3(s) for s in self.el.findall('section3')]
+  
+  
+class section3(genericsection):
+  
+  def setLevel(self): 
+    return 'subsubsection'
+      
+  def getNextXMLLevel(self): 
+    return 'section4'
+  
+  def getSubsections(self):
+    return [section4(s) for s in self.el.findall('section4')]
   
     
 
@@ -95,7 +111,7 @@ class textelement():
     self.text = self.getText(el)
     
   def getText(self,el):  
-    if self.tag in ('p', 'figure', 'example', 'chart', 'tablenumbered'):
+    if self.tag in ('p','pc', 'figure', 'example', 'chart', 'tablenumbered', 'table'):
       #these elements can have meaningful subelements
       return self.treatTextElement(el)
     else:
@@ -105,36 +121,53 @@ class textelement():
     tail = ''
     text = ''
     if te.tail:
-      tail = te.tail
+      tail = te.tail.replace('%','\%').replace('{','\ob ').replace('}','\cb ').replace('&','\&').replace('#','\#').replace('_','\_')
       if tail[-1].strip() == '': #replace all trailing white space by ' '
         tail = "%s "%tail.strip()
     if te.text:
-      text = te.text
+      text = te.text.replace('%','\%').replace('{','\ob ').replace('}','\cb ').replace('&','\&').replace('#','\#').replace('_','\_')
     if te.tag == 'caption':
         return '\n%%\\caption{%s}%s\n'%(text,tail)  
     if te.tag == 'free':
         return '\\glt %s %s'%(text,tail)  
-    if te.tag == 'td':
-        return '%s %s & %s'%(text,''.join([self.treatTextElement(x) for x in te]) ,tail)         
-    if te.tag == 'th':
-        return '%s %s & %s'%(text,''.join([self.treatTextElement(x) for x in te]) ,tail)  
+    if te.tag in  ('td','th'):
+      colspan = te.attrib.get('colspan')
+      if colspan:
+        return '\multicolumn{%s}{l}{%s %s} & %s'%(colspan,text,''.join([self.treatTextElement(x) for x in te]) ,tail)         
+      return '%s %s & %s'%(text,''.join([self.treatTextElement(x) for x in te]) ,tail)    
     if te.tag == 'chart':
         return ''.join([self.treatTextElement(x) for x in te]) 
     if te.tag == 'interlinear':
+        return ''.join([self.treatTextElement(x) for x in te]) 
+    if te.tag == 'single':
         return ''.join([self.treatTextElement(x) for x in te])   
     if te.tag == 'img':
-        return '\\includegraphics[width=\\textwidth]{ %s}'%te.attrib['src']
+        return '%%\\includegraphics[width=\\textwidth]{%s}\n'%te.attrib['src']
     if te.tag == 'object':
       typ = te.attrib["type"]
       if typ == 'tItalic':
         return '\\textit{%s}%s'%(text,tail)
+      if typ == 'tBold':
+        return '\\textbf{%s}%s'%(text,tail)
+      if typ == 'tSuperscript':
+        return '\\textsuperscript{%s}%s'%(text,tail)
+      if typ == 'tSubscript':
+        return '\\textsubscript{%s}%s'%(text,tail)
+      if typ == 'tUnderline':
+        return '\\ul{%s}%s'%(text,tail)
     if te.tag == 'langData':
       lang = te.attrib["lang"]
-      if lang == 'lVernacular':
+      if lang in('lVernacular','lVernacularProse',"lVernacularHeader","lAppendixHeader","lAppendLabel"):
         return '\\vernacular{%s}%s'%(text,tail) 
+      if lang in ('lGloss','lGlossProse','lGlossHeader'):
+        return '\\gloss{%s}%s'%(text,tail) 
+      if lang in ('lRule','lRuleHeader'):
+        return '\\regel{%s}%s'%(text,tail) 
+      if lang in ('lExampleHeader',"lDerivationHeader"):
+        return '%s%s'%(text,tail)       
     if te.tag == 'gloss':
       lang = te.attrib["lang"]
-      if lang == 'lGloss':
+      if lang in ('lGloss','lGlossProse'):
         return '\\gloss{%s}%s'%(text,tail) 
     if te.tag == 'exampleRef': 
       label  = te.attrib.get('num')
@@ -145,12 +178,21 @@ class textelement():
     if te.tag == 'sectionRef': 
       label  = te.attrib.get('sec')
       return '\\sectref{sec:%s} %s'% (label, tail)
+    if te.tag == 'appendixRef': 
+      label  = te.attrib.get('app')
+      return '\\appref{sec:%s} %s'% (label, tail)
+    if te.tag == 'endnoteRef': 
+      label  = te.attrib.get('note')
+      return '\\fnref{fn:%s} %s'% (label, tail)
     if te.tag == 'tablenumberedRef': 
       label  = te.attrib.get('table')
       return '\\tabref{tab:%s} %s'% (label, tail)
     if te.tag == 'citation': 
       key  = te.attrib.get('ref')
       return '\\citealt{%s} %s'% (key, tail)
+    if te.tag == 'link': 
+      key  = te.attrib.get('href')
+      return '\\href{%s}{%s}%s'% (key, text, tail)
     if te.tag == 'lineGroup':
         numberoflines = len(te)
         lls = numberoflines * 'l' #count how many src/imt lines there are
@@ -169,21 +211,21 @@ class textelement():
       if label:
         labelstring = '\\label{fig:%s} '%label 
       figurebody = ' '.join([self.treatTextElement(x) for x in te])
-      return '\n\n\\begin{figure}\n%s%s\n\\end{ figure}\n\n' % (figurebody,labelstring)       
+      return '\n\n\\begin{figure}\n%s%s\n\\end{figure}\n\n' % (figurebody,labelstring)       
     if te.tag == 'tablenumbered':  
       label = te.attrib.get('id', False) 
       labelstring = ''
       if label:
         labelstring = '\\label{tab:%s} '%label 
       tablebody = ' '.join([self.treatTextElement(x) for x in te])
-      return '\n\n\\begin{table}\n%s%s\n\\end{ table}\n\n' % (tablebody,labelstring)   
+      return '\n\n\\begin{table}\n%s%s\n\\end{table}\n\n' % (tablebody,labelstring)   
     if te.tag == 'tr':   
         trbody = ' '.join([self.treatTextElement(x) for x in te])
         return '%s\\\\\n' % (trbody)   
-    if te.tag == 'p':  
+    if te.tag == 'p' or te.tag == 'pc':  
         text = ' '
         try:
-          text=te.text.strip()
+          text=te.text.strip().replace('%','\%').replace('{','\ob ').replace('}','\cb ').replace('&','\&').replace('#','\#').replace('_','\_')
         except AttributeError:
           pass 
         return "%s %s\n\n" %(text, ''.join([self.treatTextElement(x) for x in te]))
@@ -194,6 +236,13 @@ class textelement():
         labelstring = '\\label{ex:%s} '%label 
       exbody = ''.join([self.treatTextElement(x) for x in te])
       return '\n\\ea%s\n%s\n\\z\n\n' % (labelstring, exbody)   
+    if te.tag == 'exampleHeading': 
+      text = ' '
+      try:
+        text=te.text.strip().replace('%','\%').replace('{','\ob ').replace('}','\cb ').replace('&','\&').replace('#','\#').replace('_','\_')
+      except AttributeError:
+        pass 
+      return "%s %s\n\n" %(text, ''.join([self.treatTextElement(x) for x in te]))
     if te.tag == 'endnote':        
         label = te.attrib.get('id', False)
         labelstring = ''
@@ -203,20 +252,24 @@ class textelement():
         return '\\footnote{%s%s\n}%%\n' % (labelstring, fnbody)
     if te.text == None:
       return ''  
-    print(te,te.text)
+    print(te,te.tag,te.text,te.tail,te.attrib)
     raise ValueError
     return te.text
   
   def treattabular(self,el):
-    numberofcolumns = len(el.find('tr'))+1 #hack to take care of extra & at end #TODO
+    numberofcolumns = sum([int(td.attrib.get('colspan',1)) for td in el.find('tr')])+1
+    #numberofcolumns = len(el.find('tr'))+1 #hack to take care of extra & at end #TODO
     columntypes = numberofcolumns * 'l'
-    caption = el.find('caption').text
+    try:
+      caption = el.find('caption').text
+    except AttributeError:
+      caption = '\\nocaption'
     trs = el.findall('tr')
     rows = ''.join([self.treatTextElement(tr) for tr in trs])      
-    return """\n\\begin{ tabular}{%s}  
-  %s\\end{ tabular}
-\\caption{%s}
-    """%(columntypes,rows,caption)
+    return """\n\\begin{tabular}{%s}  
+  %s\\end{tabular}
+%%\\caption{%s}
+    """%(columntypes,rows,caption) #hack with % sign comment #FIXME
     
     
 if __name__ == "__main__":

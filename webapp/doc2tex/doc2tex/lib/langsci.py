@@ -124,7 +124,7 @@ class Document:
         
         
         
-    def getModtext(self):
+    def getModtext(self,ID='key'):
         modtext = self.text
         explicitreplacements = ( #'`^v~
                 
@@ -179,13 +179,32 @@ class Document:
         (r"\v{r}",u"ř"), 
         (r"\v{c}",u"č"),
         (r"\v{s}",u"š"),
-        (r"\v{z}",u"ž"), 
+        (r"\v{z}",u"ž"),
+        (r"\v{C}",u"Č"),
+        (r"\v{S}",u"Š"),
+        (r"\v{Y}",u"Ž"), 
         
         (r"\u{a}",u"ă"),
         (r"\u{e}",u"ĕ"),
         (r"\u{i}",u"ĭ"),
         (r"\u{o}",u"ŏ"),
-        (r"\u{u}",u"ŭ"),
+        (r"\u{u}",u"ŭ"),        
+        (r"\u{A}",u"Ă"),
+        (r"\u{E}",u"Ĕ"),
+        (r"\u{I}",u"Ĭ"),
+        (r"\u{O}",u"Ŏ"),
+        (r"\u{U}",u"Ŭ"),
+        
+        (r"\={a}",u"ā"),
+        (r"\={e}",u"ē"),
+        (r"\={i}",u"ī"),
+        (r"\={o}",u"ō"),
+        (r"\={u}",u"ū"),        
+        (r"\={A}",u"Ā"),
+        (r"\={E}",u"Ē"),
+        (r"\={I}",u"Ī"),
+        (r"\={O}",u"Ō"),
+        (r"\={U}",u"Ū"),
         
         ("{\\textquoteleft}","`"),
         ("{\\textgreater}",">"),
@@ -202,9 +221,9 @@ class Document:
                                 #(" }","} "),%causes problems with '\ '
                                 ("supertabular","tabular"),  
                                 ("\~{}","{\\textasciitilde}"), 
-                                ("\\section","\\chapter"),  
-                                ("\\subsection","\\section"),  
-                                ("\\subsubsection","\\subsection"),  
+                                #("\\section","\\chapter"),  
+                                #("\\subsection","\\section"),  
+                                #("\\subsubsection","\\subsection"),  
                                 
                                 ("""\\begin{listWWNumiileveli}
 \\item 
@@ -222,11 +241,11 @@ class Document:
                                 
                                 ("""\\begin{listWWNumiileveli}
 \\item 
-\\begin{styleLangSciLanginfo}\n""","\\ea\\label{exx:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii langsci
+\\begin{styleLangSciLanginfo}\n""","\\ea\\label{ex:key:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii langsci
                                 
                                 ("""\\begin{listWWNumiileveli}
 \\item 
-\\begin{stylelsLanginfo}\n""","\\ea\\label{exx:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii ls
+\\begin{stylelsLanginfo}\n""","\\ea\\label{ex:key:}\n%%1st subexample: change \\ea\\label{...} to \\ea\\label{...}\\ea; remove \\z  \n%%further subexamples: change \\ea to \\ex; remove \\z  \n%%last subexample: change \\z to \\z\\z \n\\langinfo{}{}{"),#MSii ls
                                 
                                 ("""\\begin{listLangSciLanginfoiileveli}
 \\item 
@@ -268,10 +287,10 @@ class Document:
 \\end{listWWNumiileveli}""","\\end{stylelsLanginfo}"), #ls
                                  
                                 
-                                ("\\begin{styleLangSciLanginfo}\n","\\ea\label{ex:}\n\\langinfo{}{}{"),
-                                ("\\begin{stylelsLanginfo}\n","\\ea\label{ex:}\n\\langinfo{}{}{"),
+                                ("\\begin{styleLangSciLanginfo}\n","\\ea\label{ex:key:}\n\\langinfo{}{}{"),
+                                ("\\begin{stylelsLanginfo}\n","\\ea\label{ex:key:}\n\\langinfo{}{}{"),
 
-                                ("\\begin{listWWNumiilevelii}\n\\item \n\\ea\\label{ex:}\n",""),
+                                ("\\begin{listWWNumiilevelii}\n\\item \n\\ea\\label{ex:key:}\n",""),
 
                                 ("\n\\end{styleLangSciLanginfo}\n","}\\\\\n"),                          
                                 ("\\begin{styleLangSciExample}\n","\n\\gll "),
@@ -301,20 +320,20 @@ class Document:
                                 ("\\end{stylelsTranslationSubexample}","\z"), 
 
                                 ("""\\setcounter{listWWNumiileveli}{0}
-\\ea\\label{ex:}""",""),#MS
+\\ea\\label{ex:key:}""",""),#MS
                                 #("""\\setcounter{listLangSciLanginfoiilevelii}{0}
-#\\ea\\label{ex:}""",""),#OO
+#\\ea\\label{ex:key:}""",""),#OO
                                 ("""\\begin{listLangSciLanginfoiileveli}
-\item""","\\ea\label{ex:}"),
+\item""","\\ea\label{ex:key:}"),
                                 ("""\setcounter{listLangSciLanginfoiilevelii}{0}
-\\ea\label{ex:}""",""),
+\\ea\label{ex:key:}""",""),
                                 ("\n\\end{listLangSciLanginfoiileveli}",""), 
                                 ("\n\\end{listLangSciLanginfoiilevelii}",""), 
 
                                 ("""\\begin{listlsLanginfoiileveli}
-\item""","\\ea\label{ex:}"),
+\item""","\\ea\label{ex:key:}"),
                                 ("""\setcounter{listlsLanginfoiilevelii}{0}
-\\ea\label{ex:}""",""),
+\\ea\label{ex:key:}""",""),
                                 ("\n\\end{listlsLanginfoiileveli}",""), 
                                 ("\n\\end{listlsLanginfoiilevelii}",""), 
 
@@ -454,8 +473,7 @@ class Document:
         #examples
         modtext = modtext.replace("\n()", "\n\\ea \n \\gll \\\\\n   \\\\\n \\glt\n\\z\n\n")
         modtext = re.sub("\n\(([0-9]+)\)", """\n\ea%\\1
-    \label{ex:\\1}
-    \langinfo{lg}{fam}{src}\\\\newline
+    \label{ex:key:\\1}
     \\\\gll\\\\newline
         \\\\newline
     \\\\glt
@@ -463,8 +481,7 @@ class Document:
 
         """,modtext)
         modtext = re.sub("\\label\{(bkm:Ref[0-9]+)\}\(\)", """ea%\\1
-    \label{\\1}
-    \langinfo{lg}{fam}{src}\\\\newline
+    \label{\\1}  
     \\\\gll \\\\newline  
         \\\\newline
     \\\\glt
@@ -480,12 +497,12 @@ class Document:
         modtext = modtext.replace(r"\newline",r"\\")
 
 
-        modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular . \n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)
+        modtext = re.sub("\n\\\\textit{Table ([0-9]+)[\.:] *(.*?)}\n","%%please move \\\\begin{table} just above \\\\begin{tabular . \n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:key:\\1}\n\\end{table}",modtext)
         modtext = re.sub("\nTable ([0-9]+)[\.:] *(.*?) *\n","%%please move \\\\begin{table} just above \\\\begin{tabular\n\\\\begin{table}\n\\caption{\\2}\n\\label{tab:\\1}\n\\end{table}",modtext)#do not add } after tabular
-        modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:\\1}",modtext) 
-        modtext = re.sub("\nFigure ([0-9]+)[\.:] *(.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{fig:\\1}\n\\end{figure}",modtext)
-        modtext = re.sub("Figure ([0-9]+)","\\\\figref{fig:\\1}",modtext)
-        modtext = re.sub("Section ([0-9\.]+)","\\\\sectref{sec:\\1}",modtext) 
+        modtext = re.sub("Table ([0-9]+)","\\\\tabref{tab:key:\\1}",modtext) 
+        modtext = re.sub("\nFigure ([0-9]+)[\.:] *(.*?)\n","\\\\begin{figure}\n\\caption{\\2}\n\\label{fig:key:\\1}\n\\end{figure}",modtext)
+        modtext = re.sub("Figure ([0-9]+)","\\\\figref{fig:key:\\1}",modtext)
+        modtext = re.sub("Section ([0-9\.]+)","\\\\sectref{sec:key:\\1}",modtext) 
         modtext = re.sub("\\\\(begin|end){minipage}.*?\n",'',modtext)
         modtext = re.sub("\\\\begin{figure}\[h\]",'\\\\begin{figure}',modtext)
         
@@ -498,6 +515,7 @@ class Document:
         modtext = modtext.replace("begin{tabular}","begin{tabularx}{\\textwidth}")
         modtext = modtext.replace("end{tabular}","end{tabularx}")
 
+        modtext = re.sub(r"\\setcounter{[^}]+\}\{0\}",'',modtext)
 
         modtext = re.sub("""listWWNum[ivxlc]+level[ivxlc]+""","itemize",modtext) 
         modtext = re.sub("""listL[ivxlc]+level[ivxlc]+""","itemize",modtext) 
@@ -544,6 +562,9 @@ class Document:
         
         
         bibliography = ''
+        modtext = modtext.replace(r'\\textbf{References}','References')
+        modtext = modtext.replace('\\section{References}','References')
+        modtext = modtext.replace('\\chapter{References}','References') 
         a = re.compile("\n\s*References\s*\n").split(modtext)
         if len(a)==2:
                 modtext = a[0]
