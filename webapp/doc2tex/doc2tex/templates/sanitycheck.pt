@@ -52,7 +52,7 @@
                 </div>
               </div>
               <div tal:repeat="img imgs">
-                <h2>${file.split('/')[-1]}</h2>
+                <h2>${img.split('/')[-1]}</h2>
                 <div class="sanityresult">
                   <div tal:repeat="error imgs[img][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}">
                     <div class="lsperrorstring">
