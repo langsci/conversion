@@ -18,7 +18,7 @@ def doc2tex(request):
 
   
 @view_config(route_name='doc2bib', renderer='templates/doc2bib.pt')
-def home(request): 
+def dco2bib(request): 
         biboutput = ''
         try:
                 bibinput = request.POST['bibinput'].strip()
@@ -37,7 +37,7 @@ Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change i
     
     
 @view_config(route_name='normalizebib', renderer='templates/normalizebib.pt')
-def home(request): 
+def normalizebib(request): 
         biboutput = ''
         try:
                 bibinput = request.POST['bibinput'].strip()
