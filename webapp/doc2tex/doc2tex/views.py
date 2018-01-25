@@ -6,6 +6,7 @@ import re
 import uuid
 from .lib.langsci import  convert
 from .lib.sanitycheck import  LSPDir
+from .lib import  overleafsanity
 import shutil
 import string
 from lib import langscibibtex
@@ -34,6 +35,35 @@ Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change i
         'biboutput': biboutput
                                 }
     
+    
+@view_config(route_name='normalizebib', renderer='templates/normalizebib.pt')
+def home(request): 
+        biboutput = ''
+        try:
+                bibinput = request.POST['bibinput'].strip()
+                biboutput = normalizebib()
+        except KeyError:
+                bibinput = """
+@BOOK{Smith2000,
+  author = {John Smith},
+  year = {2000},
+  title = {A Grammar of the Turkish Language},
+  publisher = {Oxford University Press}
+}
+
+@article{Jones1999,
+  author = {Jane Jones et al},
+  year = {1999},
+  title = {Exploring unknown movements of NP},
+  jounral = {Annals of Improbable research}
+} 
+"""
+        #biboutput = bibinput
+        return {'project': 'normalizebib',
+        'bibinput': bibinput,
+        'biboutput': biboutput
+                                }
+    
 @view_config(route_name='sanitycheck', renderer='templates/sanitycheck.pt')
 def sanitycheck(request):   
     fn = request.POST['texbibzip'].filename 
@@ -43,6 +73,16 @@ def sanitycheck(request):
     d = os.path.dirname(os.path.realpath(filename))
     lspdir = LSPDir(d)
     lspdir.check()  
+    #shutil.rmtree(d)
+    return {'project': 'doc2tex',
+            'files':lspdir.errors}
+  
+@view_config(route_name='overleafsanity', renderer='templates/sanitycheck.pt')
+def overleafsanity(request):   
+    overleafurl = request.GET['overleafurl']
+    d = sanityoverleaf.cloneorpull(overleafurl)
+    lspdir = LSPDir(os.path.join(d,"chapters"))
+    lspdir.check()
     #shutil.rmtree(d)
     return {'project': 'doc2tex',
             'files':lspdir.errors}

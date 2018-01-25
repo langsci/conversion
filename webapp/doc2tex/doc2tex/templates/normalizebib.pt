@@ -8,7 +8,7 @@
     <meta name="author" content="Pylons Project">
     <link rel="shortcut icon" href="${request.static_url('doc2tex:static/pyramid-16x16.png')}">
 
-    <title>Starter Template for The Pyramid Web Framework</title>
+    <title>Unified Style Sheet Converter</title>
 
     <!-- Bootstrap core CSS -->
     <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
@@ -33,41 +33,21 @@
           </div>
           <div class="col-md-10">
 	    <div class="content">
-<h1>Web services</h1>
-<div> There are currently three web services to help you with the creation of your manuscript for Language Science Press</div>
+<h1>Bib converter</h1>
 <ul>
 <li>
-		<h3>Convert MS Word or Libre Office files to LaTeX</h3> 
-		<form action="http://glottotopia.org/doc2tex/result" method="post" enctype="multipart/form-data">
-		    <p>Choose a Word or LibreOffice file (doc, docx, odt)<br>
-			<input name="docfile" type="file" size="50" />
-		    </p>
-		    <input type="submit" value="Convert"/>
-		</form> 
+		<h3>Convert a Unified Style Sheet bibliography to bibtex</h3> 
+    <p> NB: Fields are converted one by one. If the conversion fails, the original string remains in place for manual conversion. </p>
+		<form action="./doc2bib" method="post" enctype="multipart/form-data">
+		<p>Paste your bibliography in the left pane and submit
+		<input type="submit" value="Convert"/>
+		</p>
+		<textarea cols="40" rows="40" name="bibinput" class="bibconvpane bibleft">${bibinput}</textarea>
+		<textarea cols="40" rows="40" name="biboutput"  class="bibconvpane bibright">${biboutput}</textarea>
+			
+			</form> 
 </li>
-<li>
-	<h3>Check a file for compliance with the guidelines</h3> 
-	
-		<form action="http://glottotopia.org/doc2tex/sanitycheck" method="post" enctype="multipart/form-data">
-		  <p>	
-		    Choose a texfile or a bibfile and check for compliance with the guidelines
-		    <input name="texbibzip" type="file" size="50" />
-		  </p>
-		  <input type="submit" value="Check" />
-		</form>
-</li>
-<li>
-	<h3>Check an Overleaf project for compliance with the guidelines</h3> 
-	
-		<form action="http://glottotopia.org/doc2tex/overleafsanity" method="get" enctype="multipart/form-data">
-		  <p>	
-		    Paste the URL of the Overleaf project you want to check
-		    <input name="overleafurl" type="textarea" size="50" />
-		  </p>
-		  <input type="submit" value="Check" />
-		</form>
-</li>
-<li> you might also be interested in our <a href="/doc2tex/doc2bib">Bibtex generator</a>, or the <a href="/doc2tex/normalizebib">bibtex normalizer</a>. 
+
 </ul>
 	    </div>
         </div>
