@@ -75,7 +75,8 @@ def sanitycheck(request):
     lspdir.check()  
     #shutil.rmtree(d)
     return {'project': 'doc2tex',
-            'files':lspdir.errors}
+            'files':lspdir.errors,
+            'imgs':[]}
   
 @view_config(route_name='overleafsanity', renderer='templates/sanitycheck.pt')
 def overleafsanity(request):   
