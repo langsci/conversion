@@ -6,7 +6,7 @@ import re
 import uuid
 from .lib.langsci import  convert
 from .lib.sanitycheck import  LSPDir
-from .lib import  overleafsanity
+from .lib import  sanityoverleaf
 import shutil
 import string
 from lib import langscibibtex
