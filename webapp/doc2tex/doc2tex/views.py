@@ -41,7 +41,7 @@ def home(request):
         biboutput = ''
         try:
                 bibinput = request.POST['bibinput'].strip()
-                biboutput = normalizebib()
+                biboutput = bibinput
         except KeyError:
                 bibinput = """
 @BOOK{Smith2000,
