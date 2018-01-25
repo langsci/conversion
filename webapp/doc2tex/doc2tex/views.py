@@ -44,19 +44,21 @@ def home(request):
                 biboutput = normalize(bibinput)
         except KeyError:
                 bibinput = """
-@BOOK{Smith2000,
-  author = {John Smith},
-  year = {2000},
-  title = {A Grammar of the Turkish Language},
-  publisher = {Oxford University Press}
-}
+%This is a comment
 
 @article{Jones1999,
   author = {Jane Jones et al},
   year = {1999},
   title = {Exploring unknown movements of NP},
   journal = {Annals of Improbable research}
-} 
+}
+
+@BOOK{Smith2000,
+  author = {John Smith},
+  year = {2000},
+  title = {A Grammar of the Turkish Language},
+  publisher = {Oxford University Press}
+}
 """
         #biboutput = bibinput
         return {'project': 'normalizebib',
