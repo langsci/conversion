@@ -52,6 +52,26 @@
 		</div>  
 	      </div>
             </div>
+            
+            <div tal:repeat="img imgs">
+		<h2> ${file.split('/')[-1]} </h2>
+		<div class="sanityresult">
+		    <div tal:repeat="error files[file][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}" >  
+		      <div class="lsperrorstring">
+			<div class="closer" title="dismiss this message" onclick="document.getElementById('${error.ID}').parentNode.removeChild(document.getElementById('${error.ID}'))">X</div>
+			<div class="megacloser" title="dismiss all messages like this one" onclick="var list = document.getElementsByName('${error.name}'); for (i = 0; list.length; i++){list[0].parentNode.removeChild(document.getElementById(list[0].id))}">X</div>
+			<span class="linenr">@${error.linenr+1}</span>
+			<span class="lsperrorpre">${error.pre[-100:]}</span>
+			<span class="lspoffendingstring">${error.offendingstring}</span>
+			<span class="lsperrorpost">${error.post[:100]}</span>
+		      </div> 
+		      <div class="errormsg">${error.msg} </div>
+		    </div> 
+		</div>  
+	      </div>
+            </div>
+            
+            
           </div>
         </div> 
         <div class="row">

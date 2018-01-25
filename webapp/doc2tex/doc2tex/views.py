@@ -83,9 +83,12 @@ def overleafsanity(request):
     d = sanityoverleaf.cloneorpull(overleafurl)
     lspdir = LSPDir(os.path.join(d,"chapters"))
     lspdir.check()
+    imgdir = LSPDir(os.path.join(d,"figures"))
+    imgdir.check()
     #shutil.rmtree(d)
     return {'project': 'doc2tex',
-            'files':lspdir.errors}
+            'files':lspdir.errors,
+            'imgs':imgdir.errors}
   
     
 def _upload(filename,f,accept):
