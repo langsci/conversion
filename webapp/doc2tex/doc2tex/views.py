@@ -55,7 +55,7 @@ def home(request):
   author = {Jane Jones et al},
   year = {1999},
   title = {Exploring unknown movements of NP},
-  jounral = {Annals of Improbable research}
+  journal = {Annals of Improbable research}
 } 
 """
         #biboutput = bibinput
