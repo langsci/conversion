@@ -6,6 +6,7 @@ import re
 import uuid
 from .lib.langsci import  convert
 from .lib.sanitycheck import  LSPDir
+from .lib.normalizebib import  normalize
 from .lib import  sanityoverleaf
 import shutil
 import string
@@ -28,8 +29,7 @@ def home(request):
                 bibinput = """Bloomfield, Leonard. 1925. On the sound-system of central Algonquian. Language 1(4). 130-156.
 
 Lahiri, Aditi (ed.). 2000. Analogy, leveling, markedness: Principles of change in phonology and morphology (Trends in Linguistics 127). Berlin: Mouton de Gruyter.
-"""
-        #biboutput = bibinput
+""" 
         return {'project': 'doc2bib',
         'bibinput': bibinput,
         'biboutput': biboutput
@@ -41,7 +41,7 @@ def home(request):
         biboutput = ''
         try:
                 bibinput = request.POST['bibinput'].strip()
-                biboutput = biboutput
+                biboutput = normalize(bibinput)
         except KeyError:
                 bibinput = """
 @BOOK{Smith2000,
