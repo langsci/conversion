@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="${request.locale_name}" xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:tal="http://xml.zope.org/namespaces/tal" xmlns:metal="http://xml.zope.org/namespaces/metal" lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="pyramid web application">
-    <meta name="author" content="Pylons Project">
-    <link rel="shortcut icon" href="${request.static_url('doc2tex:static/pyramid-16x16.png')}">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="pyramid web application" />
+    <meta name="author" content="Pylons Project" />
+    <link rel="shortcut icon" href="${request.static_url('doc2tex:static/pyramid-16x16.png')}" />
     <title>Sanity Check</title>
-    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${request.static_url('doc2tex:static/theme.css')}" rel="stylesheet">
+    <link href="//oss.maxcdn.com/libs/twitter-bootstrap/3.0.3/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="${request.static_url('doc2tex:static/theme.css')}" rel="stylesheet" />
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="//oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -21,68 +21,60 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2">
-            <img class="logo img-responsive" src="http://langsci-press.org/public/presses/1/pageHeaderLogoImage_en_US.png" alt="pyramid web framework">
+            <img class="logo img-responsive" src="http://langsci-press.org/public/presses/1/pageHeaderLogoImage_en_US.png" alt="pyramid web framework" />
           </div>
           <div class="col-md-10">
             <div class="content">
-	      <h1>  Sanity check </h1> 
-	      <div id="debuginfo">Please direct bug reports and requests for enhancements to Sebastian Nordhoff</div>		
-	      <div tal:repeat="file files">
-		<h2> ${file.split('/')[-1]} </h2>
-		<div class="sanityresult">
-		    <div class="errorcount">${len(files[file][0])} possible errors </div>
-		    <div tal:repeat="error files[file][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}" >  
-		      <div class="lsperrorstring">
-			<div class="closer" title="dismiss this message" onclick="document.getElementById('${error.ID}').parentNode.removeChild(document.getElementById('${error.ID}'))">X</div>
-			<div class="megacloser" title="dismiss all messages like this one" onclick="var list = document.getElementsByName('${error.name}'); for (i = 0; list.length; i++){list[0].parentNode.removeChild(document.getElementById(list[0].id))}">X</div>
-			<span class="linenr">@${error.linenr+1}</span>
-			<span class="lsperrorpre">${error.pre[-100:]}</span>
-			<span class="lspoffendingstring">${error.offendingstring}</span>
-			<span class="lsperrorpost">${error.post[:100]}</span>
-		      </div> 
-		      <div class="errormsg">${error.msg} </div>
-		    </div>
-		  <div class="spellingerrors"> 
-		    <div> The following words were not found in the dictionary </div>
-		    <div tal:repeat="sperror files[file][1]" class="spellingerror" id="sp_${sperror}">
-		      <span> ${sperror} </span>
-		      <span class="closer" title="dismiss this error" onclick="document.getElementById('sp_${sperror}').parentNode.removeChild(document.getElementById('sp_${sperror}'))">X</span>			
-		    </div>
-		  </div>
-		</div>  
-	      </div>
+              <h1>Sanity check</h1>
+              <div id="debuginfo">Please direct bug reports and requests for enhancements to Sebastian Nordhoff</div>
+              <div tal:repeat="file files">
+                <h2>${file.split('/')[-1]}</h2>
+                <div class="sanityresult">
+                  <div class="errorcount">${len(files[file][0])} possible errors</div>
+                  <div tal:repeat="error files[file][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}">
+                    <div class="lsperrorstring">
+                      <div class="closer" title="dismiss this message" onclick="document.getElementById('${error.ID}').parentNode.removeChild(document.getElementById('${error.ID}'))">X</div>
+                      <div class="megacloser" title="dismiss all messages like this one" onclick="var list = document.getElementsByName('${error.name}'); for (i = 0; list.length; i++){list[0].parentNode.removeChild(document.getElementById(list[0].id))}">X</div>
+                      <span class="linenr">@${error.linenr+1}</span>
+                      <span class="lsperrorpre">${error.pre[-100:]}</span>
+                      <span class="lspoffendingstring">${error.offendingstring}</span>
+                      <span class="lsperrorpost">${error.post[:100]}</span>
+                    </div>
+                    <div class="errormsg">${error.msg}</div>
+                  </div>
+                  <div class="spellingerrors">
+                    <div>The following words were not found in the dictionary</div>
+                    <div tal:repeat="sperror files[file][1]" class="spellingerror" id="sp_${sperror}">
+                      <span>${sperror}</span>
+                      <span class="closer" title="dismiss this error" onclick="document.getElementById('sp_${sperror}').parentNode.removeChild(document.getElementById('sp_${sperror}'))">X</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div tal:repeat="img imgs">
+                <h2>${file.split('/')[-1]}</h2>
+                <div class="sanityresult">
+                  <div tal:repeat="error imgs[img][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}">
+                    <div class="lsperrorstring">
+                      <div class="closer" title="dismiss this message" onclick="document.getElementById('${error.ID}').parentNode.removeChild(document.getElementById('${error.ID}'))">X</div>
+                      <div class="megacloser" title="dismiss all messages like this one" onclick="var list = document.getElementsByName('${error.name}'); for (i = 0; list.length; i++){list[0].parentNode.removeChild(document.getElementById(list[0].id))}">X</div>
+                      <span class="linenr">@${error.linenr+1}</span>
+                      <span class="lsperrorpre">${error.pre[-100:]}</span>
+                      <span class="lspoffendingstring">${error.offendingstring}</span>
+                      <span class="lsperrorpost">${error.post[:100]}</span>
+                    </div>
+                    <div class="errormsg">${error.msg}</div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <div tal:repeat="img imgs">
-		<h2> ${file.split('/')[-1]} </h2>
-		<div class="sanityresult">
-		    <div tal:repeat="error files[file][0]" class="errorblock" name="${error.name}" id="${error.ID}" style="background:${error.color};border-color:${error.bordercolor}" >  
-		      <div class="lsperrorstring">
-			<div class="closer" title="dismiss this message" onclick="document.getElementById('${error.ID}').parentNode.removeChild(document.getElementById('${error.ID}'))">X</div>
-			<div class="megacloser" title="dismiss all messages like this one" onclick="var list = document.getElementsByName('${error.name}'); for (i = 0; list.length; i++){list[0].parentNode.removeChild(document.getElementById(list[0].id))}">X</div>
-			<span class="linenr">@${error.linenr+1}</span>
-			<span class="lsperrorpre">${error.pre[-100:]}</span>
-			<span class="lspoffendingstring">${error.offendingstring}</span>
-			<span class="lsperrorpost">${error.post[:100]}</span>
-		      </div> 
-		      <div class="errormsg">${error.msg} </div>
-		    </div> 
-		</div>  
-	      </div>
-            </div>
-            
-            
           </div>
-        </div> 
-        <div class="row">
-          <div class="copyright">
-            Copyright   Language Science Press
+          <div class="row">
+            <div class="copyright">Copyright Language Science Press</div>
           </div>
         </div>
       </div>
     </div>
-
-
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
