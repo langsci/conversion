@@ -5,9 +5,11 @@ class lingPaper():
     """A representation of the complete paper """
 
     def __init__(self, el):
-        self.chapters = [chapter(c) for c in el.findall('chapter')]
+        self.chapters = [Chapter(c) for c in el.findall('chapter')]
+        if self.chapters == []:
+            self.chapters = [Section1(s) for s in el.findall('section1')]
         backmatter = el.find('backMatter')
-        self.appendices = [chapter(c) for c in backmatter.findall('appendix')]
+        self.appendices = [Chapter(c) for c in backmatter.findall('appendix')]
         self.frontmatter = el.find('frontmatter')
         self.backmatter = el.findall('backmatter')
 
@@ -19,7 +21,7 @@ class lingPaper():
 
 
 
-class genericsection():
+class Genericsection():
     """A portion of a paper, which can contain subsections"""
 
     def __init__(self, el):
@@ -57,7 +59,7 @@ class genericsection():
                 children4preamble.append(ch)
             else:
                 break
-        return [textelement(el) for el in children4preamble]
+        return [TextElement(el) for el in children4preamble]
 
     def title2latex(self):
         return "\\%s{%s}\\label{sec:%s}\n" %(self.sectionlevel, self.title, self.ID)
@@ -72,7 +74,7 @@ class genericsection():
 
 
 
-class chapter(genericsection):
+class Chapter(Genericsection):
     """A section of the chapter level"""
 
     def setLevel(self):
@@ -82,12 +84,12 @@ class chapter(genericsection):
         return 'section1'
 
     def getSubsections(self):
-        return [section1(s) for s in self.el.findall('section1')]
+        return [Section1(s) for s in self.el.findall('section1')]
 
 
 
-class section1(genericsection):
-    """A section of the section1 level"""
+class Section1(Genericsection):
+    """A section of the Section1 level"""
     def setLevel(self):
         return 'section'
 
@@ -95,12 +97,12 @@ class section1(genericsection):
         return 'section2'
 
     def getSubsections(self):
-        return [section2(s) for s in self.el.findall('section2')]
+        return [Section2(s) for s in self.el.findall('section2')]
 
 
 
-class section2(genericsection):
-    """A section of the section2 level"""
+class Section2(Genericsection):
+    """A section of the Section2 level"""
 
     def setLevel(self):
         return 'subsection'
@@ -109,11 +111,11 @@ class section2(genericsection):
         return 'section3'
 
     def getSubsections(self):
-        return [section3(s) for s in self.el.findall('section3')]
+        return [Section3(s) for s in self.el.findall('section3')]
 
 
-class section3(genericsection):
-    """A section of the section3 level"""
+class Section3(Genericsection):
+    """A section of the Section3 level"""
 
     def setLevel(self):
         return 'subsubsection'
@@ -126,7 +128,7 @@ class section3(genericsection):
 
 
 
-class textelement():
+class TextElement():
     """An XML element found in an XLingPaper"""
 
     def __init__(self, el):
@@ -139,13 +141,13 @@ class textelement():
 
         if self.tag in ('p', 'pc', 'figure', 'example', 'chart', 'tablenumbered', 'table'):
             #this element causes special markup to be inserted in addition to its textual content
-            return self.treatTextElement(el)
+            return self.treat_text_element(el)
         else:
             #the element does not have meaning beyond the sum of the text of its children
-            return "".join([self.treatTextElement(te) for te in self.el.iter() if te != el])
+            return "".join([self.treat_text_element(te) for te in self.el.iter() if te != el])
 
 
-    def treatTextElement(self, te):
+    def treat_text_element(self, te):
         """output LaTeX code according to tag of XML element"""
 
         def prettify_latex(s):
@@ -175,17 +177,17 @@ class textelement():
             if colspan:
                 return r'\multicolumn{%s}{l}{%s %s} & %s'%(colspan,
                                                            text,
-                                                           ''.join([self.treatTextElement(x)
+                                                           ''.join([self.treat_text_element(x)
                                                                     for x
                                                                     in te]),
                                                            tail)
-            return '%s %s & %s'%(text, ''.join([self.treatTextElement(x) for x in te]), tail)
+            return '%s %s & %s'%(text, ''.join([self.treat_text_element(x) for x in te]), tail)
         if te.tag == 'chart':
-            return ''.join([self.treatTextElement(x) for x in te])
+            return ''.join([self.treat_text_element(x) for x in te])
         if te.tag == 'interlinear':
-            return ''.join([self.treatTextElement(x) for x in te])
+            return ''.join([self.treat_text_element(x) for x in te])
         if te.tag == 'single':
-            return ''.join([self.treatTextElement(x) for x in te])
+            return ''.join([self.treat_text_element(x) for x in te])
         if te.tag == 'img':
             return '%%\\includegraphics[width=\\textwidth]{%s}\n'%te.attrib['src']
         if te.tag == 'object':
@@ -245,7 +247,7 @@ class textelement():
         if te.tag == 'lineGroup':
             numberoflines = len(te)
             lls = numberoflines * 'l' #count how many src/imt lines there are
-            return '\\g%s %s '% (lls, ''.join([self.treatTextElement(x) for x in te]))
+            return '\\g%s %s '% (lls, ''.join([self.treat_text_element(x) for x in te]))
         if te.tag == 'line':
             langDatas = [x.text for x in te.findall('.//langData')] #langData can be nested in <wrd>
             if len(langDatas) > 0:
@@ -255,23 +257,23 @@ class textelement():
                 return ' '.join(glosses)+'\\\\\n'
             return '\\\\%%no interlinear content in XML\n'
         if te.tag == 'table':
-            return self.treattabular(te)
+            return self.treat_tabular(te)
         if te.tag == 'figure':
             label = te.attrib.get('id', False)
             labelstring = ''
             if label:
                 labelstring = '\\label{fig:%s} '%label
-            figurebody = ' '.join([self.treatTextElement(x) for x in te])
+            figurebody = ' '.join([self.treat_text_element(x) for x in te])
             return '\n\n\\begin{figure}\n%s%s\n\\end{figure}\n\n' % (figurebody, labelstring)
         if te.tag == 'tablenumbered':
             label = te.attrib.get('id', False)
             labelstring = ''
             if label:
                 labelstring = '\\label{tab:%s} '%label
-            tablebody = ' '.join([self.treatTextElement(x) for x in te])
+            tablebody = ' '.join([self.treat_text_element(x) for x in te])
             return '\n\n\\begin{table}\n%s%s\n\\end{table}\n\n' % (tablebody, labelstring)
         if te.tag == 'tr':
-            trbody = ' '.join([self.treatTextElement(x) for x in te])
+            trbody = ' '.join([self.treat_text_element(x) for x in te])
             return '%s\\\\\n' % (trbody)
         if te.tag == 'p' or te.tag == 'pc':
             text = ' '
@@ -279,13 +281,13 @@ class textelement():
                 text = prettify_latex(te.text)
             except AttributeError:
                 pass
-            return "%s %s\n\n" %(text, ''.join([self.treatTextElement(x) for x in te]))
+            return "%s %s\n\n" %(text, ''.join([self.treat_text_element(x) for x in te]))
         if te.tag == 'example':
             label = te.attrib.get('num', False)
             labelstring = ''
             if label:
                 labelstring = '\\label{ex:%s} '%label
-            exbody = ''.join([self.treatTextElement(x) for x in te])
+            exbody = ''.join([self.treat_text_element(x) for x in te])
             return '\n\\ea%s\n%s\n\\z\n\n' % (labelstring, exbody)
         if te.tag == 'exampleHeading':
             text = ' '
@@ -293,13 +295,13 @@ class textelement():
                 text = self.latex_prettify(te.text)
             except AttributeError:
                 pass
-            return "%s %s\n\n" %(text, ''.join([self.treatTextElement(x) for x in te]))
+            return "%s %s\n\n" %(text, ''.join([self.treat_text_element(x) for x in te]))
         if te.tag == 'endnote':
             label = te.attrib.get('id', False)
             labelstring = ''
             if label:
                 labelstring = '\\label{fn:%s} '%label
-            fnbody = ' '.join([self.treatTextElement(x) for x in te])
+            fnbody = ' '.join([self.treat_text_element(x) for x in te])
             return '\\footnote{%s%s\n}%%\n' % (labelstring, fnbody)
         if te.text is None:
             return ''
@@ -313,7 +315,7 @@ class textelement():
         raise ValueError #an unknown tag was provided
         return te.text #unreachable
 
-    def treattabular(self, el):
+    def treat_tabular(self, el):
         "parse XML tabular and output latex tabular"
         numberofcolumns = sum([int(td.attrib.get('colspan', 1)) for td in el.find('tr')])+1
         #numberofcolumns = len(el.find('tr'))+1 #hack to take care of extra & at end #TODO
@@ -323,7 +325,7 @@ class textelement():
         except AttributeError:
             caption = '\\nocaption'
         trs = el.findall('tr')
-        rows = ''.join([self.treatTextElement(tr) for tr in trs])
+        rows = ''.join([self.treat_text_element(tr) for tr in trs])
         return """\n\\begin{tabular}{%s}
     %s\\end{tabular}
 %%\\caption{%s}
