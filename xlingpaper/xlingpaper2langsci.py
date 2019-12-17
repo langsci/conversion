@@ -19,8 +19,6 @@ class lingPaper():
                       )
 
 
-
-
 class GenericSection():
     """A portion of a paper, which can contain subsections"""
 
@@ -73,7 +71,6 @@ class GenericSection():
         return '\n'.join([titlestring, preamblestring, subsectionstring])
 
 
-
 class Chapter(GenericSection):
     """A section of the chapter level"""
 
@@ -87,7 +84,6 @@ class Chapter(GenericSection):
         return [Section1(s) for s in self.el.findall('section1')]
 
 
-
 class Section1(GenericSection):
     """A section of the Section1 level"""
     def setLevel(self):
@@ -98,7 +94,6 @@ class Section1(GenericSection):
 
     def getSubsections(self):
         return [Section2(s) for s in self.el.findall('section2')]
-
 
 
 class Section2(GenericSection):
@@ -127,7 +122,6 @@ class Section3(GenericSection):
         return [section4(s) for s in self.el.findall('section4')]
 
 
-
 class TextElement():
     """An XML element found in an XLingPaper"""
 
@@ -145,7 +139,6 @@ class TextElement():
         else:
             #the element does not have meaning beyond the sum of the text of its children
             return "".join([self.treat_text_element(te) for te in self.el.iter() if te != el])
-
 
     def treat_text_element(self, te):
         """output LaTeX code according to tag of XML element"""
@@ -317,6 +310,7 @@ class TextElement():
 
     def treat_tabular(self, el):
         "parse XML tabular and output latex tabular"
+        
         numberofcolumns = sum([int(td.attrib.get('colspan', 1)) for td in el.find('tr')])+1
         #numberofcolumns = len(el.find('tr'))+1 #hack to take care of extra & at end #TODO
         columntypes = numberofcolumns * 'l'
