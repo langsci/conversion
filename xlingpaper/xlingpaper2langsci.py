@@ -21,7 +21,7 @@ class lingPaper():
 
 
 
-class Genericsection():
+class GenericSection():
     """A portion of a paper, which can contain subsections"""
 
     def __init__(self, el):
@@ -74,7 +74,7 @@ class Genericsection():
 
 
 
-class Chapter(Genericsection):
+class Chapter(GenericSection):
     """A section of the chapter level"""
 
     def setLevel(self):
@@ -88,7 +88,7 @@ class Chapter(Genericsection):
 
 
 
-class Section1(Genericsection):
+class Section1(GenericSection):
     """A section of the Section1 level"""
     def setLevel(self):
         return 'section'
@@ -101,7 +101,7 @@ class Section1(Genericsection):
 
 
 
-class Section2(Genericsection):
+class Section2(GenericSection):
     """A section of the Section2 level"""
 
     def setLevel(self):
@@ -114,7 +114,7 @@ class Section2(Genericsection):
         return [Section3(s) for s in self.el.findall('section3')]
 
 
-class Section3(Genericsection):
+class Section3(GenericSection):
     """A section of the Section3 level"""
 
     def setLevel(self):
