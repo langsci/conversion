@@ -197,12 +197,14 @@ class textelement():
         numberoflines = len(te)
         lls = numberoflines * 'l' #count how many src/imt lines there are
         return '\\g%s %s '% (lls,  ''.join([self.treatTextElement(x) for x in te]) )
-    if te.tag == 'line':   
-        try:
-          linebody = te.find('langData').text #check for embedded elements
-        except AttributeError:
-          linebody = te.find('gloss').text #check for embedded elements          
-        return '1%s2\\\\\n'% linebody
+    if te.tag == 'line':    
+        langDatas = [x.text for x in te.findall('.//langData')] #langData can be nested in <wrd>
+        if len(langDatas) > 0:
+            return ' '.join(langDatas)+'\\\\\n' 
+        glosses = [x.text for x in te.findall('.//gloss')] #gloss can be nested in <wrd> 
+        if len(glosses) > 0:
+            return ' '.join(glosses)+'\\\\\n' 
+        return '\\\\%%no interlinear content in XML\n'% linebody
     if te.tag == 'table':        
         return self.treattabular(te)
     if te.tag == 'figure':  
@@ -252,6 +254,14 @@ class textelement():
         return '\\footnote{%s%s\n}%%\n' % (labelstring, fnbody)
     if te.text == None:
       return ''  
+    if te.tag == 'textInfo': 
+        return ''
+    if te.tag == 'textTitle': 
+        return '%%\\title{%s}'%te.text
+    if te.tag == 'shortTitle': 
+        return te.text
+    if te.tag == 'shortTitle': 
+        return te.text
     print(te,te.tag,te.text,te.tail,te.attrib)
     raise ValueError
     return te.text
