@@ -27,12 +27,21 @@ class genericsection():
         self.tag = el.tag
         self.ID = el.attrib["id"]
         self.title = el.find("secTitle").text
-        if self.title == None:
+        if self.title is None:
             self.title = ''
         self.preamble = self.getPreamble()
         self.subsections = self.getSubsections()
         self.sectionlevel = False
         self.sectionlevel = self.setLevel()
+  
+    def getSubsections(self):
+        pass
+
+    def setLevel(self):
+        pass
+
+    def getNextXMLLevel(self):
+        pass
 
     def getPreamble(self):
         """
@@ -64,6 +73,7 @@ class genericsection():
 
 
 class chapter(genericsection):
+    """A section of the chapter level"""
 
     def setLevel(self):
         return 'chapter'
@@ -77,6 +87,7 @@ class chapter(genericsection):
 
 
 class section1(genericsection):
+    """A section of the section1 level"""
     def setLevel(self):
         return 'section'
 
@@ -89,6 +100,7 @@ class section1(genericsection):
 
 
 class section2(genericsection):
+    """A section of the section2 level"""
 
     def setLevel(self):
         return 'subsection'
@@ -101,6 +113,7 @@ class section2(genericsection):
 
 
 class section3(genericsection):
+    """A section of the section3 level"""
 
     def setLevel(self):
         return 'subsubsection'
@@ -121,48 +134,60 @@ class textelement():
         self.tag = el.tag
         self.text = self.getText(el)
 
-    def getText(self,el):
+    def getText(self, el): 
+        """Return the text for an xml element"""
+        
         if self.tag in ('p', 'pc', 'figure', 'example', 'chart', 'tablenumbered', 'table'):
             #this element causes special markup to be inserted in addition to its textual content
             return self.treatTextElement(el)
         else:
             #the element does not have meaning beyond the sum of the text of its children
-            return "".join([self.treatTextElement(te) for te in self.el.iter() if te!=el])
+            return "".join([self.treatTextElement(te) for te in self.el.iter() if te != el])
 
-    def prettify_latex(self, s):
-        return s.replace('%', r'\%')\
-            .replace('{', r'\ob ')\
-            .replace('}', r'\cb ')\
-            .replace('&', r'\&')\
-            .replace('#', r'\#')\
-            .replace('_', r'\_')
 
-    def treatTextElement(self,te):
+    def treatTextElement(self, te):
+        """output LaTeX code according to tag of XML element"""
+                
+        def prettify_latex(s):
+            """adjust XML text to LaTeX convention"""
+            
+            return s.replace('%', r'\%')\
+                .replace('{', r'\ob ')\
+                .replace('}', r'\cb ')\
+                .replace('&', r'\&')\
+                .replace('#', r'\#')\
+                .replace('_', r'\_')
+            
         tail = ''
         text = ''
         if te.tail:
-            tail = self.prettify_latex(te.tail)
+            tail = prettify_latex(te.tail)
             if tail[-1].strip() == '': #replace all trailing white space by ' '
                 tail = "%s "%tail.strip()
         if te.text:
-            text = self.prettify_latex(te.text)
+            text = prettify_latex(te.text)
         if te.tag == 'caption':
-                return '\n%%\\caption{%s}%s\n'%(text ,tail)
+            return '\n%%\\caption{%s}%s\n'%(text, tail)
         if te.tag == 'free':
-                return '\\glt %s %s'%(text, tail)
+            return '\\glt %s %s'%(text, tail)
         if te.tag in    ('td', 'th'):
             colspan = te.attrib.get('colspan')
             if colspan:
-                return r'\multicolumn{%s}{l}{%s %s} & %s'%(colspan, text, ''.join([self.treatTextElement(x) for x in te]), tail)
-            return '%s %s & %s'%(text,''.join([self.treatTextElement(x) for x in te]), tail)
+                return r'\multicolumn{%s}{l}{%s %s} & %s'%(colspan,
+                                                           text,
+                                                           ''.join([self.treatTextElement(x)
+                                                                    for x
+                                                                    in te]),
+                                                           tail)
+            return '%s %s & %s'%(text, ''.join([self.treatTextElement(x) for x in te]), tail)
         if te.tag == 'chart':
-                return ''.join([self.treatTextElement(x) for x in te])
+            return ''.join([self.treatTextElement(x) for x in te])
         if te.tag == 'interlinear':
-                return ''.join([self.treatTextElement(x) for x in te])
+            return ''.join([self.treatTextElement(x) for x in te])
         if te.tag == 'single':
-                return ''.join([self.treatTextElement(x) for x in te])
+            return ''.join([self.treatTextElement(x) for x in te])
         if te.tag == 'img':
-                return '%%\\includegraphics[width=\\textwidth]{%s}\n'%te.attrib['src']
+            return '%%\\includegraphics[width=\\textwidth]{%s}\n'%te.attrib['src']
         if te.tag == 'object':
             typ = te.attrib["type"]
             if typ == 'tItalic':
@@ -177,13 +202,17 @@ class textelement():
                 return '\\ul{%s}%s'%(text, tail)
         if te.tag == 'langData':
             lang = te.attrib["lang"]
-            if lang in('lVernacular', 'lVernacularProse', "lVernacularHeader", "lAppendixHeader", "lAppendLabel"):
-                return '\\vernacular{%s}%s'%(text,tail)
+            if lang in('lVernacular',
+                       'lVernacularProse',
+                       "lVernacularHeader",
+                       "lAppendixHeader",
+                       "lAppendLabel"):
+                return '\\vernacular{%s}%s'%(text, tail)
             if lang in ('lGloss', 'lGlossProse', 'lGlossHeader'):
                 return '\\gloss{%s}%s'%(text, tail)
             if lang in ('lRule', 'lRuleHeader'):
                 return '\\regel{%s}%s'%(text, tail)
-            if lang in ('lExampleHeader',"lDerivationHeader"):
+            if lang in ('lExampleHeader', "lDerivationHeader"):
                 return '%s%s'%(text, tail)
         if te.tag == 'gloss':
             lang = te.attrib["lang"]
@@ -224,9 +253,9 @@ class textelement():
             glosses = [x.text for x in te.findall('.//gloss')] #gloss can be nested in <wrd>
             if len(glosses) > 0:
                 return ' '.join(glosses)+'\\\\\n'
-            return '\\\\%%no interlinear content in XML\n'% linebody
+            return '\\\\%%no interlinear content in XML\n'
         if te.tag == 'table':
-                return self.treattabular(te)
+            return self.treattabular(te)
         if te.tag == 'figure':
             label = te.attrib.get('id', False)
             labelstring = ''
@@ -247,7 +276,7 @@ class textelement():
         if te.tag == 'p' or te.tag == 'pc':
             text = ' '
             try:
-                text = self.latex_prettify(te.text)
+                text = prettify_latex(te.text)
             except AttributeError:
                 pass
             return "%s %s\n\n" %(text, ''.join([self.treatTextElement(x) for x in te]))
@@ -272,14 +301,14 @@ class textelement():
                 labelstring = '\\label{fn:%s} '%label
             fnbody = ' '.join([self.treatTextElement(x) for x in te])
             return '\\footnote{%s%s\n}%%\n' % (labelstring, fnbody)
-        if te.text == None:
+        if te.text is None:
             return ''
         if te.tag == 'textInfo':
-                return ''
+            return ''
         if te.tag == 'textTitle':
-                return '%%\\title{%s}'%te.text
+            return '%%\\title{%s}'%te.text
         if te.tag == 'shortTitle':
-                return te.text
+            return te.text
         print(te, te.tag, te.text, te.tail, te.attrib)
         raise ValueError #an unknown tag was provided
         return te.text #unreachable
@@ -308,4 +337,3 @@ if __name__ == "__main__":
     root = tree.getroot()
     doc = lingPaper(root)
     print(doc)
-
