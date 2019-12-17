@@ -33,7 +33,7 @@ class genericsection():
         self.subsections = self.getSubsections()
         self.sectionlevel = False
         self.sectionlevel = self.setLevel()
-  
+
     def getSubsections(self):
         pass
 
@@ -134,9 +134,9 @@ class textelement():
         self.tag = el.tag
         self.text = self.getText(el)
 
-    def getText(self, el): 
+    def getText(self, el):
         """Return the text for an xml element"""
-        
+
         if self.tag in ('p', 'pc', 'figure', 'example', 'chart', 'tablenumbered', 'table'):
             #this element causes special markup to be inserted in addition to its textual content
             return self.treatTextElement(el)
@@ -147,17 +147,17 @@ class textelement():
 
     def treatTextElement(self, te):
         """output LaTeX code according to tag of XML element"""
-                
+
         def prettify_latex(s):
             """adjust XML text to LaTeX convention"""
-            
+
             return s.replace('%', r'\%')\
                 .replace('{', r'\ob ')\
                 .replace('}', r'\cb ')\
                 .replace('&', r'\&')\
                 .replace('#', r'\#')\
                 .replace('_', r'\_')
-            
+
         tail = ''
         text = ''
         if te.tail:
